@@ -67,7 +67,6 @@ select,input[type=number]{width:100%;padding:11px;border:1px solid var(--line);b
 .sound{margin-top:24px;padding-top:20px;border-top:1px solid var(--soft)}
 .sound-head{display:flex;align-items:center;justify-content:space-between;gap:16px}
 .sound-title{font-size:13px}
-.sound-desc{font-size:11px;color:var(--muted);margin:5px 0 0;line-height:1.5}
 .switch{flex-shrink:0;width:44px;height:26px;padding:3px;border:0;border-radius:20px;background:var(--switch-off);transition:background .18s}
 .switch span{display:block;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px #0003;transition:transform .18s}
 .switch[aria-checked="true"]{background:var(--accent)}
@@ -81,6 +80,8 @@ select,input[type=number]{width:100%;padding:11px;border:1px solid var(--line);b
 #volume{display:block;width:100%;height:5px;margin:18px 0 20px;border-radius:6px;appearance:none;-webkit-appearance:none;cursor:pointer;touch-action:pan-y}
 #volume::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#fff;border:1px solid var(--line);box-shadow:0 1px 4px #0003}
 #volume::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:#fff;border:1px solid var(--line);box-shadow:0 1px 4px #0003}
+#preview{min-height:36px;padding:8px 14px;font-size:12px;border:1px solid var(--line);border-radius:6px;background:transparent;color:var(--accent)}
+#preview:disabled{color:var(--muted);opacity:.6;cursor:default}
 .sound-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:10px;color:var(--muted)}
 
 /* Stage */
@@ -156,10 +157,7 @@ select,input[type=number]{width:100%;padding:11px;border:1px solid var(--line);b
 
       <section class="sound" aria-label="声音设置">
         <div class="sound-head">
-          <div>
-            <span class="sound-title">提示音</span>
-            <p class="sound-desc">倒计时 3-2-1 与箭头出现时播放</p>
-          </div>
+          <span class="sound-title">提示音</span>
           <button id="sound" class="switch" type="button" role="switch" aria-label="提示音" aria-checked="false" value="off"><span></span></button>
         </div>
         <div id="sound-panel" hidden>
@@ -174,7 +172,7 @@ select,input[type=number]{width:100%;padding:11px;border:1px solid var(--line);b
           </select>
           <div class="volume-head"><label for="volume">提示音量</label><output id="volume-value" for="volume">40%</output></div>
           <input id="volume" type="range" min="0" max="100" value="40" aria-describedby="volume-help">
-          <div class="sound-foot"><span id="volume-help">同时受设备音量控制</span></div>
+          <div class="sound-foot"><span id="volume-help">同时受设备音量控制</span><button type="button" id="preview">试听</button></div>
         </div>
       </section>
 
@@ -279,6 +277,7 @@ function syncSound(){
   $('sound').setAttribute('aria-checked',String(on));
   $('sound-panel').hidden=!on;
   $('volume').disabled=!on;
+  $('preview').disabled=!on||v===0;
   $('volume-value').textContent=text;
   $('volume').setAttribute('aria-valuetext',text);
   $('volume').style.background=`linear-gradient(to right,var(--accent) ${v}%,var(--soft) ${v}%)`;
@@ -376,7 +375,8 @@ darkQuery.addEventListener('change',applyTheme);
 $('sound').onclick=()=>setSound(!soundOn());
 $('mute').onclick=()=>setSound(!soundOn());
 $('volume').oninput=()=>{syncSound();save()};
-$('sound-type').addEventListener('change',async()=>{await unlockSound();cue()});
+$('preview').onclick=async()=>{await unlockSound();cue()};
+$('sound-type').addEventListener('change',()=>$('preview').click());
 const presets=[...document.querySelectorAll('[data-speed]')];
 function syncPresets(){
   const d=+$('duration').value,g=+$('gap').value;
