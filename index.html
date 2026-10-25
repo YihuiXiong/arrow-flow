@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#ffffff">
 <link rel="icon" type="image/svg+xml" href="./favicon.svg">
@@ -33,9 +33,9 @@ try{const t=JSON.parse(localStorage.getItem('arrow-flow')||'{}').theme;if(t==='l
   --switch-off:#3a423c;--countdown:#6fcf9f;--progress:#2c4a3a;--focus:#4fae82;
 }
 *{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+html,body{touch-action:manipulation;-webkit-text-size-adjust:100%;margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
 button,select,input{font:inherit;color:inherit}
-button{cursor:pointer}
+button{cursor:pointer;touch-action:manipulation}
 :focus-visible{outline:2px solid var(--focus);outline-offset:3px}
 svg{display:block}
 .hidden{display:none!important}
@@ -91,7 +91,7 @@ select,input[type=number]{width:100%;padding:11px;border:1px solid var(--line);b
 .top{position:absolute;top:max(22px,env(safe-area-inset-top));left:24px;right:24px;display:flex;justify-content:space-between;align-items:center}
 .phase{font-size:12px;letter-spacing:.05em;color:var(--muted)}
 .top-right{display:flex;gap:8px;align-items:center}
-.counter{min-width:70px;padding:9px 12px;border:1px solid var(--line);border-radius:8px;text-align:center;font-size:15px;font-variant-numeric:tabular-nums}
+.counter{position:absolute;left:50%;transform:translateX(-50%);font-size:22px;font-weight:500;letter-spacing:.02em;font-variant-numeric:tabular-nums;white-space:nowrap}
 .icon-btn{display:grid;place-items:center;width:40px;height:40px;padding:0;border:1px solid var(--line);border-radius:8px;background:transparent;color:var(--muted)}
 .icon-btn svg{width:18px;height:18px}
 .controls{position:absolute;bottom:max(24px,env(safe-area-inset-bottom));left:0;right:0;display:flex;justify-content:center;gap:20px}
@@ -183,12 +183,12 @@ select,input[type=number]{width:100%;padding:11px;border:1px solid var(--line);b
 <section id="stage" class="stage" aria-label="反应练习">
   <div class="top">
     <span class="phase" id="phase">准备开始</span>
+    <span class="counter" id="counter" aria-live="off">0 / 20</span>
     <div class="top-right">
       <button id="mute" class="icon-btn" type="button" aria-label="关闭声音" aria-pressed="false">
         <svg id="icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>
         <svg id="icon-off" class="hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M17 9.5l5 5M22 9.5l-5 5"/></svg>
       </button>
-      <span class="counter" id="counter">0 / 20</span>
     </div>
   </div>
 
@@ -244,12 +244,24 @@ function applyTheme(){
 /* ---------- 声音 ---------- */
 let audioCtx=null,playing=null;const buffers={};
 function soundOn(){return $('sound').value==='on'}
+// iOS：让声音在静音开关打开时也能播放
+const SILENT='data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjYwLjE2LjEwMAAAAAAAAAAAAAAA//NwwAAAAAAAAAAAAEluZm8AAAAPAAAAFgAACbEAHR0dHSgoKCgoMzMzMz09PT09SEhISFNTU1NTXl5eXmlpaWlpc3Nzc35+fn5+iYmJiZSUlJSUnp6enp6pqamptLS0tLS/v7+/ysrKysrU1NTU39/f39/q6urq9fX19fX/////AAAAAExhdmM2MC4zMQAAAAAAAAAAAAAAACQELwAAAAAAAAmxyOFTSgAAAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsRbAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NCxKMAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NAxKQAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/80LEowAAA0gAAAAAVVVVVVVVVVVVVVVVVVVVVVVVVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/80DEpAAAA0gAAAAAVVVVVVVVVVVVVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsSjAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NCxKMAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NAxKQAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/80LEowAAA0gAAAAAVVVVVVVVVVVVVVVVVVVVVVVVVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/80DEpAAAA0gAAAAAVVVVVVVVVVVVVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsSjAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NCxKMAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NAxKQAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/80LEowAAA0gAAAAAVVVVVVVVVVVVVVVVVVVVVVVVVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/80DEpAAAA0gAAAAAVVVVVVVVVVVVVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsSjAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NCxKMAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV';
+let keepAlive=null;
+function iosPlayback(){
+  try{if(navigator.audioSession){navigator.audioSession.type='playback';return}}catch{}
+  try{
+    if(!keepAlive){keepAlive=new Audio(SILENT);keepAlive.loop=true;keepAlive.setAttribute('playsinline','');keepAlive.volume=0.01}
+    keepAlive.play().catch(()=>{});
+  }catch{}
+}
+function stopKeepAlive(){try{keepAlive?.pause()}catch{}}
 async function unlockSound(){
   if(!soundOn())return;
   try{
     const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+    iosPlayback();
     audioCtx=audioCtx||new AC();
-    if(audioCtx.state==='suspended')await audioCtx.resume();
+    if(audioCtx.state!=='running')await audioCtx.resume();
     await Promise.all(Object.keys(SOUNDS).map(async k=>{
       if(buffers[k])return;
       const bin=atob(SOUNDS[k]),u=new Uint8Array(bin.length);
@@ -260,12 +272,13 @@ async function unlockSound(){
 }
 function play(key){
   const vol=+$('volume').value/100;
-  if(!soundOn()||vol<=0||!audioCtx||audioCtx.state!=='running')return;
+  if(!soundOn()||vol<=0||!audioCtx)return;
+  if(audioCtx.state!=='running'){audioCtx.resume().catch(()=>{});return}
   const buf=buffers[key]||buffers.beep;if(!buf)return;
   try{
     if(playing)try{playing.stop()}catch{}
     const src=audioCtx.createBufferSource(),gain=audioCtx.createGain();
-    src.buffer=buf;gain.gain.value=vol*vol;
+    src.buffer=buf;gain.gain.value=vol;
     src.connect(gain);gain.connect(audioCtx.destination);src.start();
     playing=src;src.onended=()=>{src.disconnect();gain.disconnect();if(playing===src)playing=null};
   }catch{}
@@ -363,9 +376,9 @@ function finish(){
   show('arrow',false);show('countdown',false);show('controls',false);show('result',true);
   updatePhase();
   $('summary').textContent='完成了 '+round+' 次方向提示。休息一下，再开始下一轮。';
-  releaseWake();
+  releaseWake();stopKeepAlive();
 }
-function exit(){clearTimeout(timer);state='idle';$('stage').classList.remove('active');releaseWake()}
+function exit(){clearTimeout(timer);state='idle';$('stage').classList.remove('active');releaseWake();stopKeepAlive()}
 
 /* ---------- 绑定 ---------- */
 load();applyTheme();syncSound();
@@ -387,6 +400,7 @@ for(const k of ['duration','gap'])$(k).addEventListener('input',()=>{syncPresets
 syncPresets();
 $('start').onclick=start;$('again').onclick=start;
 $('pause').onclick=togglePause;$('exit').onclick=exit;$('back').onclick=exit;
+document.addEventListener('dblclick',e=>e.preventDefault(),{passive:false});
 document.addEventListener('keydown',e=>{
   if(state==='idle')return;
   if(e.code==='Space'){e.preventDefault();togglePause()}
