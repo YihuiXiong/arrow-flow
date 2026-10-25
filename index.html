@@ -17,6 +17,8 @@ try{const t=JSON.parse(localStorage.getItem('arrow-flow')||'{}').theme;if(t==='l
   --bg:#fff;--text:#252925;--muted:#858c86;--line:#e4e8e2;--soft:#edf0eb;
   --field:#fff;--accent:#29976b;--btn:#262c28;--btn-hover:#424b44;--btn-text:#fff;
   --switch-off:#dfe4df;--countdown:#245b42;--progress:#dceade;--focus:#66a686;
+  --num:ui-rounded,"SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --snap:cubic-bezier(.34,1.56,.64,1);--out:cubic-bezier(.22,1,.36,1);
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
@@ -43,10 +45,15 @@ svg{display:block}
 /* Home */
 .home{min-height:100svh;max-width:420px;margin:auto;padding:60px 28px 40px;display:flex;flex-direction:column;align-items:center}
 .home-mark{font-size:10px;letter-spacing:.22em;color:var(--muted)}
-.home-arrow{width:130px;height:130px;color:var(--accent);transform:rotate(45deg);margin:clamp(64px,15vh,145px) 0 34px}
+.dial{position:relative;width:180px;height:180px;margin:clamp(52px,13vh,130px) 0 30px}
+.dial-ticks{position:absolute;inset:0;width:100%;height:100%}
+.tick-mark{stroke:var(--line);stroke-width:3;stroke-linecap:round;transition:stroke .3s}
+.tick-mark.on{stroke:var(--accent)}
+.home-arrow{position:absolute;left:19%;top:19%;width:62%;height:62%;color:var(--accent);transform:rotate(45deg);transition:transform .6s var(--snap)}
 .home h1{font-size:18px;font-weight:400;letter-spacing:.13em;margin:0 0 44px}
-.start{width:156px;border:0;border-radius:6px;padding:13px;font-size:14px;background:var(--btn);color:var(--btn-text)}
+.start{min-width:168px;height:50px;border:0;border-radius:25px;padding:0 28px;font-size:15px;letter-spacing:.08em;background:var(--btn);color:var(--btn-text);transition:transform .15s var(--out),background .2s}
 .start:hover{background:var(--btn-hover)}
+.start:active{transform:scale(.96)}
 
 /* Settings */
 .settings{width:100%;margin-top:21px}
@@ -55,8 +62,12 @@ svg{display:block}
 .settings summary::after{content:' +';margin-left:4px}
 .settings[open] summary::after{content:' −'}
 .settings-body{padding:7px 0 20px;border-top:1px solid var(--soft);margin-top:12px}
+.settings[open] .settings-body{animation:reveal .4s var(--out)}
+@keyframes reveal{from{opacity:0;transform:translateY(-8px)}}
 label{display:block;font-size:12px;color:var(--muted);margin:20px 0 9px}
-select,input[type=number]{width:100%;padding:11px;border:1px solid var(--line);border-radius:6px;background:var(--field)}
+select,input[type=number]{width:100%;height:44px;padding:0 12px;border:1px solid var(--line);border-radius:8px;background-color:var(--field);transition:border-color .2s}
+select{appearance:none;-webkit-appearance:none;padding-right:34px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%238a938c' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;background-size:11px}
+select:hover,input[type=number]:hover{border-color:var(--muted)}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .presets{display:flex;gap:7px}
 .presets button{flex:1;min-height:40px;padding:8px 4px;font-size:12px;border:1px solid var(--line);border-radius:6px;background:transparent;color:var(--muted)}
@@ -86,35 +97,62 @@ select,input[type=number]{width:100%;padding:11px;border:1px solid var(--line);b
 
 /* Stage */
 .stage{display:none;position:fixed;inset:0;z-index:10;background:var(--bg);align-items:center;justify-content:center}
-.stage.active{display:flex}
+.stage.active{display:flex;animation:fade .3s var(--out)}
+@keyframes fade{from{opacity:0}}
+.stage.paused #arrow,.stage.paused .countdown{opacity:.15;transition:opacity .25s}
+.stage.paused *{animation-play-state:paused!important}
 #arrow{width:clamp(165px,36vmin,480px);height:clamp(165px,36vmin,480px)}
 .top{position:absolute;top:max(22px,env(safe-area-inset-top));left:24px;right:24px;display:flex;justify-content:space-between;align-items:center}
 .phase{font-size:12px;letter-spacing:.05em;color:var(--muted)}
 .top-right{display:flex;gap:8px;align-items:center}
-.counter{position:absolute;left:50%;transform:translateX(-50%);font-size:22px;font-weight:500;letter-spacing:.02em;font-variant-numeric:tabular-nums;white-space:nowrap}
-.icon-btn{display:grid;place-items:center;width:40px;height:40px;padding:0;border:1px solid var(--line);border-radius:8px;background:transparent;color:var(--muted)}
+.counter{position:absolute;left:50%;transform:translateX(-50%);font-family:var(--num);font-size:22px;font-weight:500;letter-spacing:.02em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.icon-btn{display:grid;place-items:center;width:40px;height:40px;padding:0;border:1px solid var(--line);border-radius:8px;background:transparent;color:var(--muted);transition:transform .15s var(--out),color .2s}
+.icon-btn:active,.round-btn:active{transform:scale(.9)}
 .icon-btn svg{width:18px;height:18px}
 .controls{position:absolute;bottom:max(24px,env(safe-area-inset-bottom));left:0;right:0;display:flex;justify-content:center;gap:20px}
-.round-btn{display:grid;place-items:center;width:52px;height:52px;padding:0;border:1px solid var(--line);border-radius:50%;background:var(--bg);color:var(--muted)}
+.round-btn{display:grid;place-items:center;width:52px;height:52px;padding:0;border:1px solid var(--line);border-radius:50%;background:var(--bg);color:var(--muted);transition:transform .15s var(--out),color .2s}
+.round-btn:hover,.icon-btn:hover{color:var(--text)}
 .round-btn svg{width:18px;height:18px}
-.countdown{font-size:100px;font-weight:300;color:var(--countdown)}
+.countdown{position:relative;display:grid;place-items:center;width:clamp(160px,34vmin,240px);height:clamp(160px,34vmin,240px)}
+.countdown svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.ring-track,.ring-fill{fill:none;stroke-width:3}
+.ring-track{stroke:var(--soft)}
+.ring-fill{stroke:var(--accent);stroke-linecap:round;stroke-dasharray:339.3;stroke-dashoffset:0}
+.countdown.tick .ring-fill{animation:drain 1s linear forwards}
+@keyframes drain{to{stroke-dashoffset:339.3}}
+#count-num{font-family:var(--num);font-size:clamp(72px,16vmin,112px);font-weight:300;line-height:1;color:var(--countdown);font-variant-numeric:tabular-nums}
+.countdown.tick #count-num{animation:pop .5s var(--out)}
+@keyframes pop{from{opacity:0;transform:scale(1.4)}}
 .result{text-align:center;padding:30px}
-.result .label{font-size:12px;letter-spacing:.13em;color:var(--muted)}
+.done-mark{display:block;width:64px;height:64px;margin:0 auto 6px;color:var(--accent)}
+.done-mark circle,.done-mark path{fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.done-mark circle{stroke-dasharray:182.3;animation:draw .7s var(--out) both}
+.done-mark path{stroke-dasharray:40;animation:draw .45s var(--out) .45s both}
+@keyframes draw{from{stroke-dashoffset:var(--len,182.3)}}
+.done-mark path{--len:40}
+.result>*{animation:rise .6s var(--out) both}
+.result>:nth-child(2){animation-delay:.25s}.result>:nth-child(3){animation-delay:.35s}.result>:nth-child(4){animation-delay:.45s}.result>:nth-child(5){animation-delay:.5s}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}}
+.result .done-mark{animation:none}
 .result h2{font-size:32px;margin:15px 0}
 .result p{color:var(--muted);line-height:1.7}
 .result .start{width:100%;margin-top:18px}
-.result .ghost{width:100%;margin-top:12px;padding:11px 16px;border:1px solid var(--line);border-radius:6px;background:transparent;color:var(--muted)}
-.progress{position:absolute;bottom:0;left:0;height:3px;background:var(--progress);transition:width .15s linear}
+.result{width:min(340px,100%)}
+.result .ghost{width:100%;margin-top:12px;height:46px;border:1px solid var(--line);border-radius:23px;background:transparent;color:var(--muted)}
+.progress{position:absolute;bottom:0;left:0;height:4px;border-radius:0 2px 2px 0;background:var(--accent);opacity:.5;transition:width .35s var(--out)}
 
-@media (max-height:600px){.home{padding-top:25px}.home-arrow{width:98px;height:98px;margin:35px 0 20px}.home h1{margin-bottom:24px}}
+@media (max-height:600px){.home{padding-top:25px}.dial{width:130px;height:130px;margin:30px 0 20px}.home h1{margin-bottom:24px}}
 @media (max-height:500px){#arrow{width:48vmin;height:48vmin}.controls{bottom:12px}.top{top:12px}}
-@media (prefers-reduced-motion:reduce){.switch,.switch span,.progress{transition:none}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 <main class="home">
   <div class="home-mark">ARROW FLOW</div>
-  <svg class="home-arrow" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 88V13M17 46L50 13L83 46" fill="none" stroke="currentColor" stroke-width="7"/></svg>
+  <div class="dial" aria-hidden="true">
+    <svg class="dial-ticks" viewBox="0 0 180 180"><line class="tick-mark" data-deg="0" x1="90" y1="3" x2="90" y2="13" transform="rotate(0 90 90)"/><line class="tick-mark on" data-deg="45" x1="90" y1="3" x2="90" y2="10" transform="rotate(45 90 90)"/><line class="tick-mark" data-deg="90" x1="90" y1="3" x2="90" y2="13" transform="rotate(90 90 90)"/><line class="tick-mark" data-deg="135" x1="90" y1="3" x2="90" y2="10" transform="rotate(135 90 90)"/><line class="tick-mark" data-deg="180" x1="90" y1="3" x2="90" y2="13" transform="rotate(180 90 90)"/><line class="tick-mark" data-deg="225" x1="90" y1="3" x2="90" y2="10" transform="rotate(225 90 90)"/><line class="tick-mark" data-deg="270" x1="90" y1="3" x2="90" y2="13" transform="rotate(270 90 90)"/><line class="tick-mark" data-deg="315" x1="90" y1="3" x2="90" y2="10" transform="rotate(315 90 90)"/></svg>
+    <svg class="home-arrow" id="home-arrow" viewBox="0 0 100 100"><path d="M50 88V13M17 46L50 13L83 46" fill="none" stroke="currentColor" stroke-width="7"/></svg>
+  </div>
   <h1>箭头反应</h1>
   <button id="start" class="start">开始</button>
 
@@ -193,10 +231,10 @@ select,input[type=number]{width:100%;padding:11px;border:1px solid var(--line);b
   </div>
 
   <svg id="arrow" class="hidden" viewBox="0 0 100 100" role="img" aria-label="方向箭头"><path d="M50 88V13M17 46L50 13L83 46" fill="none" stroke="currentColor" stroke-width="10"/></svg>
-  <div id="countdown" class="countdown">3</div>
+  <div id="countdown" class="countdown"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="ring-track" cx="60" cy="60" r="54"/><circle class="ring-fill" cx="60" cy="60" r="54"/></svg><span id="count-num">3</span></div>
 
   <div id="result" class="result hidden">
-    <span class="label">SESSION COMPLETE</span>
+    <svg class="done-mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="29"/><path d="M20 33l8 8 16-17"/></svg>
     <h2>这一轮，完成了。</h2>
     <p id="summary"></p>
     <button id="again" class="start">再练一次</button>
@@ -330,14 +368,18 @@ function start(){
   round=0;last=-1;count=3;state='countdown';
   $('stage').classList.add('active');
   show('result',false);show('controls',true);show('arrow',false);show('countdown',true);
-  $('countdown').textContent=count;$('progress').style.width='0%';
+  $('stage').classList.remove('paused');setCount(count);$('progress').style.width='0%';
   setPauseIcon(false);updatePhase();updateCounter();keepAwake();
   unlockSound().then(()=>{if(state==='countdown'&&count===3)cue()});
   schedule(tick,1000);
 }
+function setCount(n){
+  $('count-num').textContent=n;
+  const c=$('countdown');c.classList.remove('tick');void c.offsetWidth;c.classList.add('tick');
+}
 function tick(){
   count--;
-  if(count>0){$('countdown').textContent=count;cue();schedule(tick,1000)}
+  if(count>0){setCount(count);cue();schedule(tick,1000)}
   else{show('countdown',false);showArrow()}
 }
 function showArrow(){
@@ -363,22 +405,22 @@ function blank(){
 function togglePause(){
   if(state==='idle'||state==='done')return;
   if(state==='paused'){
-    state=resumeState;unlockSound();setPauseIcon(false);updatePhase();
+    state=resumeState;unlockSound();setPauseIcon(false);updatePhase();$('stage').classList.remove('paused');
     schedule(next,left);keepAwake();
   }else{
     resumeState=state;state='paused';
     left=Math.max(0,due-performance.now());clearTimeout(timer);
-    setPauseIcon(true);updatePhase();
+    setPauseIcon(true);updatePhase();$('stage').classList.add('paused');
   }
 }
 function finish(){
-  clearTimeout(timer);state='done';
+  clearTimeout(timer);state='done';$('stage').classList.remove('paused');
   show('arrow',false);show('countdown',false);show('controls',false);show('result',true);
   updatePhase();
   $('summary').textContent='完成了 '+round+' 次方向提示。休息一下，再开始下一轮。';
   releaseWake();stopKeepAlive();
 }
-function exit(){clearTimeout(timer);state='idle';$('stage').classList.remove('active');releaseWake();stopKeepAlive()}
+function exit(){clearTimeout(timer);state='idle';$('stage').classList.remove('paused');$('stage').classList.remove('active');releaseWake();stopKeepAlive()}
 
 /* ---------- 绑定 ---------- */
 load();applyTheme();syncSound();
@@ -400,6 +442,18 @@ for(const k of ['duration','gap'])$(k).addEventListener('input',()=>{syncPresets
 syncPresets();
 $('start').onclick=start;$('again').onclick=start;
 $('pause').onclick=togglePause;$('exit').onclick=exit;$('back').onclick=exit;
+/* 首页指针：随机转向，预告练习内容 */
+const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)');
+let homeAngle=45,homeDir=45;
+function spinHome(){
+  if($('stage').classList.contains('active')||document.hidden||reduceMotion.matches)return;
+  const options=DIRS[8].filter(d=>d!==homeDir);
+  const d=options[Math.floor(Math.random()*options.length)];
+  homeAngle+=((d-homeDir+540)%360)-180;homeDir=d;
+  $('home-arrow').style.transform=`rotate(${homeAngle}deg)`;
+  document.querySelectorAll('.tick-mark').forEach(t=>t.classList.toggle('on',+t.dataset.deg===d));
+}
+setInterval(spinHome,1800);
 document.addEventListener('dblclick',e=>e.preventDefault(),{passive:false});
 document.addEventListener('keydown',e=>{
   if(state==='idle')return;
