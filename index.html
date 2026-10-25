@@ -99,7 +99,7 @@ select:hover,input[type=number]:hover{border-color:var(--muted)}
 .stage{display:none;position:fixed;inset:0;z-index:10;background:var(--bg);align-items:center;justify-content:center}
 .stage.active{display:flex;animation:fade .3s var(--out)}
 @keyframes fade{from{opacity:0}}
-.stage.paused #arrow,.stage.paused .countdown,.stage.paused .rest{opacity:.15;transition:opacity .25s}
+.stage.paused #arrow,.stage.paused .countdown{opacity:.15;transition:opacity .25s}
 .stage.paused *{animation-play-state:paused!important}
 #arrow{width:clamp(165px,36vmin,480px);height:clamp(165px,36vmin,480px)}
 .top{position:absolute;top:max(22px,env(safe-area-inset-top));left:24px;right:24px;display:flex;justify-content:space-between;align-items:center}
@@ -113,7 +113,7 @@ select:hover,input[type=number]:hover{border-color:var(--muted)}
 .round-btn{display:grid;place-items:center;width:52px;height:52px;padding:0;border:1px solid var(--line);border-radius:50%;background:var(--bg);color:var(--muted);transition:transform .15s var(--out),color .2s}
 .round-btn:hover,.icon-btn:hover{color:var(--text)}
 .round-btn svg{width:18px;height:18px}
-.rest{display:flex;flex-direction:column;align-items:center;gap:20px;animation:controls-in .3s var(--out)}.rest-label,.rest-next{font-size:13px;letter-spacing:.08em;color:var(--muted)}.rest-time{font-family:var(--num);font-size:clamp(80px,19vmin,150px);font-weight:400;line-height:1.1;letter-spacing:-.055em;font-variant-numeric:tabular-nums}.rest-next{font-size:12px}.countdown{position:relative;display:grid;place-items:center;width:clamp(160px,34vmin,240px);height:clamp(160px,34vmin,240px)}
+.rest{display:flex;flex-direction:column;align-items:center;gap:30px;animation:controls-in .35s var(--out)}.rest-dial{position:relative;display:grid;place-items:center;width:clamp(230px,48vmin,340px);aspect-ratio:1}.rest-ring{position:absolute;inset:0;width:100%;height:100%;overflow:visible;transform:rotate(-90deg)}.rest-ring circle{fill:none;stroke-width:2}.rest-track{stroke:var(--line)}.rest-fill{stroke:var(--accent);stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:0}.rest-inner{display:flex;flex-direction:column;align-items:center;gap:14px}.rest-label{font-size:12px;letter-spacing:.12em;color:var(--muted)}.rest-time{font-family:var(--num);font-size:clamp(62px,13vmin,92px);font-weight:400;line-height:1.05;letter-spacing:-.055em;font-variant-numeric:tabular-nums}.rest-hint{font-size:11px;color:var(--muted);letter-spacing:.05em}.rest-next{font-size:13px;letter-spacing:.06em;color:var(--text)}.stage.paused .rest-fill{stroke:var(--muted)}@media(max-height:500px){.rest{gap:14px}.rest-dial{width:clamp(160px,52vmin,230px)}.rest-time{font-size:54px}.rest-inner{gap:8px}}.countdown{position:relative;display:grid;place-items:center;width:clamp(160px,34vmin,240px);height:clamp(160px,34vmin,240px)}
 .countdown svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
 .ring-track,.ring-fill{fill:none;stroke-width:3}
 .ring-track{stroke:var(--soft)}
@@ -238,7 +238,7 @@ body:has(.settings-dialog[open]){overflow:hidden}.settings-dialog{--sheet-bg:var
   <svg id="arrow" class="hidden" viewBox="0 0 100 100" role="img" aria-label="方向箭头"><path d="M50 88V13M17 46L50 13L83 46" fill="none" stroke="currentColor" stroke-width="10"/></svg>
   <div id="countdown" class="countdown"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="ring-track" cx="60" cy="60" r="54"/><circle class="ring-fill" cx="60" cy="60" r="54"/></svg><span id="count-num">3</span></div>
 
-  <div id="rest" class="rest hidden" role="status"><span class="rest-label">组间休息</span><span id="rest-time" class="rest-time">0:30</span><span id="rest-next" class="rest-next"></span></div>
+  <div id="rest" class="rest hidden" role="timer" aria-label="组间休息倒计时" aria-live="off"><div class="rest-dial"><svg class="rest-ring" viewBox="0 0 200 200" aria-hidden="true"><circle class="rest-track" cx="100" cy="100" r="96"/><circle id="rest-ring-fill" class="rest-fill" cx="100" cy="100" r="96" pathLength="1"/></svg><div class="rest-inner"><span class="rest-label">组间休息</span><span id="rest-time" class="rest-time">0:30</span><span id="rest-hint" class="rest-hint">放松呼吸</span></div></div><span id="rest-next" class="rest-next"></span></div>
   <div id="result" class="result hidden" role="status" aria-live="polite">
     <svg class="done-mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="29"/><path d="M20 33l8 8 16-17"/></svg>
     <h2>Complete</h2>
@@ -268,6 +268,7 @@ const DIR_LABELS={0:'上',45:'右上',90:'右',135:'右下',180:'下',225:'左�
 const darkQuery=matchMedia('(prefers-color-scheme: dark)');
 
 let state='idle',resumeState='',timer=null,next=null,due=0,left=0;
+let restFrame=0;
 let round=0,set=1,restSeconds=0,last=-1,count=3,config={},wake=null;
 
 /* ---------- 设置 ---------- */
@@ -292,40 +293,51 @@ function soundOn(){return $('sound').value==='on'}
 const SILENT='data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjYwLjE2LjEwMAAAAAAAAAAAAAAA//NwwAAAAAAAAAAAAEluZm8AAAAPAAAAFgAACbEAHR0dHSgoKCgoMzMzMz09PT09SEhISFNTU1NTXl5eXmlpaWlpc3Nzc35+fn5+iYmJiZSUlJSUnp6enp6pqamptLS0tLS/v7+/ysrKysrU1NTU39/f39/q6urq9fX19fX/////AAAAAExhdmM2MC4zMQAAAAAAAAAAAAAAACQELwAAAAAAAAmxyOFTSgAAAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsRbAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NCxKMAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NAxKQAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/80LEowAAA0gAAAAAVVVVVVVVVVVVVVVVVVVVVVVVVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/80DEpAAAA0gAAAAAVVVVVVVVVVVVVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsSjAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NCxKMAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NAxKQAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/80LEowAAA0gAAAAAVVVVVVVVVVVVVVVVVVVVVVVVVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/80DEpAAAA0gAAAAAVVVVVVVVVVVVVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsSjAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NCxKMAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NAxKQAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/80LEowAAA0gAAAAAVVVVVVVVVVVVVVVVVVVVVVVVVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/80DEpAAAA0gAAAAAVVVVVVVVVVVVVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsSjAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NCxKMAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV';
 let keepAlive=null;
 function iosPlayback(){
-  try{if(navigator.audioSession){navigator.audioSession.type='playback';return}}catch{}
+  try{if(navigator.audioSession){navigator.audioSession.type='playback'}}catch{}
   try{
     if(!keepAlive){keepAlive=new Audio(SILENT);keepAlive.loop=true;keepAlive.setAttribute('playsinline','');keepAlive.volume=0.01}
     keepAlive.play().catch(()=>{});
   }catch{}
 }
 function stopKeepAlive(){try{keepAlive?.pause()}catch{}}
+async function loadSound(key,ctx){
+  if(buffers[key])return;
+  const bin=atob(SOUNDS[key]),u=new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);
+  buffers[key]=await new Promise((res,rej)=>ctx.decodeAudioData(u.buffer,res,rej));
+}
 async function unlockSound(){
   if(!soundOn())return;
   try{
-    const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
     iosPlayback();
-    audioCtx=audioCtx||new AC();
-    if(audioCtx.state!=='running')await audioCtx.resume();
-    await Promise.all(Object.keys(SOUNDS).map(async k=>{
-      if(buffers[k])return;
-      const bin=atob(SOUNDS[k]),u=new Uint8Array(bin.length);
-      for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);
-      buffers[k]=await new Promise((res,rej)=>audioCtx.decodeAudioData(u.buffer,res,rej));
-    }));
+    const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+    if(!audioCtx||audioCtx.state==='closed'||audioCtx.state==='interrupted'){
+      const old=audioCtx;audioCtx=new AC();if(old)old.close().catch(()=>{});
+    }
+    const ctx=audioCtx;
+    // Both resume and the silent source start inside the tap gesture, before awaiting decoding.
+    const ready=ctx.state==='running'?Promise.resolve():ctx.resume();
+    const prime=ctx.createBufferSource();prime.buffer=ctx.createBuffer(1,1,ctx.sampleRate);prime.connect(ctx.destination);prime.start();prime.onended=()=>prime.disconnect();
+    await Promise.all([ready,loadSound($('sound-type').value,ctx)]);
+    Promise.allSettled(Object.keys(SOUNDS).map(k=>loadSound(k,ctx)));
   }catch{}
 }
 function play(key){
-  const vol=+$('volume').value/100;
-  if(!soundOn()||vol<=0||!audioCtx)return;
-  if(audioCtx.state!=='running'){audioCtx.resume().catch(()=>{});return}
-  const buf=buffers[key]||buffers.beep;if(!buf)return;
-  try{
-    if(playing)try{playing.stop()}catch{}
-    const src=audioCtx.createBufferSource(),gain=audioCtx.createGain();
-    src.buffer=buf;gain.gain.value=vol;
-    src.connect(gain);gain.connect(audioCtx.destination);src.start();
-    playing=src;src.onended=()=>{src.disconnect();gain.disconnect();if(playing===src)playing=null};
-  }catch{}
+  const vol=+$('volume').value/100,ctx=audioCtx;
+  if(!soundOn()||vol<=0||!ctx)return;
+  const requested=performance.now();
+  const emit=()=>{
+    if(!soundOn()||ctx!==audioCtx||ctx.state!=='running'||performance.now()-requested>500)return;
+    const buf=buffers[key]||buffers.beep;if(!buf)return;
+    try{
+      if(playing)try{playing.stop()}catch{}
+      const src=ctx.createBufferSource(),gain=ctx.createGain();
+      src.buffer=buf;gain.gain.value=+$('volume').value/100;
+      src.connect(gain);gain.connect(ctx.destination);src.start();
+      playing=src;src.onended=()=>{src.disconnect();gain.disconnect();if(playing===src)playing=null};
+    }catch{}
+  };
+  if(ctx.state==='running')emit();else ctx.resume().then(emit).catch(()=>{});
 }
 const cue=()=>play($('sound-type').value);
 
@@ -343,13 +355,13 @@ function syncSound(){
   $('icon-on').classList.toggle('hidden',!on);
   $('icon-off').classList.toggle('hidden',on);
 }
-function setSound(on){$('sound').value=on?'on':'off';syncSound();save();if(on)unlockSound()}
+function setSound(on){$('sound').value=on?'on':'off';syncSound();save();if(on)unlockSound();else stopKeepAlive()}
 
 /* ---------- 练习流程 ---------- */
 function schedule(fn,ms){clearTimeout(timer);next=fn;left=ms;due=performance.now()+ms;timer=setTimeout(fn,ms)}
 function show(id,on){$(id).classList.toggle('hidden',!on)}
 function updatePhase(){
-  const phase=state==='paused'?'已暂停':state==='countdown'?'准备开始':state==='rest'?'组间休息':'';const group=config.rounds?'第 '+set+' / '+config.sets+' 组':'';const text=[group,phase].filter(Boolean).join(' · ');
+  const phase=state==='paused'?'已暂停':state==='countdown'?'准备开始':state==='rest'?(restSeconds<=3?'准备开始':'组间休息'):'';const preparing=(state==='rest'||state==='paused'&&resumeState==='rest')&&restSeconds<=3;const group=config.rounds?'第 '+(preparing?set+1:set)+' / '+config.sets+' 组':'';const text=[group,phase].filter(Boolean).join(' · ');
   $('phase').textContent=text;
   $('phase').style.visibility=text?'visible':'hidden';
 }
@@ -363,6 +375,7 @@ function releaseWake(){try{wake?.release()}catch{}wake=null}
 const clamp=(v,lo,hi,fallback)=>Math.max(lo,Math.min(hi,Number.isFinite(v)?v:fallback));
 
 function start(){
+  cancelAnimationFrame(restFrame);
   if(!validateIntervals()){openSettings();$('gap-max').focus();$('gap-max').reportValidity();return;}
   const requestedRounds=$('rounds').value.trim()===''?20:+$('rounds').value;
   $('rounds').value=String(Number.isFinite(requestedRounds)?Math.max(0,Math.min(Number.MAX_SAFE_INTEGER,Math.floor(requestedRounds))):20);sessionInfo();
@@ -421,29 +434,39 @@ function completeSet(){
   restSeconds=config.setRest;
   if(restSeconds===0)return nextSet();
   state='rest';$('rest-next').textContent='下一组 · 第 '+(set+1)+' / '+config.sets+' 组';
-  show('arrow',false);show('rest',true);renderRest();updatePhase();schedule(restTick,1000);
+  show('arrow',false);show('rest',true);if(restSeconds>3)cue();renderRest();updatePhase();schedule(restTick,1000);animateRestRing();
 }
-function renderRest(){$('rest-time').textContent=Math.floor(restSeconds/60)+':'+String(restSeconds%60).padStart(2,'0');}
+function renderRest(){const preparing=restSeconds<=3;show('rest',!preparing);show('countdown',preparing);if(preparing){setCount(restSeconds);cue();$('counter').textContent='0 / '+config.rounds;}else{$('rest-time').textContent=Math.floor(restSeconds/60)+':'+String(restSeconds%60).padStart(2,'0');}updatePhase();}
+function animateRestRing(){
+  cancelAnimationFrame(restFrame);
+  const paused=state==='paused'&&resumeState==='rest';
+  if((state!=='rest'&&!paused)||restSeconds<=3)return;
+  const remaining=Math.max(0,(restSeconds-1)*1000+(paused?left:Math.max(0,due-performance.now())));
+  $('rest-ring-fill').style.strokeDashoffset=String(1-Math.min(1,remaining/(config.setRest*1000)));
+  $('rest-hint').textContent=paused?'已暂停':remaining<=3000?'准备开始':'放松呼吸';
+  if(!paused)restFrame=requestAnimationFrame(animateRestRing);
+}
 function restTick(){restSeconds--;if(restSeconds<=0)return nextSet();renderRest();schedule(restTick,1000);}
-function nextSet(){set++;round=0;last=-1;show('rest',false);showArrow();}
+function nextSet(){cancelAnimationFrame(restFrame);set++;round=0;last=-1;show('rest',false);show('countdown',false);showArrow();}
 function togglePause(){
   if(state==='idle'||state==='done')return;
   if(state==='paused'){
     state=resumeState;unlockSound();setPauseIcon(false);updatePhase();$('stage').classList.remove('paused');
-    schedule(next,left);keepAwake();
+    schedule(next,left);keepAwake();if(state==='rest')animateRestRing();
   }else{
     resumeState=state;state='paused';
     left=Math.max(0,due-performance.now());clearTimeout(timer);
-    setPauseIcon(true);updatePhase();$('stage').classList.add('paused');
+    setPauseIcon(true);updatePhase();$('stage').classList.add('paused');if(resumeState==='rest')animateRestRing();
   }
 }
 function finish(){
+  cancelAnimationFrame(restFrame);
   clearTimeout(timer);state='done';$('stage').classList.add('finished');$('stage').classList.remove('paused');
   show('arrow',false);show('rest',false);show('countdown',false);show('controls',false);show('result',true);
   updatePhase();
   releaseWake();stopKeepAlive();
 }
-function exit(){$('stage').classList.remove('finished');clearTimeout(timer);state='idle';$('stage').classList.remove('paused');$('stage').classList.remove('active');releaseWake();stopKeepAlive()}
+function exit(){cancelAnimationFrame(restFrame);$('stage').classList.remove('finished');clearTimeout(timer);state='idle';$('stage').classList.remove('paused');$('stage').classList.remove('active');releaseWake();stopKeepAlive()}
 
 /* ---------- 绑定 ---------- */
 load();applyTheme();syncSound();
@@ -511,7 +534,7 @@ document.addEventListener('keydown',e=>{
   if(e.code==='Space'){e.preventDefault();togglePause()}
   if(e.key==='Escape')exit();
 });
-document.addEventListener('visibilitychange',()=>{if(document.hidden&&['countdown','arrow','blank'].includes(state))togglePause()});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&['countdown','arrow','blank','rest'].includes(state))togglePause()});
 </script>
 </body>
 </html>
