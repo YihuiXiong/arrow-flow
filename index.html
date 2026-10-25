@@ -179,8 +179,8 @@ body:has(.settings-dialog[open]){overflow:hidden}.settings-dialog{--sheet-bg:var
         <option value="2">两方向（左右）</option>
       </select></div>
 
-        <div><label for="rounds">练习轮数</label>
-          <input id="rounds" type="number" min="0" step="1" value="20" list="round-options" inputmode="numeric" aria-describedby="rounds-help"><datalist id="round-options"><option value="10"><option value="20"><option value="30"><option value="50"><option value="100"><option value="0" label="无限循环"></datalist><small id="rounds-help" class="field-help">自定义轮数，0 为无限</small>
+        <div><label for="rounds-choice">练习轮数</label>
+          <input id="rounds" type="hidden" value="20"><select id="rounds-choice" aria-controls="custom-rounds"><option value="10">10 轮</option><option value="20" selected>20 轮</option><option value="30">30 轮</option><option value="50">50 轮</option><option value="100">100 轮</option><option value="0">无限循环</option><option value="custom">自定义…</option></select><div id="custom-rounds" hidden style="margin-top:12px"><label for="rounds-custom" style="margin-top:0">自定义轮数</label><input id="rounds-custom" type="number" min="1" step="1" value="20" inputmode="numeric"></div>
         </div>
 </div>      <label id="presets-label">速度预设</label>
       <div class="presets" role="group" aria-labelledby="presets-label">
@@ -450,6 +450,12 @@ syncPresets();
 $('start').onclick=start;$('again').onclick=start;
 $('pause').onclick=togglePause;$('exit').onclick=exit;$('back').onclick=()=>{exit();openSettings()};
 
+/* Round presets with a separate custom entry. */
+function syncRoundChoice(){const value=$('rounds').value;const preset=['10','20','30','50','100','0'].includes(value);$('rounds-choice').value=preset?value:'custom';$('custom-rounds').hidden=preset;if(!preset)$('rounds-custom').value=value;}
+$('rounds-choice').onchange=()=>{const value=$('rounds-choice').value;const custom=value==='custom';$('custom-rounds').hidden=!custom;if(custom){const n=+$('rounds-custom').value;$('rounds').value=String(Number.isFinite(n)&&n>=1?Math.floor(n):20);$('rounds-custom').value=$('rounds').value;$('rounds-custom').focus();}else $('rounds').value=value;save();sessionInfo();};
+$('rounds-custom').oninput=()=>{const raw=$('rounds-custom').value;const n=+raw;if(raw!==''&&Number.isFinite(n)&&n>=1){$('rounds').value=String(Math.floor(n));save();sessionInfo()}};
+$('rounds-custom').onchange=()=>{$('rounds-custom').value=$('rounds').value==='0'?'20':$('rounds').value;};
+syncRoundChoice();
 /* Settings dialog: native focus management and keyboard dismissal. */
 const settingsDialog=$('settings-dialog');let settingsClosing=false;
 function openSettings(){if(settingsDialog.open||settingsClosing)return;settingsDialog.showModal();}
