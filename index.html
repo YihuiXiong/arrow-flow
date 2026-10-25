@@ -422,7 +422,7 @@ function showArrow(){
   arrow.style.color=config.color==='green'?pal[0]:config.color==='black'?'var(--text)':pal[Math.floor(Math.random()*pal.length)];
   arrow.setAttribute('aria-label',DIR_LABELS[last]);
   show('arrow',true);cue();updatePhase();updateCounter();
-  $('progress').style.width=config.rounds?(((set-1)*config.rounds+round)/(config.rounds*config.sets)*100)+'%':'0%';
+  $('progress').style.width=config.rounds?(round/config.rounds*100)+'%':'0%';
   schedule(blank,config.duration);
 }
 function blank(){
@@ -438,7 +438,7 @@ function completeSet(){
   state='rest';$('rest-next').textContent='下一组 · 第 '+(set+1)+' / '+config.sets+' 组';
   show('arrow',false);show('rest',true);if(restSeconds>3)cue();renderRest();updatePhase();schedule(restTick,1000);animateRestRing();
 }
-function renderRest(){const preparing=restSeconds<=3;$('stage').classList.toggle('resting',!preparing);show('rest',!preparing);show('countdown',preparing);if(preparing){setCount(restSeconds);cue();$('counter').textContent='0 / '+config.rounds;}else{$('rest-time').textContent=Math.floor(restSeconds/60)+':'+String(restSeconds%60).padStart(2,'0');}updatePhase();}
+function renderRest(){const preparing=restSeconds<=3;$('stage').classList.toggle('resting',!preparing);show('rest',!preparing);show('countdown',preparing);if(preparing){resetGroupProgress();setCount(restSeconds);cue();$('counter').textContent='0 / '+config.rounds;}else{$('rest-time').textContent=Math.floor(restSeconds/60)+':'+String(restSeconds%60).padStart(2,'0');}updatePhase();}
 function animateRestRing(){
   cancelAnimationFrame(restFrame);
   const paused=state==='paused'&&resumeState==='rest';
@@ -448,7 +448,8 @@ function animateRestRing(){
   if(!paused)restFrame=requestAnimationFrame(animateRestRing);
 }
 function restTick(){restSeconds--;if(restSeconds<=0)return nextSet();renderRest();schedule(restTick,1000);}
-function nextSet(){$('stage').classList.remove('resting');cancelAnimationFrame(restFrame);set++;round=0;last=-1;show('rest',false);show('countdown',false);showArrow();}
+function resetGroupProgress(){const p=$('progress');p.style.transition='none';p.style.width='0%';void p.offsetWidth;p.style.transition='';}
+function nextSet(){resetGroupProgress();$('stage').classList.remove('resting');cancelAnimationFrame(restFrame);set++;round=0;last=-1;show('rest',false);show('countdown',false);showArrow();}
 function togglePause(){
   if(state==='idle'||state==='done')return;
   if(state==='paused'){
