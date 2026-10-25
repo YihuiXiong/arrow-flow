@@ -144,6 +144,11 @@ select:hover,input[type=number]:hover{border-color:var(--muted)}
 @media (max-height:600px){.home{padding-top:25px}.dial{width:130px;height:130px;margin:30px 0 20px}.home h1{margin-bottom:24px}}
 @media (max-height:500px){#arrow{width:48vmin;height:48vmin}.controls{bottom:12px}.top{top:12px}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* Larger opening screen; quiet completion view. */
+.home{max-width:460px;padding-top:48px}.home-mark{font-size:11px;letter-spacing:.24em}.dial{width:clamp(210px,29vmin,260px);height:clamp(210px,29vmin,260px);margin:clamp(44px,10vh,96px) 0 34px}.home h1{font-size:24px;letter-spacing:.12em;margin-bottom:36px}.home>.start{min-width:200px;height:56px;font-size:16px;border-radius:28px}
+.stage.finished .top,.stage.finished .progress{display:none}.result{width:min(360px,100%);padding:32px}.result .done-mark{width:84px;height:84px;margin:0 auto 32px}.done-mark circle{fill:var(--soft);stroke:var(--accent);stroke-width:1.5}.done-mark path{stroke-width:2.8}.result h2{font-size:clamp(36px,7vmin,48px);font-weight:450;letter-spacing:-.045em;line-height:1.15;margin:0 0 44px}.result .start{height:52px;margin:0;border-radius:26px;font-size:14px;letter-spacing:.02em}.result .ghost{border:0;background:transparent;height:44px;margin-top:12px;font-size:13px;letter-spacing:.02em}.result .ghost:hover{color:var(--text)}
+@media(max-height:650px){.home{padding-top:28px}.dial{width:190px;height:190px;margin:30px 0 24px}.home h1{font-size:22px;margin-bottom:28px}}@media(max-height:430px){.dial{width:150px;height:150px;margin:12px 0 16px}.home h1{margin-bottom:18px}.result .done-mark{width:60px;height:60px;margin-bottom:18px}.result h2{margin-bottom:26px}}
 </style>
 </head>
 <body>
@@ -233,12 +238,11 @@ select:hover,input[type=number]:hover{border-color:var(--muted)}
   <svg id="arrow" class="hidden" viewBox="0 0 100 100" role="img" aria-label="方向箭头"><path d="M50 88V13M17 46L50 13L83 46" fill="none" stroke="currentColor" stroke-width="10"/></svg>
   <div id="countdown" class="countdown"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="ring-track" cx="60" cy="60" r="54"/><circle class="ring-fill" cx="60" cy="60" r="54"/></svg><span id="count-num">3</span></div>
 
-  <div id="result" class="result hidden">
+  <div id="result" class="result hidden" role="status" aria-live="polite">
     <svg class="done-mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="29"/><path d="M20 33l8 8 16-17"/></svg>
-    <h2>这一轮，完成了。</h2>
-    <p id="summary"></p>
-    <button id="again" class="start">再练一次</button>
-    <button id="back" class="ghost">调整设置</button>
+    <h2>Complete</h2>
+    <button id="again" class="start">Again</button>
+    <button id="back" class="ghost">Settings</button>
   </div>
 
   <div class="controls" id="controls">
@@ -366,7 +370,7 @@ function start(){
   };
   save();
   round=0;last=-1;count=3;state='countdown';
-  $('stage').classList.add('active');
+  $('stage').classList.remove('finished');$('stage').classList.add('active');
   show('result',false);show('controls',true);show('arrow',false);show('countdown',true);
   $('stage').classList.remove('paused');setCount(count);$('progress').style.width='0%';
   setPauseIcon(false);updatePhase();updateCounter();keepAwake();
@@ -385,7 +389,7 @@ function tick(){
 function showArrow(){
   if(config.rounds&&round>=config.rounds)return finish();
   state='arrow';round++;
-  const options=DIRS[config.dirs].filter(d=>d!==last);
+  const options=config.dirs===2?DIRS[2]:DIRS[config.dirs].filter(d=>d!==last);
   last=options[Math.floor(Math.random()*options.length)];
   const pal=PALETTE[isDark()?'dark':'light'];
   const arrow=$('arrow');
@@ -414,13 +418,12 @@ function togglePause(){
   }
 }
 function finish(){
-  clearTimeout(timer);state='done';$('stage').classList.remove('paused');
+  clearTimeout(timer);state='done';$('stage').classList.add('finished');$('stage').classList.remove('paused');
   show('arrow',false);show('countdown',false);show('controls',false);show('result',true);
   updatePhase();
-  $('summary').textContent='完成了 '+round+' 次方向提示。休息一下，再开始下一轮。';
   releaseWake();stopKeepAlive();
 }
-function exit(){clearTimeout(timer);state='idle';$('stage').classList.remove('paused');$('stage').classList.remove('active');releaseWake();stopKeepAlive()}
+function exit(){$('stage').classList.remove('finished');clearTimeout(timer);state='idle';$('stage').classList.remove('paused');$('stage').classList.remove('active');releaseWake();stopKeepAlive()}
 
 /* ---------- 绑定 ---------- */
 load();applyTheme();syncSound();
