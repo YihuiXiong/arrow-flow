@@ -14,7 +14,7 @@ try{const t=JSON.parse(localStorage.getItem('arrow-flow')||'{}').theme;if(t==='l
 <style>
 :root{
   color-scheme:light;
-  --rest-bg:#eaf1f8;--bg:#fff;--text:#252925;--muted:#858c86;--line:#e4e8e2;--soft:#edf0eb;
+  --rest-bg:#e7f2e9;--bg:#fff;--text:#252925;--muted:#858c86;--line:#e4e8e2;--soft:#edf0eb;
   --field:#fff;--accent:#29976b;--btn:#262c28;--btn-hover:#424b44;--btn-text:#fff;
   --switch-off:#dfe4df;--countdown:#245b42;--progress:#dceade;--focus:#66a686;
   --num:ui-rounded,"SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -23,14 +23,14 @@ try{const t=JSON.parse(localStorage.getItem('arrow-flow')||'{}').theme;if(t==='l
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
     color-scheme:dark;
-    --rest-bg:#1e2935;--bg:#141815;--text:#e3e8e4;--muted:#8c958e;--line:#2e3530;--soft:#222824;
+    --rest-bg:#1d3025;--bg:#141815;--text:#e3e8e4;--muted:#8c958e;--line:#2e3530;--soft:#222824;
     --field:#1a1f1b;--accent:#3fb683;--btn:#e3e8e4;--btn-hover:#c7cec9;--btn-text:#141815;
     --switch-off:#3a423c;--countdown:#6fcf9f;--progress:#2c4a3a;--focus:#4fae82;
   }
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
-  --rest-bg:#1e2935;--bg:#141815;--text:#e3e8e4;--muted:#8c958e;--line:#2e3530;--soft:#222824;
+  --rest-bg:#1d3025;--bg:#141815;--text:#e3e8e4;--muted:#8c958e;--line:#2e3530;--soft:#222824;
   --field:#1a1f1b;--accent:#3fb683;--btn:#e3e8e4;--btn-hover:#c7cec9;--btn-text:#141815;
   --switch-off:#3a423c;--countdown:#6fcf9f;--progress:#2c4a3a;--focus:#4fae82;
 }
