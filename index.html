@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#ffffff">
 <link rel="icon" type="image/svg+xml" href="./favicon.svg">
@@ -149,6 +149,14 @@ select:hover,input[type=number]:hover{border-color:var(--muted)}
 .home{max-width:460px;padding-top:48px}.home-mark{font-size:11px;letter-spacing:.24em}.dial{width:clamp(210px,29vmin,260px);height:clamp(210px,29vmin,260px);margin:clamp(44px,10vh,96px) 0 34px}.home h1{font-size:24px;letter-spacing:.12em;margin-bottom:36px}.home>.start{min-width:200px;height:56px;font-size:16px;border-radius:28px}
 .stage.finished .top,.stage.finished .progress{display:none}.result{width:min(360px,100%);padding:32px}.result .done-mark{width:84px;height:84px;margin:0 auto 32px}.done-mark circle{fill:var(--soft);stroke:var(--accent);stroke-width:1.5}.done-mark path{stroke-width:2.8}.result h2{font-size:clamp(36px,7vmin,48px);font-weight:450;letter-spacing:-.045em;line-height:1.15;margin:0 0 44px}.result .start{height:52px;margin:0;border-radius:26px;font-size:14px;letter-spacing:.02em}.result .ghost{border:0;background:transparent;height:44px;margin-top:12px;font-size:13px;letter-spacing:.02em}.result .ghost:hover{color:var(--text)}
 @media(max-height:650px){.home{padding-top:28px}.dial{width:190px;height:190px;margin:30px 0 24px}.home h1{font-size:22px;margin-bottom:28px}}@media(max-height:430px){.dial{width:150px;height:150px;margin:12px 0 16px}.home h1{margin-bottom:18px}.result .done-mark{width:60px;height:60px;margin-bottom:18px}.result h2{margin-bottom:26px}}
+
+/* Quiet surfaces, focused settings sheet */
+.home{min-height:100svh;max-width:480px;justify-content:center;padding:40px 28px 48px}.home-mark{font-size:10px;letter-spacing:.32em;opacity:.8}.dial{width:clamp(220px,30vmin,280px);height:clamp(220px,30vmin,280px);margin:clamp(44px,9vh,86px) 0 34px}.tick-mark{stroke-width:2}.home h1{font-size:25px;letter-spacing:.1em;margin-bottom:36px}.home>.start{min-width:204px;box-shadow:0 6px 18px #193a2510}.session-info{font-size:11px;color:var(--muted);letter-spacing:.05em;margin:20px 0 14px}.settings-trigger{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 17px;border:0;border-radius:22px;background:transparent;color:var(--muted);font-size:12px;transition:background .2s,color .2s,transform .2s}.settings-trigger svg{width:17px;height:17px}.settings-trigger:hover{color:var(--text);background:var(--soft)}.settings-trigger:active{transform:scale(.96)}
+body:has(.settings-dialog[open]){overflow:hidden}.settings-dialog{--sheet-bg:var(--bg);width:min(480px,calc(100% - 40px));max-height:min(86svh,880px);padding:0;border:1px solid var(--line);border-radius:26px;background:var(--sheet-bg);color:var(--text);box-shadow:0 30px 110px #0002;overflow:hidden;overscroll-behavior:contain}.settings-dialog[open]{display:flex;flex-direction:column;animation:sheet-in .32s var(--out) both}.settings-dialog::backdrop{background:#101a1460;backdrop-filter:blur(7px);animation:backdrop-in .25s both}.settings-dialog.is-closing{animation:sheet-out .18s ease-in both}.settings-dialog.is-closing::backdrop{animation:backdrop-out .18s both}.sheet-header{display:flex;align-items:center;justify-content:space-between;padding:28px 28px 23px;border-bottom:1px solid var(--soft);flex-shrink:0}.sheet-eyebrow{font-size:9px;letter-spacing:.21em;color:var(--muted)}.sheet-header h2{font-size:23px;font-weight:500;letter-spacing:-.03em;margin:8px 0 0}.close-settings{display:grid;place-items:center;width:36px;height:36px;border:0;border-radius:50%;background:var(--soft);color:var(--muted);transition:transform .2s,color .2s}.close-settings:hover{color:var(--text);transform:rotate(90deg)}.close-settings svg{width:17px;height:17px}.sheet-scroll.settings-body{padding:24px;overflow:auto;margin:0;border:0;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--line) transparent}.setting-group{margin:0 0 24px}.setting-group:last-child{margin-bottom:0}.setting-group h3{display:flex;align-items:center;gap:9px;font-size:12px;font-weight:500;margin:0 4px 12px}.setting-group h3 span{font-size:10px;color:var(--muted);font-variant-numeric:tabular-nums}.setting-card{background:var(--soft);border:1px solid var(--soft);padding:18px;border-radius:17px}.field-help{display:block;margin-top:7px;font-size:10px;line-height:1.4;color:var(--muted)}.setting-card label{font-size:11px;margin:18px 0 8px}.setting-card>label:first-child{margin-top:0}.setting-card>div>label:first-child{margin-top:18px}.setting-card>.two:first-child>div>label{margin-top:0}.setting-card select,.setting-card input[type=number]{height:46px;border-color:transparent;border-radius:10px;background-color:var(--field);font-size:13px}.setting-card select:focus,.setting-card input:focus{border-color:var(--focus)}.setting-card .presets{padding:4px;background:var(--field);border-radius:11px;gap:3px}.setting-card .presets button{min-height:36px;border:0;border-radius:8px;font-size:12px;transition:background .18s,color .18s,box-shadow .18s}.setting-card .presets button[aria-pressed="true"]{background:var(--soft);color:var(--accent);box-shadow:0 1px 4px #00000008}.setting-card .sound{border:0;margin:0;padding:0}.setting-card .sound-title{font-size:13px}.setting-card #sound-panel{border-top:1px solid var(--line);padding-top:20px;margin-top:18px;animation:controls-in .22s var(--out)}.setting-card #sound-type{margin-bottom:20px}.setting-card .volume-head label{margin:0}.setting-card .sound-foot{font-size:10px}.setting-card #preview{background:var(--field);border:0;border-radius:9px;min-height:40px;padding:8px 18px}.setting-card #volume{height:6px}.sheet-footer{padding:17px 24px 21px;display:flex;align-items:center;justify-content:space-between;gap:20px;border-top:1px solid var(--soft);flex-shrink:0}.sheet-footer>span{font-size:11px;color:var(--muted)}.sheet-footer .start{height:44px;min-width:112px;border-radius:13px;font-size:13px;letter-spacing:.02em}.stage.active{animation:stage-in .25s var(--out)}.result{animation:complete-in .45s var(--out)}
+@keyframes sheet-in{from{opacity:0;transform:translateY(24px) scale(.98)}to{opacity:1;transform:none}}@keyframes sheet-out{to{opacity:0;transform:translateY(15px) scale(.98)}}@keyframes backdrop-in{from{opacity:0}to{opacity:1}}@keyframes backdrop-out{to{opacity:0}}@keyframes controls-in{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}@keyframes stage-in{from{opacity:0;transform:scale(1.015)}to{opacity:1;transform:none}}@keyframes complete-in{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+@media(max-width:600px){.settings-dialog{width:100%;max-width:none;max-height:90svh;margin:auto 0 0;border:0;border-radius:25px 25px 0 0}.sheet-header{padding:24px 24px 20px}.sheet-scroll.settings-body{padding:20px}.sheet-footer{padding-bottom:max(20px,env(safe-area-inset-bottom))}.settings-dialog[open]{animation:mobile-sheet-in .32s var(--out)}.settings-dialog.is-closing{animation:mobile-sheet-out .2s ease-in both}@keyframes mobile-sheet-in{from{transform:translateY(100%)}to{transform:translateY(0)}}@keyframes mobile-sheet-out{to{transform:translateY(100%)}}}
+@media(max-height:650px){.home{padding:26px 24px}.dial{width:190px;height:190px;margin:26px 0 22px}.home h1{font-size:22px;margin-bottom:24px}.session-info{margin:16px 0 7px}.settings-dialog{max-height:94svh}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
@@ -161,44 +169,41 @@ select:hover,input[type=number]:hover{border-color:var(--muted)}
   <h1>箭头反应</h1>
   <button id="start" class="start">开始</button>
 
-  <details class="settings">
-    <summary>设置</summary>
-    <div class="settings-body">
-      <label for="dirs">箭头方向</label>
+  <p id="session-info" class="session-info"></p>
+  <button id="open-settings" class="settings-trigger" type="button" aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="3" fill="var(--bg)"/><circle cx="15" cy="17" r="3" fill="var(--bg)"/></svg>设置</button>
+</main>
+<dialog id="settings-dialog" aria-labelledby="settings-title" class="settings-dialog"><div class="sheet-header"><div><span class="sheet-eyebrow">MAKE IT YOURS</span><h2 id="settings-title">训练设置</h2></div><button id="close-settings" class="close-settings" aria-label="关闭设置" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div><div class="sheet-scroll settings-body"><section class="setting-group"><h3><span>01</span>训练</h3><div class="setting-card"><div class="two"><div>      <label for="dirs">箭头方向</label>
       <select id="dirs">
         <option value="8">八方向（含斜向）</option>
         <option value="4">四方向（上下左右）</option>
         <option value="2">两方向（左右）</option>
-      </select>
+      </select></div>
 
-      <div class="two">
-        <div><label for="duration">显示 / 秒</label><input id="duration" type="number" min="0.3" max="10" step="0.1" value="1.5"></div>
-        <div><label for="gap">留白 / 秒</label><input id="gap" type="number" min="0" max="10" step="0.1" value="0.5"></div>
-      </div>
-
-      <div class="two">
         <div><label for="rounds">练习轮数</label>
-          <select id="rounds"><option>10</option><option selected>20</option><option>30</option><option>50</option><option value="0">无限循环</option></select>
+          <input id="rounds" type="number" min="0" step="1" value="20" list="round-options" inputmode="numeric" aria-describedby="rounds-help"><datalist id="round-options"><option value="10"><option value="20"><option value="30"><option value="50"><option value="100"><option value="0" label="无限循环"></datalist><small id="rounds-help" class="field-help">自定义轮数，0 为无限</small>
         </div>
-        <div><label for="color">箭头颜色</label>
-          <select id="color"><option value="random">随机彩色</option><option value="green">固定绿色</option><option value="black">固定黑色</option></select>
-        </div>
-      </div>
-
-      <label for="theme">外观</label>
-      <select id="theme">
-        <option value="system">跟随系统</option>
-        <option value="light">浅色</option>
-        <option value="dark">深色</option>
-      </select>
-      <label id="presets-label">速度预设</label>
+</div>      <label id="presets-label">速度预设</label>
       <div class="presets" role="group" aria-labelledby="presets-label">
         <button type="button" data-speed="2.5,1" aria-pressed="false">舒缓</button>
         <button type="button" data-speed="1.5,0.5" aria-pressed="false">标准</button>
         <button type="button" data-speed="0.7,0.3" aria-pressed="false">快速</button>
       </div>
 
-      <section class="sound" aria-label="声音设置">
+      <div class="two">
+        <div><label for="duration">显示 / 秒</label><input id="duration" type="number" min="0.3" max="10" step="0.1" value="1.5"></div>
+        <div><label for="gap">留白 / 秒</label><input id="gap" type="number" min="0" max="10" step="0.1" value="0.5"></div>
+      </div>
+
+</div></section><section class="setting-group"><h3><span>02</span>外观</h3><div class="setting-card">      <label for="theme">外观</label>
+      <select id="theme">
+        <option value="system">跟随系统</option>
+        <option value="light">浅色</option>
+        <option value="dark">深色</option>
+      </select>
+        <div><label for="color">箭头颜色</label>
+          <select id="color"><option value="random">随机彩色</option><option value="green">固定绿色</option><option value="black">固定黑色</option></select>
+        </div>
+</div></section><section class="setting-group"><h3><span>03</span>声音</h3><div class="setting-card">      <section class="sound" aria-label="声音设置">
         <div class="sound-head">
           <span class="sound-title">提示音</span>
           <button id="sound" class="switch" type="button" role="switch" aria-label="提示音" aria-checked="false" value="off"><span></span></button>
@@ -217,11 +222,8 @@ select:hover,input[type=number]:hover{border-color:var(--muted)}
           <input id="volume" type="range" min="0" max="100" value="40" aria-describedby="volume-help">
           <div class="sound-foot"><span id="volume-help">同时受设备音量控制</span><button type="button" id="preview">试听</button></div>
         </div>
-      </section>
+      </section></div></section></div><div class="sheet-footer"><span>按你的节奏来。</span><button id="done-settings" class="start" type="button">完成</button></div></dialog>
 
-    </div>
-  </details>
-</main>
 
 <section id="stage" class="stage" aria-label="反应练习">
   <div class="top">
@@ -361,6 +363,8 @@ function releaseWake(){try{wake?.release()}catch{}wake=null}
 const clamp=(v,lo,hi,fallback)=>Math.max(lo,Math.min(hi,Number.isFinite(v)?v:fallback));
 
 function start(){
+  const requestedRounds=$('rounds').value.trim()===''?20:+$('rounds').value;
+  $('rounds').value=String(Number.isFinite(requestedRounds)?Math.max(0,Math.min(Number.MAX_SAFE_INTEGER,Math.floor(requestedRounds))):20);sessionInfo();
   config={
     dirs:+$('dirs').value,
     duration:clamp(+$('duration').value||1.5,.3,10,1.5)*1000,
@@ -444,7 +448,19 @@ presets.forEach(b=>b.onclick=()=>{[$('duration').value,$('gap').value]=b.dataset
 for(const k of ['duration','gap'])$(k).addEventListener('input',()=>{syncPresets();save()});
 syncPresets();
 $('start').onclick=start;$('again').onclick=start;
-$('pause').onclick=togglePause;$('exit').onclick=exit;$('back').onclick=exit;
+$('pause').onclick=togglePause;$('exit').onclick=exit;$('back').onclick=()=>{exit();openSettings()};
+
+/* Settings dialog: native focus management and keyboard dismissal. */
+const settingsDialog=$('settings-dialog');let settingsClosing=false;
+function openSettings(){if(settingsDialog.open||settingsClosing)return;settingsDialog.showModal();}
+function closeSettings(){if(!settingsDialog.open||settingsClosing)return;settingsClosing=true;settingsDialog.classList.add('is-closing');setTimeout(()=>{settingsDialog.close();settingsDialog.classList.remove('is-closing');settingsClosing=false;},matchMedia('(prefers-reduced-motion: reduce)').matches?0:200);}
+$('open-settings').onclick=openSettings;$('close-settings').onclick=closeSettings;$('done-settings').onclick=closeSettings;
+settingsDialog.addEventListener('cancel',e=>{e.preventDefault();closeSettings()});
+settingsDialog.addEventListener('click',e=>{if(e.target!==settingsDialog)return;const r=settingsDialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeSettings()});
+function sessionInfo(){const d=$('dirs').value,n=$('rounds').value;$('session-info').textContent=d+' 个方向 · '+(n==='0'?'无限循环':n+' 轮')+' · '+$('duration').value+' 秒';}
+for(const k of ['dirs','rounds','duration'])$(k).addEventListener('change',sessionInfo);$('rounds').addEventListener('input',sessionInfo);
+$('duration').addEventListener('input',sessionInfo);document.querySelectorAll('[data-speed]').forEach(b=>b.addEventListener('click',sessionInfo));sessionInfo();
+
 /* 首页指针：随机转向，预告练习内容 */
 const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)');
 let homeAngle=45,homeDir=45;
@@ -459,6 +475,7 @@ function spinHome(){
 setInterval(spinHome,1800);
 document.addEventListener('dblclick',e=>e.preventDefault(),{passive:false});
 document.addEventListener('keydown',e=>{
+  if(settingsDialog.open)return;
   if(state==='idle')return;
   if(e.code==='Space'){e.preventDefault();togglePause()}
   if(e.key==='Escape')exit();
