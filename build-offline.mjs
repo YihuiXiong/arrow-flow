@@ -8,7 +8,7 @@ const site = existsSync(resolve(root, 'dist/index.html')) ? resolve(root, 'dist'
 const read = name => readFileSync(resolve(site, name), 'utf8');
 let html = read('index.html');
 html = html.replace('<link rel="stylesheet" href="./styles.css">', () => `<style>\n${read('styles.css')}</style>`);
-for (const name of ['theme.js', 'app.js']) {
+for (const name of ['theme.js', 'i18n.js', 'app.js']) {
   html = html.replace(`<script src="./${name}"></script>`, () => `<script>\n${read(name)}</script>`);
 }
 html = html.replace('href="./favicon.svg"', () => `href="data:image/svg+xml,${encodeURIComponent(read('favicon.svg'))}"`);

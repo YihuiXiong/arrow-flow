@@ -45,7 +45,7 @@
       <label for="duration" id="duration-label">显示 / 秒</label><input id="duration" type="number" min="0.3" max="10" step="0.1" value="1.5">
       <div class="interval-settings"><p id="interval-help" class="field-help">当前提示消失后，到下一个提示出现前的等待时间。</p><div id="fixed-interval"><label for="gap">等待时间 / 秒</label><input id="gap" type="number" min="0" max="10" step="0.1" value="0.5"></div><div id="random-interval" hidden><div class="two"><div><label for="gap-min">最短等待 / 秒</label><input id="gap-min" type="number" min="0" max="10" step="0.1" value="0.5"></div><div><label for="gap-max">最长等待 / 秒</label><input id="gap-max" type="number" min="0" max="10" step="0.1" value="1.5"></div></div><p class="field-help">每次在范围内重新随机，不按固定节奏出现。</p></div></div>
 
-</div></div></section><section class="setting-group"><h3><span>02</span>外观</h3><div class="setting-card">      <label for="theme">外观</label>
+</div></div></section><section class="setting-group"><h3><span>02</span>外观</h3><div class="setting-card">      <label for="language">语言 / Language</label><select id="language"><option value="zh">简体中文</option><option value="en">English</option></select><label for="theme">外观</label>
       <select id="theme">
         <option value="system">跟随系统</option>
         <option value="light">浅色</option>
@@ -112,6 +112,7 @@
   <div class="progress" id="progress"></div>
 </section>
 
+<script src="./i18n.js"></script>
 <script src="./app.js"></script>
 </body>
 </html>

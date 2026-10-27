@@ -6,6 +6,7 @@ Visual reaction training for phones, tablets, and desktop browsers.
 
 - `index.html`: page structure and controls
 - `styles.css`: layout, themes, typography, and animations
+- `i18n.js`: Chinese and English translations and language switching
 - `app.js`: training, settings, random cues, and audio
 - `theme.js`: restores the saved theme before the page paints
 - `favicon.svg` and `apple-touch-icon.png`: app icons
