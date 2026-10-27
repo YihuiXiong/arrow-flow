@@ -137,7 +137,8 @@ const EN={
 };
 function t(source, values = {}) {
   let result = document.getElementById('language')?.value === 'en' ? (EN[source] ?? source) : source;
-  return result.replace(/\{(\w+)\}/g, (match, key) => values[key] ?? match);
+  result = result.replace(/\{(\w+)\}/g, (match, key) => values[key] ?? match);
+  return result.replace(/\b1 sets\b/g, '1 set').replace(/\b1 rounds\b/g, '1 round');
 }
 // Keep original text nodes so switching languages preserves icons and markup.
 const languageNodes = [];
