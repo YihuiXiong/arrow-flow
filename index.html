@@ -145,7 +145,7 @@ svg{display:block}
 .dial{position:relative;width:180px;height:180px;margin:clamp(52px,13vh,130px) 0 30px}
 .dial-ticks{position:absolute;inset:0;width:100%;height:100%}
 .tick-mark{stroke:var(--line);stroke-width:3;stroke-linecap:round;transition:stroke .3s}
-.tick-mark.on{stroke:var(--accent)}
+.tick-mark.on{stroke:var(--accent)}.home.number-home .tick-mark.on{stroke:var(--line)}
 .home-arrow{position:absolute;left:19%;top:19%;width:62%;height:62%;color:var(--accent);transform:rotate(45deg);transition:transform .6s var(--snap)}
 .home h1{font-size:18px;font-weight:400;letter-spacing:.13em;margin:0 0 44px}
 .start{min-width:168px;height:50px;border:0;border-radius:25px;padding:0 28px;font-size:15px;letter-spacing:.08em;background:var(--btn);color:var(--btn-text);transition:transform .15s var(--out),background .2s}
@@ -634,7 +634,7 @@ function validateNumberRange(){
 }
 for(const k of ['number-min','number-max'])$(k).addEventListener('input',()=>{$('number-max').setCustomValidity('');sessionInfo();save()});
 function syncTrainingMode(){
-  const numbers=$('training-mode').value==='numbers';
+  const numbers=$('training-mode').value==='numbers';document.querySelector('.home').classList.toggle('number-home',numbers);
   for(const b of document.querySelectorAll('[data-mode]'))b.setAttribute('aria-pressed',String(b.dataset.mode===$('training-mode').value));
   $('dirs-field').hidden=numbers;$('color-field').hidden=numbers;$('number-range').hidden=!numbers;$('number-color-settings').hidden=!numbers;
   $('home-title').textContent=numbers?'数字反应':'箭头反应';show('home-arrow',!numbers);show('home-number',numbers);
