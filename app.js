@@ -345,13 +345,52 @@ document.addEventListener('keydown',e=>{
   if(settingsDialog.open)return;
   if(state==='idle')return;
   if(e.code==='Space'){e.preventDefault();togglePause()}
-  if(e.key==='Escape')exit();
+  if(e.key==='Escape'&&!fullscreenElement()&&performance.now()-lastFullscreenExit>350)exit();
 });
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&['countdown','arrow','blank','rest'].includes(state))togglePause()});
 
+// Native fullscreen is always opt-in. Unsupported browsers get a brief explanation.
+let fullscreenBusy=false,fullscreenNoticeTimer=null,lastFullscreenExit=-Infinity,wasFullscreen=false;
+function fullscreenElement(){return document.fullscreenElement||document.webkitFullscreenElement||null;}
+function syncFullscreen(){
+  const active=!!fullscreenElement();
+  if(wasFullscreen&&!active)lastFullscreenExit=performance.now();
+  wasFullscreen=active;
+  for(const button of document.querySelectorAll('.fullscreen-toggle')){
+    button.setAttribute('aria-pressed',String(active));
+    button.setAttribute('aria-label',t(active?'退出全屏':'进入全屏'));
+    button.title=t(active?'退出全屏':'进入全屏');
+    button.querySelector('.expand-icon').classList.toggle('hidden',active);
+    button.querySelector('.collapse-icon').classList.toggle('hidden',!active);
+  }
+}
+function fullscreenNotice(message){
+  clearTimeout(fullscreenNoticeTimer);$('fullscreen-notice').textContent=t(message);$('fullscreen-notice').hidden=false;
+  fullscreenNoticeTimer=setTimeout(()=>{$('fullscreen-notice').hidden=true},6500);
+}
+async function toggleFullscreen(){
+  if(fullscreenBusy)return;
+  const root=document.documentElement,active=!!fullscreenElement();
+  const request=root.requestFullscreen||root.webkitRequestFullscreen;
+  const leave=document.exitFullscreen||document.webkitExitFullscreen;
+  if(!active&&(!request||(document.fullscreenEnabled===false&&!document.webkitFullscreenEnabled))){
+    fullscreenNotice('此浏览器不支持网页全屏。iPhone 可用 Safari 分享菜单添加到主屏幕后打开。');return;
+  }
+  fullscreenBusy=true;
+  try{
+    if(active){if(leave)await leave.call(document);}
+    else await request.call(root);
+    $('fullscreen-notice').hidden=true;
+  }catch{fullscreenNotice('无法进入全屏，请重试或使用其他浏览器。');}
+  finally{fullscreenBusy=false;syncFullscreen();}
+}
+for(const button of document.querySelectorAll('.fullscreen-toggle'))button.addEventListener('click',toggleFullscreen);
+document.addEventListener('fullscreenchange',syncFullscreen);
+document.addEventListener('webkitfullscreenchange',syncFullscreen);
+
 // Refresh every dynamic label when switching languages, without resetting settings.
 function applyLanguage(){
-  applyStaticLanguage();syncTrainingMode();syncSound();sessionInfo();
+  applyStaticLanguage();syncTrainingMode();syncSound();sessionInfo();syncFullscreen();
   setPauseIcon(state==='paused');updatePhase();
   $('rest-next').textContent=t('下一组 · 第 {current} / {total} 组',{current:set+1,total:config.sets||+$('sets').value});
   if($('number-max').validity.customError)$('number-max').setCustomValidity(t('最大数字不能小于最小数字。'));

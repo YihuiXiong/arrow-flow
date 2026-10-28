@@ -1,5 +1,9 @@
 // Chinese source strings and their English translations.
 const EN={
+  "进入全屏":"Enter fullscreen",
+  "退出全屏":"Exit fullscreen",
+  "此浏览器不支持网页全屏。iPhone 可用 Safari 分享菜单添加到主屏幕后打开。":"Fullscreen is unavailable in this browser. On iPhone, use Safari’s Share menu to add this app to your Home Screen.",
+  "无法进入全屏，请重试或使用其他浏览器。":"Could not enter fullscreen. Try again or use another browser.",
   "箭头反应 · Arrow Flow": "Arrow Flow · Reaction Training",
   "箭头反应": "Arrow Reaction",
   "数字反应": "Number Reaction",

@@ -13,6 +13,7 @@
 </head>
 <body>
 <main class="home">
+  <button id="home-fullscreen" class="icon-btn fullscreen-toggle home-fullscreen" type="button" aria-label="进入全屏" aria-pressed="false"><svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M21 16v5h-5M8 21H3v-5"/></svg><svg class="collapse-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h5V3M16 3v5h5M21 16h-5v5M8 21v-5H3"/></svg></button>
   <div class="home-mark">ARROW FLOW</div>
   <div class="dial" aria-hidden="true">
     <svg class="dial-ticks" viewBox="0 0 180 180"><line class="tick-mark" data-deg="0" x1="90" y1="3" x2="90" y2="13" transform="rotate(0 90 90)"/><line class="tick-mark on" data-deg="45" x1="90" y1="3" x2="90" y2="10" transform="rotate(45 90 90)"/><line class="tick-mark" data-deg="90" x1="90" y1="3" x2="90" y2="13" transform="rotate(90 90 90)"/><line class="tick-mark" data-deg="135" x1="90" y1="3" x2="90" y2="10" transform="rotate(135 90 90)"/><line class="tick-mark" data-deg="180" x1="90" y1="3" x2="90" y2="13" transform="rotate(180 90 90)"/><line class="tick-mark" data-deg="225" x1="90" y1="3" x2="90" y2="10" transform="rotate(225 90 90)"/><line class="tick-mark" data-deg="270" x1="90" y1="3" x2="90" y2="13" transform="rotate(270 90 90)"/><line class="tick-mark" data-deg="315" x1="90" y1="3" x2="90" y2="10" transform="rotate(315 90 90)"/></svg>
@@ -77,6 +78,7 @@
 
 
 <section id="stage" class="stage" aria-label="反应练习">
+  <button id="stage-fullscreen" class="icon-btn fullscreen-toggle stage-fullscreen" type="button" aria-label="进入全屏" aria-pressed="false"><svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M21 16v5h-5M8 21H3v-5"/></svg><svg class="collapse-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h5V3M16 3v5h5M21 16h-5v5M8 21v-5H3"/></svg></button>
   <div class="top">
     <span class="phase" id="phase">准备开始</span>
     <span class="counter" id="counter" aria-live="off">0 / 20</span>
@@ -112,6 +114,7 @@
   <div class="progress" id="progress"></div>
 </section>
 
+<div id="fullscreen-notice" class="fullscreen-notice" role="status" hidden></div>
 <script src="./i18n.js"></script>
 <script src="./app.js"></script>
 </body>
