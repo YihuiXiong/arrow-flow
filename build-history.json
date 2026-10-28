@@ -148,7 +148,9 @@
       "tag": "v1.8.5",
       "summary": "Bring research context into the onboarding page.",
       "retrospective": false,
-      "source_commits": []
+      "source_commits": [
+        "1d4b1a9b3d242e8251c73b942bde9cb16f9eaddb"
+      ]
     }
   ],
   "snapshots": [
@@ -966,6 +968,25 @@
       "cache_version": "34c68799a7e4bb67",
       "public_commit": null,
       "stage_version": "1.8.4"
+    },
+    {
+      "build": "build-061",
+      "commit": "1d4b1a9b3d242e8251c73b942bde9cb16f9eaddb",
+      "date": "2026-10-28T22:23:49Z",
+      "summary": "Update Site source",
+      "files": [
+        "CHANGELOG.md",
+        "README.md",
+        "build-history.json",
+        "dist/build-info.json",
+        "dist/landing.css",
+        "dist/landing.html",
+        "dist/sw.js",
+        "release.json"
+      ],
+      "cache_version": "5fbb0db1270ac63c",
+      "public_commit": null,
+      "stage_version": "1.8.5"
     }
   ]
 }
