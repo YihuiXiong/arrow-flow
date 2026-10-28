@@ -9,7 +9,7 @@
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <title>箭头反应 · Arrow Flow</title>
 <script src="./theme.js?v=7be9e997f7da"></script>
-<link rel="stylesheet" href="./styles.css?v=868bbf5b911a">
+<link rel="stylesheet" href="./styles.css?v=de02a9b37fdd">
 </head>
 <body>
 <main class="home">
@@ -25,7 +25,7 @@
 
   <p id="session-info" class="session-info"></p>
   <button id="open-settings" class="settings-trigger" type="button" aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="3" fill="var(--bg)"/><circle cx="15" cy="17" r="3" fill="var(--bg)"/></svg>设置</button>
-  <nav class="home-links" aria-label="了解与帮助"><a href="#about">关于</a></nav>
+  <nav class="home-links" aria-label="了解与帮助"><a href="#about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5"/><circle cx="12" cy="7.5" r=".7" fill="currentColor" stroke="none"/></svg><span>关于</span></a></nav>
 </main>
 <dialog id="settings-dialog" aria-labelledby="settings-title" class="settings-dialog"><div class="sheet-header"><div><span class="sheet-eyebrow">MAKE IT YOURS</span><h2 id="settings-title">训练设置</h2></div><button id="close-settings" class="close-settings" aria-label="关闭设置" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div><div class="sheet-scroll settings-body"><section class="setting-group"><h3><span>01</span>训练</h3><div class="setting-card"><label id="mode-label">练习模式</label><input id="training-mode" type="hidden" value="arrows"><div class="presets mode-options" role="group" aria-labelledby="mode-label"><button type="button" data-mode="arrows" aria-label="箭头模式" aria-pressed="true"><span class="mode-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></span><span class="mode-title">箭头模式</span><span class="mode-description">方向与颜色</span><svg class="mode-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m3 8 3 3 7-7"/></svg></button><button type="button" data-mode="numbers" aria-label="数字模式" aria-pressed="false"><span class="mode-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M10 3 7 21M18 3l-3 18M4 9h17M3 15h17"/></svg></span><span class="mode-title">数字模式</span><span class="mode-description">数字与背景颜色</span><svg class="mode-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m3 8 3 3 7-7"/></svg></button></div><div class="settings-block"><div class="block-heading">练习内容</div><div id="number-range" hidden><div class="two"><div><label for="number-min">最小数字</label><input id="number-min" type="number" min="0" max="999" step="1" value="1" required inputmode="numeric"></div><div><label for="number-max">最大数字</label><input id="number-max" type="number" min="0" max="999" step="1" value="5" required inputmode="numeric"></div></div><p id="number-help" class="field-help">范围内的整数随机出现，背景颜色独立随机。</p></div><div class="two"><div id="dirs-field">      <label for="dirs">箭头方向</label>
       <select id="dirs">
