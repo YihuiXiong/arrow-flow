@@ -1,0 +1,82 @@
+// Practical drill ideas and research notes. Rules are agreed by the people playing.
+const infoDialog=document.getElementById('info-dialog');
+const infoBody=document.getElementById('info-body');
+let infoView='guide';
+const say=(zh,en)=>document.getElementById('language').value==='en'?en:zh;
+const paper=(url,label)=>`<a href="${url}" target="_blank" rel="noopener noreferrer">${label} <span aria-hidden="true">↗</span></a>`;
+function drill(n,title,tag,body){return `<details class="drill"><summary><span class="drill-index">${n}</span><span><strong>${title}</strong><small>${tag}</small></span><span class="drill-plus" aria-hidden="true">+</span></summary><div class="drill-body">${body}</div></details>`;}
+function guideContent(){return `
+<section class="info-hero"><span class="info-kicker">${say('从一个简单规则开始','START WITH ONE RULE')}</span><h3>${say('让提示，变成动作。','Give each cue a move.')}</h3><p>${say('箭头、颜色和数字的含义由你决定。可以用标志桶、地面标记，也可以原地练习，不需要特定场地。','You decide what arrows, colors, and numbers mean. Use cones, floor markers, or movements on the spot. No particular court or equipment is required.')}</p></section>
+<ol class="quick-steps"><li><b>${say('定规则','Choose a rule')}</b><span>${say('先约定每种提示对应的方向、目标或动作。','Agree on the direction, target, or action for each cue.')}</span></li><li><b>${say('试一组','Try a set')}</b><span>${say('先忽略颜色，只读箭头或数字。用舒缓预设试 10 轮。','Ignore color at first. Read only arrows or numbers. Try 10 rounds with the Easy preset.')}</span></li><li><b>${say('留出回位时间','Make time to recover')}</b><span>${say('动作完成并回到起点，再等下一次提示；来不及就调长等待时间。','Complete the action and return to base before the next cue. Increase wait time if needed.')}</span></li></ol>
+<p class="info-note">${say('这是起步示例，不是经过验证的训练剂量。把设备放在移动路线外；动作和距离以可控为准。','This is a starting example, not a validated training dose. Keep the device outside your movement path and choose distances and actions you can control.')}</p>
+<div class="info-section-heading"><span>01</span><h3>${say('选择一种玩法','Choose your drill')}</h3></div>
+${drill('↗',say('箭头 → 移动方向','Arrow → direction'),say('先练提示与动作的对应','Cue-to-movement mapping'),`<p>${say('从起点看屏幕：箭头朝右就向自己的右侧移动，朝左就向左；完成后回位。先选两方向或四方向，熟悉后再加斜向。','Face the screen from your base: a right arrow means move to your right, a left arrow to your left. Recover after each response. Start with two or four directions before adding diagonals.')}</p><p class="drill-example">${say('羽毛球：向提示方向做熟悉的步法或无球击球动作。网球：侧向移动到标记处，做一次无球挥拍，再回位。也可以用一步跨出再收回替代。','Badminton: use a familiar footwork pattern or shadow stroke in that direction. Tennis: move to a marker, shadow a stroke, then recover. A single step out and back also works.')}</p>`)}
+${drill('#',say('数字 → 编号桩 / 标志桶','Number → numbered target'),say('数字决定去哪里','Number chooses the destination'),`<p>${say('在空间内放 1–5 号标志桶或地面标记，并把数字范围设为 1–5。看到 3，就到 3 号目标完成约定动作，再回位。没有器材时，可把数字对应到五个原地动作。','Label five cones or floor spots 1–5 and set the number range to 1–5. A 3 sends you to target 3 for the agreed action, then back to base. Without equipment, map the numbers to five stationary actions.')}</p><p class="drill-example">${say('先只看数字；不要让一个目标同时需要猜测颜色和编号。','Read only the number at first. Make the destination unambiguous.')}</p>`)}
+${drill('◉',say('方向 / 目标 + 颜色动作','Direction / target + color action'),say('一个提示选地点，另一个选动作','One cue for place, one for action'),`<p>${say('箭头模式中，箭头选方向，颜色选动作。数字模式中，数字选编号目标，背景色选动作。先只用两种容易区分的颜色。','In arrow mode, direction chooses where and arrow color chooses what to do. In number mode, the number chooses the target and the background chooses the action. Begin with two easily distinguished colors.')}</p><p class="drill-example">${say('例如：绿色 → 到目标处触碰标记；蓝色 → 在目标处做一次熟悉的无球挥拍。绿色 3 = 到 3 号触碰；蓝色 3 = 到 3 号挥拍。','For example: green → touch the marker; blue → shadow one familiar stroke there. Green 3 = touch target 3. Blue 3 = shadow a stroke at target 3.')}</p><p>${say('也可以反过来：颜色决定去哪个彩色标志桶，数字决定动作。每组先固定一种解释方式，并在设置里匹配实际颜色。','Or reverse the mapping: color selects a colored cone, number selects an action. Keep one interpretation for the whole set and match the palette to your targets in settings.')}</p>`)}
+${drill('Ⅱ',say('连续重复 → 切换动作','A repeat → a different response'),say('记住上一次，再决定这一次','Compare with the previous cue'),`<p>${say('数字模式：同一个数字连续出现两次时，留在起点做一次原地挥拍，替代前往标志桶。比较数字即可，忽略背景色。','Number mode: if the number matches the previous cue, stay at base and shadow one stroke instead of going to the cone. Compare the number only, ignoring the background.')}</p><p class="drill-example">${say('2 → 去 2 号；4 → 去 4 号；4 → 留在起点挥拍；1 → 去 1 号。','2 → target 2; 4 → target 4; 4 → stay and shadow; 1 → target 1.')}</p><p>${say('颜色重复则用“随机彩色”的箭头模式：连续两次箭头颜色相同时，改成原地动作；否则跟随箭头。至少保留两种不同颜色。','For color repeats, use random-color arrow mode: if the arrow color matches the previous cue, do a stationary action; otherwise follow the arrow. Use at least two distinct colors.')}</p><p class="info-note">${say('当前数字模式的背景色会避免连续重复，所以不要把背景色重复设为触发条件。每组第一条提示正常执行，回位空白不算提示；第三次仍重复时也触发。重复规则优先于普通规则，换组后重新记忆。','Number-mode backgrounds currently avoid consecutive repeats, so do not use a background-color repeat as the trigger. Follow the first cue normally; blank intervals do not count. A third consecutive match triggers again. The repeat rule overrides the normal rule. Reset memory at each set.')}</p>`)}
+${drill('—',say('指定颜色 → 不移动','One color → no movement'),say('练习等待，而不是每次都冲出去','Respond selectively'),`<p>${say('约定黄色为“保持准备姿势”：黄色出现时不出发，下一条提示再重新判断。其余提示按普通规则执行。也可用某个数字代替颜色，比如 5 = 不移动。','Agree that yellow means hold your ready position: do not leave base on yellow, and assess the next cue afresh. Follow normal rules otherwise. You can use a number instead, such as 5 = hold.')}</p><p>${say('颜色不易分辨时优先用数字；一次只加一个例外。','Use a number when colors are hard to distinguish. Add only one exception at a time.')}</p>`)}
+${drill('↔',say('搭档口令 / 反向规则','Partner calls / opposite direction'),say('让同一套提示有不同任务','Change the task, keep the cues'),`<p>${say('搭档玩法：一人读出数字或颜色，另一人按口令移动；下一组交换。反向玩法：看到右箭头就向左，看到上箭头就向后。先确认每个方向在实际空间中的含义。','Partner version: one person calls out the cue, the other moves; swap next set. Opposite-direction version: right means left, up means backward. Agree on the real-world directions before starting.')}</p><p>${say('如想练习阅读对手动作，把无球提示练习和搭档喂球、对抗或比赛视频练习结合使用。','To practise reading an opponent, combine symbol drills with partner feeds, live play, or sport-specific video practice.')}</p>`)}
+<div class="info-section-heading"><span>02</span><h3>${say('让设置服务于规则','Fit the settings to the drill')}</h3></div>
+<dl class="info-definitions"><div><dt>${say('显示时间','Cue duration')}</dt><dd>${say('提示停留多久。要足够看清，不必一直盯着屏幕。','How long the cue stays visible. Give yourself time to read it.')}</dd></div><div><dt>${say('固定 / 随机间隔','Fixed / random interval')}</dt><dd>${say('固定等待便于熟悉动作；随机等待改变提示时机。两者都要留够动作与回位时间。','Fixed waits make timing predictable; random waits vary cue onset. Both need enough time for movement and recovery.')}</dd></div><div><dt>${say('声音 / 全屏','Sound / fullscreen')}</dt><dd>${say('声音提示新一轮开始，不编码方向或目标。全屏由角落图标手动开启，能否使用取决于浏览器。','Sound marks a new cue; it does not encode direction or destination. The corner icon requests fullscreen when the browser supports it.')}</dd></div></dl>
+<aside class="info-callout"><b>${say('规则由人执行','You apply the rules')}</b><p>${say('应用不会识别重复、判断动作或记录反应时。轮数统计的是已显示的提示，不是成功动作。可以请搭档手动记录漏看、走错和失去平衡的次数；先做对，再调快。','The app does not detect your repeat-rule responses, judge movements, or measure reaction time. Rounds count displayed cues, not successful actions. A partner can tally missed cues, wrong choices, or loss of balance. Aim for accurate, controlled responses before speeding up.')}</p></aside>`;}
+function aboutContent(){return `
+<section class="info-hero"><span class="info-kicker">${say('关于 ARROW FLOW','ABOUT ARROW FLOW')}</span><h3>${say('看见。判断。移动。','See. Decide. Move.')}</h3><p>${say('一个轻量的视觉提示工具：把随机箭头、颜色和数字，变成你自己设计的移动规则。适用于羽毛球、网球的辅助练习，也适用于小空间里的反应游戏。','A lightweight visual cue tool. Turn random arrows, colors, and numbers into movement rules you design. Use it alongside badminton or tennis practice, or for reaction games in a small space.')}</p></section>
+<div class="perception-loop" aria-label="${say('观察提示、选择动作、执行与回位','Read the cue, select a response, move and recover')}"><span>${say('观察提示','Read the cue')}</span><span aria-hidden="true">→</span><span>${say('选择动作','Choose a response')}</span><span aria-hidden="true">→</span><span>${say('执行与回位','Move & recover')}</span></div>
+<div class="info-section-heading"><span>01</span><h3>${say('练习里发生了什么','What the drill asks of you')}</h3></div>
+<div class="mechanism-grid"><article><h4>${say('选择相关信息','Select relevant information')}</h4><p>${say('只看箭头，或同时读数字和颜色。你决定哪些信息与当前规则有关。','Read only the arrow, or combine number and color. Decide which information matters for the current rule.')}</p></article><article><h4>${say('从规则到动作','Map a rule to an action')}</h4><p>${say('把屏幕上的符号对应到真实空间里的方向、目标和熟悉动作。','Translate a symbol into a real-world direction, destination, and familiar movement.')}</p></article><article><h4>${say('记住与抑制','Remember & withhold')}</h4><p>${say('重复或“不移动”规则要求记住上一条提示，并在例外出现时放弃默认动作。这是任务要求，不代表已证明能提高一般认知能力。','Repeat and hold rules require remembering the last cue and overriding the usual response. These are task demands, not demonstrated gains in general cognition.')}</p></article></div>
+<div class="info-section-heading"><span>02</span><h3>${say('球拍运动的神经科学','Neuroscience of racket sports')}</h3></div>
+<p class="info-prose">${say('真正的预判发生在方向明朗之前：球员利用对手的身体、球拍运动和回合背景来准备动作。随机箭头直接给出答案，因此它更接近提示—动作选择练习。','Sport anticipation starts before the outcome is obvious: players use an opponent’s body and racket movements, together with rally context, to prepare. A random arrow supplies the direction directly, making this a cue-to-action drill.')}</p>
+<div class="evidence-list">
+<article><span class="evidence-type">fMRI · 2014</span><h4>${say('经验与预测网络有关','Experience relates to prediction networks')}</h4><p>${say('Balser 等比较了网球和排球专家。专项预判时，顶叶、辅助运动区和小脑的活动与经验或表现有关。这是相关性研究，不能证明符号训练会产生同样变化。','Balser and colleagues compared tennis and volleyball experts. Sport-specific anticipation involved parietal, supplementary motor, and cerebellar activity related to expertise or performance. This association does not establish effects of symbol training.')}</p>${paper('https://doi.org/10.3389/fnhum.2014.00568','Balser et al. (2014)')}</article>
+<article><span class="evidence-type">EEG / ERP · 2017</span><h4>${say('真实练习可以伴随神经变化','Real practice can accompany neural change')}</h4><p>${say('Liu 等的 12 周羽毛球训练研究报告了预判综合表现改善及 N2、P3 电位变化。研究检验的是实际羽毛球训练，并没有测试 Arrow Flow，也不意味着某种脑波越大越好。','Liu and colleagues reported improved anticipation efficiency and N2/P3 changes after 12 weeks of badminton practice. They studied real badminton, not Arrow Flow. Larger EEG components are not a universal measure of a better brain.')}</p>${paper('https://doi.org/10.1016/j.neulet.2017.08.038','Liu et al. (2017)')}</article>
+<article><span class="evidence-type">${say('网球干预','TENNIS INTERVENTION')} · 2017</span><h4>${say('训练的内容和情境很重要','The information and context matter')}</h4><p>${say('Broadbent 等用真实击球视频训练中级网球球员。按回合顺序呈现的视频组，在场地测试的整体决策时间上更好；不是所有指标都有组间差异。这种训练包含本工具没有的对手线索。','Broadbent and colleagues trained intermediate tennis players with opponent footage. Rally-sequence practice benefited overall on-court decision time, but not every outcome differed between groups. Those videos contained opponent cues absent from this tool.')}</p>${paper('https://doi.org/10.1371/journal.pone.0174311','Broadbent et al. (2017)')}</article>
+<article><span class="evidence-type">${say('羽毛球干预','BADMINTON INTERVENTION')} · 2025</span><h4>${say('测试进步，不一定迁移到比赛','Test gains need not transfer to play')}</h4><p>${say('Wang 等研究了 42 名有初步羽毛球经验的学生。部分视频及模拟移动任务改善，但比赛视频任务未发现显著训练效果。这里的比赛任务也不是实际比赛表现。','Wang and colleagues studied 42 students with some badminton experience. Several video and movement-simulation tasks improved, but the match-video task showed no significant training effects. That task was not actual match performance either.')}</p>${paper('https://doi.org/10.1038/s41598-025-93475-7','Wang et al. (2025)')}</article>
+</div>
+<aside class="info-callout"><b>${say('合理定位','What the evidence supports here')}</b><p>${say('把 Arrow Flow 当作可自定规则的辅助练习。它没有临床或运动表现验证，也不测量大脑活动、反应时或比赛预判。是否对你的运动有帮助，需要在具体场地任务里另行评估。','Use Arrow Flow as a configurable practice aid. It has not been validated for clinical or sport-performance outcomes and does not measure brain activity, reaction time, or match anticipation. Any sport benefit needs separate, representative testing.')}</p></aside>
+<p class="info-prose">${say('证据并非一概否定训练：2024 年的时间遮挡训练荟萃分析发现了代表性测试中的迁移收益；另一篇同期评论则提醒，不应把这推广成一般认知工具的广泛运动收益。两类训练的线索、动作和测试不同。','The evidence is not uniformly negative: a 2024 temporal-occlusion meta-analysis found benefits on representative transfer tests, while a contemporaneous commentary cautioned against broad sport-benefit claims for generic cognitive tools. Their tasks and information differ.')}</p>
+<div class="further-reading">${paper('https://doi.org/10.1007/s40279-024-02073-6','Müller et al. (2024) · '+say('荟萃分析','meta-analysis'))}${paper('https://doi.org/10.1007/s40279-024-02060-x','Fransen (2024) · '+say('观点评论','commentary'))}</div>
+<p class="info-note">${say('以上说明把研究发现与本应用的设计推论分开呈现。玩法是实践建议，不是对这些论文训练程序的复现。','Research findings and app-design inferences are distinguished above. The drills are practical suggestions, not replications of these research protocols.')}</p>`;}
+function renderInfo(){
+  const guide=infoView==='guide';
+  document.getElementById('info-title').textContent=guide?say('玩法说明','How to play'):say('关于与研究','About & science');
+  document.getElementById('info-language').value=document.getElementById('language').value;
+  document.getElementById('close-info').setAttribute('aria-label',say('返回训练','Back to training'));
+  document.getElementById('info-back').textContent=say('返回训练','Back to training');
+  document.querySelector('.info-footer>span').textContent=say('先看清，再决定，最后移动。','See. Decide. Move.');
+  for(const button of document.querySelectorAll('[data-info-page]')){
+    const selected=button.dataset.infoPage===infoView;
+    button.setAttribute('aria-selected',String(selected));button.tabIndex=selected?0:-1;
+    button.textContent=button.dataset.infoPage==='guide'?say('玩法说明','How to play'):say('关于与研究','About & science');
+  }
+  infoBody.setAttribute('aria-labelledby','tab-'+infoView);
+  infoBody.innerHTML=guide?guideContent():aboutContent();infoBody.scrollTop=0;
+}
+function syncInfoHash(){
+  const page=location.hash.slice(1);
+  if(page==='guide'||page==='about'){
+    infoView=page;renderInfo();if(!infoDialog.open)infoDialog.showModal();
+  }else if(infoDialog.open)infoDialog.close();
+}
+function closeInfo(){
+  if(['#guide','#about'].includes(location.hash))history.replaceState(null,'',location.pathname+location.search);
+  infoDialog.close();
+}
+for(const button of document.querySelectorAll('[data-info-page]')){
+  button.addEventListener('click',()=>{location.hash=button.dataset.infoPage;});
+  button.addEventListener('keydown',event=>{
+    if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+    event.preventDefault();const page=event.key==='Home'?'guide':event.key==='End'?'about':infoView==='guide'?'about':'guide';
+    location.hash=page;document.getElementById('tab-'+page).focus();
+  });
+}
+document.getElementById('close-info').addEventListener('click',closeInfo);
+document.getElementById('info-back').addEventListener('click',closeInfo);
+infoDialog.addEventListener('cancel',event=>{event.preventDefault();closeInfo();});
+infoDialog.addEventListener('click',event=>{if(event.target!==infoDialog)return;const r=infoDialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)closeInfo();});
+document.getElementById('info-language').addEventListener('change',event=>{
+  document.getElementById('language').value=event.target.value;
+  document.getElementById('language').dispatchEvent(new Event('change',{bubbles:true}));
+});
+document.addEventListener('languagechange',()=>{if(infoDialog.open)renderInfo();});
+window.addEventListener('hashchange',syncInfoHash);
+syncInfoHash();

@@ -342,7 +342,7 @@ function spinHome(){
 setInterval(spinHome,1800);
 document.addEventListener('dblclick',e=>e.preventDefault(),{passive:false});
 document.addEventListener('keydown',e=>{
-  if(settingsDialog.open)return;
+  if(settingsDialog.open||document.getElementById('info-dialog')?.open)return;
   if(state==='idle')return;
   if(e.code==='Space'){e.preventDefault();togglePause()}
   if(e.key==='Escape'&&!fullscreenElement()&&performance.now()-lastFullscreenExit>350)exit();
@@ -396,5 +396,5 @@ function applyLanguage(){
   if($('number-max').validity.customError)$('number-max').setCustomValidity(t('最大数字不能小于最小数字。'));
   if($('gap-max').validity.customError)$('gap-max').setCustomValidity(t('最长等待不能小于最短等待。'));
 }
-$('language').addEventListener('change',()=>{applyLanguage();save()});
+$('language').addEventListener('change',()=>{applyLanguage();save();document.dispatchEvent(new Event('languagechange'))});
 applyLanguage();

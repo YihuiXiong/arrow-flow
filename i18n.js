@@ -1,5 +1,11 @@
 // Chinese source strings and their English translations.
 const EN={
+  "先约定动作，再跟随提示。":"Choose your rules, then follow the cues.",
+  "玩法说明":"How to play",
+  "关于与研究":"About & science",
+  "了解与帮助":"Learn & help",
+  "返回训练":"Back to training",
+  "先看清，再决定，最后移动。":"See. Decide. Move.",
   "进入全屏":"Enter fullscreen",
   "退出全屏":"Exit fullscreen",
   "此浏览器不支持网页全屏。iPhone 可用 Safari 分享菜单添加到主屏幕后打开。":"Fullscreen is unavailable in this browser. On iPhone, use Safari’s Share menu to add this app to your Home Screen.",
