@@ -1,15 +1,14 @@
 {
-  "version": "1.8.5",
+  "version": "1.8.6",
   "name": "Fieldwork",
   "name_zh": "场上练习",
   "date": "2026-10-28",
   "status": "released",
-  "summary": "Bring research context into the onboarding page.",
+  "summary": "Use regular weight for offline readiness labels.",
   "changes": [
-    "Add a bilingual research introduction before the drill walkthrough, with a task diagram, three primary studies and separately labeled design implications.",
-    "Add a research navigation entry and keep evidence limits and source links visible."
+    "Remove bold weight from the offline entry label and offline readiness status in both languages."
   ],
-  "tag": "v1.8.5",
+  "tag": "v1.8.6",
   "numbering": "feature-stage-and-patch",
   "previous_build_count": 57,
   "historical_baseline_commit": "764c8489fe0a05bcd5af942570cd3ec8adaf3560"

@@ -2,6 +2,12 @@
 
 Versions group meaningful feature stages; small refinements increment the patch digit. Raw source snapshots are recorded separately in [build-history.json](./build-history.json). Historical stage labels below are retrospective groupings, not claims of pre-existing published tags.
 
+## v1.8.6 — Lighter offline labels
+
+2026-10-28
+
+- Use regular font weight for the offline entry and readiness status in both languages.
+
 ## v1.8.5 — Research in onboarding
 
 2026-10-28
