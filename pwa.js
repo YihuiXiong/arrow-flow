@@ -7,7 +7,7 @@
   const busy = () => !!window.arrowFlowIsTraining?.();
   const standalone = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
   const ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1);
-  let registration=null,ready=false,preparing=supported,failed=false,installPrompt=null,requestedUpdate=false,reloading=false,version='',checking=false,notice='';
+  let registration=null,ready=false,preparing=supported,failed=false,installPrompt=null,requestedUpdate=false,reloading=false,checking=false,notice='';
   const entry=document.createElement('button');entry.type='button';entry.className='pwa-entry';
   entry.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M5 16v4h14v-4"/></svg><span></span>';
   const host=document.querySelector('.home-links')||document.querySelector('footer.wrap>div');
@@ -69,7 +69,7 @@
     $('pwa-safari-label').textContent=say('Safari 安装步骤 · iPhone / iPad','Safari steps · iPhone / iPad');
     drawSteps($('pwa-safari-steps'),safariSteps());
     $('pwa-install').hidden=standalone()||!installPrompt;$('pwa-install').textContent=say('安装 Arrow Flow','Install Arrow Flow');
-    $('pwa-footnote').textContent=say('首次联网准备后才可离线使用。清除网站数据或系统回收缓存后，需要重新准备；主屏幕应用可能需要单独首次联网。设置保存在当前浏览器或主屏幕应用中，外部研究论文仍需网络。','Prepare once online before using offline. Clearing site data or system cache eviction requires preparation again; a Home Screen app may need its own first online launch. Settings are saved in the current browser or Home Screen app. External research articles require internet access.')+(version?' · '+version.slice(0,8):'');
+    $('pwa-footnote').textContent=say('首次联网准备后才可离线使用。清除网站数据或系统回收缓存后，需要重新准备；主屏幕应用可能需要单独首次联网。设置保存在当前浏览器或主屏幕应用中，外部研究论文仍需网络。','Prepare once online before using offline. Clearing site data or system cache eviction requires preparation again; a Home Screen app may need its own first online launch. Settings are saved in the current browser or Home Screen app. External research articles require internet access.');
     $('pwa-notice').hidden=!notice;$('pwa-notice').textContent=notice;
   }
   function ask(worker,type,timeout=5000){
@@ -81,7 +81,7 @@
     });
   }
   async function checkCache(){
-    try{const status=await ask(navigator.serviceWorker.controller||registration?.active,'OFFLINE_STATUS');ready=status.ready;version=status.version||'';preparing=false;failed=!ready;}
+    try{const status=await ask(navigator.serviceWorker.controller||registration?.active,'OFFLINE_STATUS');ready=status.ready;preparing=false;failed=!ready;}
     catch{if(!preparing){ready=false;failed=true;}}
     render();
   }

@@ -21,3 +21,10 @@ let worker=readFileSync(resolve(root,'service-worker.template.js'),'utf8');
 worker=worker.replace('__CACHE_VERSION__',version).replace('__PRECACHE_URLS__',JSON.stringify(resources)).replace('__PRECACHE_INTEGRITY__',JSON.stringify(integrity));
 writeFileSync(resolve(site,'sw.js'),worker);
 console.log(`PWA cache ${version}: ${resources.length} resources.`);
+
+// Human-readable release identity is separate from the worker's cache fingerprint.
+const releasePath=resolve(root,'release.json');
+if(existsSync(releasePath)){
+  const release=JSON.parse(readFileSync(releasePath,'utf8'));
+  writeFileSync(resolve(site,'build-info.json'),JSON.stringify({...release,cache_version:version},null,2)+'\n');
+}

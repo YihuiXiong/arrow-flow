@@ -1,0 +1,910 @@
+{
+  "schema": 3,
+  "description": "Feature-stage and patch versions, separate from raw source snapshots. Historical stages are retrospective groupings, not claims of previously published tags. Every source snapshot is retained; small internal saves do not each create a public release. Source IDs and public GitHub IDs differ.",
+  "current_release": {
+    "version": "1.8.3",
+    "name": "Fieldwork",
+    "name_zh": "场上练习",
+    "date": "2026-10-28",
+    "status": "released",
+    "summary": "Fieldwork / 场上练习: the offline-PWA stage with three small refinements, continuing earlier development.",
+    "changes": [
+      "Remove internal cache identifiers from installation instructions.",
+      "Track feature stages and small patch versions while preserving all historical source snapshots.",
+      "Baseline includes arrow/number modes, editable colors and timing, sets/rest, sounds, bilingual guides, offline installation and standalone-aware fullscreen controls."
+    ],
+    "tag": "v1.8.3",
+    "numbering": "feature-stage-and-patch",
+    "previous_build_count": 57,
+    "historical_baseline_commit": "764c8489fe0a05bcd5af942570cd3ec8adaf3560"
+  },
+  "versions": [
+    {
+      "version": "1.6.0",
+      "name": "Training foundation",
+      "summary": "Earlier training-tool development consolidated as a historical baseline.",
+      "retrospective": true,
+      "source_commits": [
+        "3b2e3d0cb556176485f8ab11bf97914adfe34af3",
+        "7b3a3c30c728ff7411e6c6ba9988fe8fe8883c46",
+        "55376c8c636942777fb0d1406140c6dae8e7a937",
+        "94e8851bbd3735e54ebef96f3e5d6ea0a11a4222",
+        "f506f336d45a933de38887d62f16756e74e539ad",
+        "f433510c29bc9891ab691f8596344a8b8580e0dd",
+        "1a1e9ae4e5f0e377ea38d7f10f0d72680311a1b7",
+        "fa7ce66c9dc5b1340ecd206b0426648be2e86298",
+        "50bc3ae471f132054e6d7a291369ea8c4a9300da",
+        "6c098e109d67ad9b1e507a49f78b41f02d7a1024",
+        "1203e0628100ed23c4dc689f73f62a6d32613025",
+        "fe9461da581c3f16509e319ec741d9b67aa863c4",
+        "d2755f0b1ac3459ed03d19cb1216336bed979347",
+        "0d4965430a079db451f6cf6ff89bb8672a63522a",
+        "4db4b7f57096bfe42879149d7492030ea61a7c88",
+        "a0775b81e6c70b0a93ea66f8dccbfac1441c5178",
+        "766d22f2114077f69b2e0c65606e9c5761ad8c2e",
+        "9247b0cb0b504b0600953277dcdc538f812f0481",
+        "733644104d5ce8c711d9fa200fb8bbacefae51de",
+        "7571c29ef6a825c691c0f1aa3acb905e441e7850",
+        "53b7d3827efb266e7f8c8448fe2381be2b750b6b",
+        "29d34c9386672d5369cd9ad73bc50c5335282fa3",
+        "6f852684a0c0990919e44a2f7225c09c6a5e83d3",
+        "6b7fcd14028885c1fbc8c88d5cd71e7760ed0643",
+        "6ac5bd0f3483612c6acba5bba7816d93d80dcc3f",
+        "bd63b54177a79720bf660bc8bd59278f0adaf077",
+        "dbe3af7937a5de7a9b31cb2762e9c9c054625738",
+        "06a68e782c2d509c2b62d6e81594b8fc78f037a5",
+        "e95876845b532f5e4a18a76cac9868c9b323bdf8",
+        "85826bd8bfcd1c4ede9adfee55a338c01de5c5d2",
+        "d3a697565a706f4791edd240db2a1b914b936f43",
+        "d78eb34e039086b49891a158696e4dd4fa04c445",
+        "44e6448e3dd3f0e1d84fd997f5e0ba04f10468f3",
+        "c8ceea7188d2571a90544cc7549703a5c4b58e64",
+        "ddec2793890a6779120e48741bbba78d86b62b3e",
+        "9e5e9618b258231abda554d3214356c21c376226",
+        "bfc014dd68fa2cf200d3b22f5191a275f03cd747",
+        "1a90e91bcdeb8a41c1cf5ca697c551dfe3ec4069",
+        "6959a9b9aa22e01cdcbb21008a15c77e2afba291",
+        "2f4ff6af5faa3c1be2194bb327c22e76a0b00e4f",
+        "4521b5dd1e6895a43608c12d70d4714324cb9b14",
+        "363990aa93b5ab61089ca6f3561ec7d061023658",
+        "94432fc4e9b4611d206023ec55780d8b03f25557",
+        "e2c656026dba2b99c2415a37acc7ddc7275be1b5",
+        "a2d224f824416ab22be3562a9e2b07240216ad4e",
+        "a58812621c6338112bb77ea4687e533a6ccd86b9",
+        "11c9c5434a625f184cbd6051dcd29676ab44441a",
+        "39e7e58a1682f785933a4c3ed8b090c862241d29",
+        "5d3b616be4bf05da02fbff6e4415c19fe735a24a",
+        "c7c29df2850c61fda35388452e4aeaa030e5297c"
+      ]
+    },
+    {
+      "version": "1.7.0",
+      "name": "Field guide",
+      "summary": "Landing page, bilingual visual guide and illustrated About.",
+      "retrospective": true,
+      "source_commits": [
+        "849399d6d84627452e060f869ba14d86343e9c05",
+        "2f41a165688f50041335233426cf50dddd71239e",
+        "8c30ebc64c32731f37fbc11bca3dc87ff546fe9a",
+        "1f3072e3cc33af8014e5a170f5ea19baeb5d12a1"
+      ]
+    },
+    {
+      "version": "1.8.0",
+      "name": "Offline PWA",
+      "summary": "Home Screen installation, verified offline files and explicit updates.",
+      "retrospective": true,
+      "source_commits": [
+        "bc51f0c0743e84255eacd3478e7aaa3c5303d610"
+      ]
+    },
+    {
+      "version": "1.8.1",
+      "name": "Safari steps",
+      "summary": "Illustrated Safari installation instructions.",
+      "retrospective": true,
+      "source_commits": [
+        "2563c3b8d0b6fb781507b4e23d7c3afcb506417e"
+      ]
+    },
+    {
+      "version": "1.8.2",
+      "name": "Standalone layout",
+      "summary": "Hide redundant fullscreen controls in standalone windows.",
+      "retrospective": true,
+      "source_commits": [
+        "764c8489fe0a05bcd5af942570cd3ec8adaf3560"
+      ]
+    },
+    {
+      "version": "1.8.3",
+      "name": "Fieldwork",
+      "name_zh": "场上练习",
+      "date": "2026-10-28",
+      "tag": "v1.8.3",
+      "summary": "Fieldwork / 场上练习: the offline-PWA stage with three small refinements, continuing earlier development.",
+      "retrospective": false,
+      "source_commits": [
+        "7f056422ea711547723435fdecbb90807358f79e"
+      ]
+    }
+  ],
+  "snapshots": [
+    {
+      "build": "build-001",
+      "commit": "3b2e3d0cb556176485f8ab11bf97914adfe34af3",
+      "date": "2026-10-25T21:24:34+09:00",
+      "summary": "Update Site source",
+      "files": [
+        ".openai/hosting.json",
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-002",
+      "commit": "7b3a3c30c728ff7411e6c6ba9988fe8fe8883c46",
+      "date": "2026-10-25T21:28:20+09:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-003",
+      "commit": "55376c8c636942777fb0d1406140c6dae8e7a937",
+      "date": "2026-10-25T21:38:03+09:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-004",
+      "commit": "94e8851bbd3735e54ebef96f3e5d6ea0a11a4222",
+      "date": "2026-10-25T21:44:20+09:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/apple-touch-icon.png",
+        "dist/favicon.svg",
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-005",
+      "commit": "f506f336d45a933de38887d62f16756e74e539ad",
+      "date": "2026-10-25T21:53:36+09:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-006",
+      "commit": "f433510c29bc9891ab691f8596344a8b8580e0dd",
+      "date": "2026-10-25T22:07:42+09:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-007",
+      "commit": "1a1e9ae4e5f0e377ea38d7f10f0d72680311a1b7",
+      "date": "2026-10-25T22:11:52+09:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-008",
+      "commit": "fa7ce66c9dc5b1340ecd206b0426648be2e86298",
+      "date": "2026-10-25T22:14:21+09:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-009",
+      "commit": "50bc3ae471f132054e6d7a291369ea8c4a9300da",
+      "date": "2026-10-25T22:17:08+09:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-010",
+      "commit": "6c098e109d67ad9b1e507a49f78b41f02d7a1024",
+      "date": "2026-10-25T22:17:59+09:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-011",
+      "commit": "1203e0628100ed23c4dc689f73f62a6d32613025",
+      "date": "2026-10-25T22:20:59+09:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-012",
+      "commit": "fe9461da581c3f16509e319ec741d9b67aa863c4",
+      "date": "2026-10-25T22:22:08+09:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-013",
+      "commit": "d2755f0b1ac3459ed03d19cb1216336bed979347",
+      "date": "2026-10-25T13:28:33-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-014",
+      "commit": "0d4965430a079db451f6cf6ff89bb8672a63522a",
+      "date": "2026-10-25T13:33:04-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-015",
+      "commit": "4db4b7f57096bfe42879149d7492030ea61a7c88",
+      "date": "2026-10-25T13:38:14-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-016",
+      "commit": "a0775b81e6c70b0a93ea66f8dccbfac1441c5178",
+      "date": "2026-10-25T13:41:46-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-017",
+      "commit": "766d22f2114077f69b2e0c65606e9c5761ad8c2e",
+      "date": "2026-10-25T13:59:57-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-018",
+      "commit": "9247b0cb0b504b0600953277dcdc538f812f0481",
+      "date": "2026-10-25T14:12:34-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-019",
+      "commit": "733644104d5ce8c711d9fa200fb8bbacefae51de",
+      "date": "2026-10-25T14:14:02-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-020",
+      "commit": "7571c29ef6a825c691c0f1aa3acb905e441e7850",
+      "date": "2026-10-25T14:21:51-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-021",
+      "commit": "53b7d3827efb266e7f8c8448fe2381be2b750b6b",
+      "date": "2026-10-25T14:29:38-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-022",
+      "commit": "29d34c9386672d5369cd9ad73bc50c5335282fa3",
+      "date": "2026-10-25T14:30:19-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-023",
+      "commit": "6f852684a0c0990919e44a2f7225c09c6a5e83d3",
+      "date": "2026-10-25T14:37:26-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-024",
+      "commit": "6b7fcd14028885c1fbc8c88d5cd71e7760ed0643",
+      "date": "2026-10-25T14:37:46-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-025",
+      "commit": "6ac5bd0f3483612c6acba5bba7816d93d80dcc3f",
+      "date": "2026-10-25T14:39:30-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-026",
+      "commit": "bd63b54177a79720bf660bc8bd59278f0adaf077",
+      "date": "2026-10-25T14:41:39-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-027",
+      "commit": "dbe3af7937a5de7a9b31cb2762e9c9c054625738",
+      "date": "2026-10-25T14:46:00-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-028",
+      "commit": "06a68e782c2d509c2b62d6e81594b8fc78f037a5",
+      "date": "2026-10-25T14:49:11-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-029",
+      "commit": "e95876845b532f5e4a18a76cac9868c9b323bdf8",
+      "date": "2026-10-25T15:07:15-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-030",
+      "commit": "85826bd8bfcd1c4ede9adfee55a338c01de5c5d2",
+      "date": "2026-10-27T10:47:51-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-031",
+      "commit": "d3a697565a706f4791edd240db2a1b914b936f43",
+      "date": "2026-10-27T10:51:42-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-032",
+      "commit": "d78eb34e039086b49891a158696e4dd4fa04c445",
+      "date": "2026-10-27T10:59:16-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-033",
+      "commit": "44e6448e3dd3f0e1d84fd997f5e0ba04f10468f3",
+      "date": "2026-10-27T12:12:37-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-034",
+      "commit": "c8ceea7188d2571a90544cc7549703a5c4b58e64",
+      "date": "2026-10-27T12:24:06-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-035",
+      "commit": "ddec2793890a6779120e48741bbba78d86b62b3e",
+      "date": "2026-10-27T12:28:17-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-036",
+      "commit": "9e5e9618b258231abda554d3214356c21c376226",
+      "date": "2026-10-27T12:33:17-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-037",
+      "commit": "bfc014dd68fa2cf200d3b22f5191a275f03cd747",
+      "date": "2026-10-27T15:26:22-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-038",
+      "commit": "1a90e91bcdeb8a41c1cf5ca697c551dfe3ec4069",
+      "date": "2026-10-27T15:31:47-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-039",
+      "commit": "6959a9b9aa22e01cdcbb21008a15c77e2afba291",
+      "date": "2026-10-27T15:35:44-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-040",
+      "commit": "2f4ff6af5faa3c1be2194bb327c22e76a0b00e4f",
+      "date": "2026-10-27T15:50:06-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-041",
+      "commit": "4521b5dd1e6895a43608c12d70d4714324cb9b14",
+      "date": "2026-10-27T16:03:34-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "README.md",
+        "build-offline.mjs",
+        "dist/app.js",
+        "dist/index.html",
+        "dist/styles.css",
+        "dist/theme.js"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-042",
+      "commit": "363990aa93b5ab61089ca6f3561ec7d061023658",
+      "date": "2026-10-27T16:25:55-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "README.md",
+        "build-offline.mjs",
+        "dist/app.js",
+        "dist/i18n.js",
+        "dist/index.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-043",
+      "commit": "94432fc4e9b4611d206023ec55780d8b03f25557",
+      "date": "2026-10-27T16:28:33-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/i18n.js"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-044",
+      "commit": "e2c656026dba2b99c2415a37acc7ddc7275be1b5",
+      "date": "2026-10-28T03:28:42-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/app.js",
+        "dist/i18n.js",
+        "dist/index.html",
+        "dist/styles.css"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-045",
+      "commit": "a2d224f824416ab22be3562a9e2b07240216ad4e",
+      "date": "2026-10-28T03:32:14-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "README.md",
+        "build-offline.mjs",
+        "dist/index.html",
+        "version-assets.mjs"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-046",
+      "commit": "a58812621c6338112bb77ea4687e533a6ccd86b9",
+      "date": "2026-10-28T06:42:34-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "README.md",
+        "RESEARCH.md",
+        "build-offline.mjs",
+        "dist/app.js",
+        "dist/i18n.js",
+        "dist/index.html",
+        "dist/info.js",
+        "dist/styles.css",
+        "version-assets.mjs"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-047",
+      "commit": "11c9c5434a625f184cbd6051dcd29676ab44441a",
+      "date": "2026-10-28T06:52:28-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/i18n.js",
+        "dist/index.html",
+        "dist/styles.css"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-048",
+      "commit": "39e7e58a1682f785933a4c3ed8b090c862241d29",
+      "date": "2026-10-28T10:21:50-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "dist/index.html",
+        "dist/styles.css"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-049",
+      "commit": "5d3b616be4bf05da02fbff6e4415c19fe735a24a",
+      "date": "2026-10-28T10:27:36-04:00",
+      "summary": "Remove footer tagline",
+      "files": [
+        "dist/i18n.js",
+        "dist/index.html",
+        "dist/info.js",
+        "dist/styles.css"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-050",
+      "commit": "c7c29df2850c61fda35388452e4aeaa030e5297c",
+      "date": "2026-10-28T10:29:38-04:00",
+      "summary": "Add a clear drill-guide entry and remove footer tagline",
+      "files": [
+        "dist/index.html",
+        "dist/info.js",
+        "dist/styles.css"
+      ],
+      "cache_version": null,
+      "public_commit": "647c714a25e422c9fcd2a1db57f6a88879e8e031",
+      "stage_version": "1.6.0"
+    },
+    {
+      "build": "build-051",
+      "commit": "849399d6d84627452e060f869ba14d86343e9c05",
+      "date": "2026-10-28T12:15:56-04:00",
+      "summary": "Add bilingual landing page and interactive cue preview",
+      "files": [
+        "README.md",
+        "dist/landing.css",
+        "dist/landing.html",
+        "dist/landing.js",
+        "version-assets.mjs"
+      ],
+      "cache_version": null,
+      "public_commit": "98933c0d6209737e415414ceba8b4f39af2d48ba",
+      "stage_version": "1.7.0"
+    },
+    {
+      "build": "build-052",
+      "commit": "2f41a165688f50041335233426cf50dddd71239e",
+      "date": "2026-10-28T12:22:43-04:00",
+      "summary": "Replace emoji-prone landing glyphs with SVG",
+      "files": [
+        "dist/landing.css",
+        "dist/landing.html"
+      ],
+      "cache_version": null,
+      "public_commit": null,
+      "stage_version": "1.7.0"
+    },
+    {
+      "build": "build-053",
+      "commit": "8c30ebc64c32731f37fbc11bca3dc87ff546fe9a",
+      "date": "2026-10-28T12:26:16-04:00",
+      "summary": "Polish mobile landing layout, guide access and cue preview",
+      "files": [
+        "README.md",
+        "dist/landing.css",
+        "dist/landing.html",
+        "dist/landing.js"
+      ],
+      "cache_version": null,
+      "public_commit": "bd8d24a0fed885114c2178cea97823b936898e07",
+      "stage_version": "1.7.0"
+    },
+    {
+      "build": "build-054",
+      "commit": "1f3072e3cc33af8014e5a170f5ea19baeb5d12a1",
+      "date": "2026-10-28T12:52:00-04:00",
+      "summary": "Add standalone visual field guide and illustrated About",
+      "files": [
+        "README.md",
+        "dist/landing.css",
+        "dist/landing.html",
+        "dist/landing.js",
+        "dist/walkthrough.js",
+        "version-assets.mjs"
+      ],
+      "cache_version": null,
+      "public_commit": "6c61b453f64c4e7b199ac5111a98fc2d0add777a",
+      "stage_version": "1.7.0"
+    },
+    {
+      "build": "build-055",
+      "commit": "bc51f0c0743e84255eacd3478e7aaa3c5303d610",
+      "date": "2026-10-28T15:12:12-04:00",
+      "summary": "Add offline PWA installation and safe update controls",
+      "files": [
+        "README.md",
+        "build-offline.mjs",
+        "build-pwa.mjs",
+        "dist/app.js",
+        "dist/icon-192.png",
+        "dist/icon-512.png",
+        "dist/index.html",
+        "dist/landing.html",
+        "dist/manifest.webmanifest",
+        "dist/pwa.css",
+        "dist/pwa.js",
+        "dist/sw.js",
+        "service-worker.template.js",
+        "test-pwa.mjs",
+        "version-assets.mjs"
+      ],
+      "cache_version": "6a610db284723117",
+      "public_commit": "4217a1677f4a6f6985ef5f70955879c5e6225cc8",
+      "stage_version": "1.8.0"
+    },
+    {
+      "build": "build-056",
+      "commit": "2563c3b8d0b6fb781507b4e23d7c3afcb506417e",
+      "date": "2026-10-28T15:21:57-04:00",
+      "summary": "Illustrate Safari installation steps with vector icons",
+      "files": [
+        "dist/index.html",
+        "dist/landing.html",
+        "dist/pwa.css",
+        "dist/pwa.js",
+        "dist/sw.js"
+      ],
+      "cache_version": "f16dc21674de92f8",
+      "public_commit": "a3c5fdfd28c13a081a1a30947c75a83dc77202c6",
+      "stage_version": "1.8.1"
+    },
+    {
+      "build": "build-057",
+      "commit": "764c8489fe0a05bcd5af942570cd3ec8adaf3560",
+      "date": "2026-10-28T15:29:21-04:00",
+      "summary": "Hide fullscreen controls in standalone app windows",
+      "files": [
+        "dist/app.js",
+        "dist/index.html",
+        "dist/styles.css",
+        "dist/sw.js",
+        "dist/theme.js"
+      ],
+      "cache_version": "b6d3e91d68287d4a",
+      "public_commit": "0ae9864cf5b8516089b9dfa02b47b5ea819ba4cf",
+      "stage_version": "1.8.2"
+    },
+    {
+      "build": "build-058",
+      "commit": "7f056422ea711547723435fdecbb90807358f79e",
+      "date": "2026-10-28T15:46:38-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "CHANGELOG.md",
+        "README.md",
+        "build-history.json",
+        "build-pwa.mjs",
+        "dist/build-info.json",
+        "dist/index.html",
+        "dist/landing.html",
+        "dist/pwa.js",
+        "dist/sw.js",
+        "record-builds.mjs",
+        "release.json",
+        "version-assets.mjs"
+      ],
+      "cache_version": "3c52ce767ddf97a3",
+      "public_commit": null,
+      "stage_version": "1.8.3"
+    }
+  ]
+}

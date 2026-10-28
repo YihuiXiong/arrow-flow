@@ -1,0 +1,17 @@
+{
+  "version": "1.8.3",
+  "name": "Fieldwork",
+  "name_zh": "场上练习",
+  "date": "2026-10-28",
+  "status": "released",
+  "summary": "Fieldwork / 场上练习: the offline-PWA stage with three small refinements, continuing earlier development.",
+  "changes": [
+    "Remove internal cache identifiers from installation instructions.",
+    "Track feature stages and small patch versions while preserving all historical source snapshots.",
+    "Baseline includes arrow/number modes, editable colors and timing, sets/rest, sounds, bilingual guides, offline installation and standalone-aware fullscreen controls."
+  ],
+  "tag": "v1.8.3",
+  "numbering": "feature-stage-and-patch",
+  "previous_build_count": 57,
+  "historical_baseline_commit": "764c8489fe0a05bcd5af942570cd3ec8adaf3560"
+}

@@ -23,3 +23,5 @@ console.log('Updated asset versions.');
 
 // Generate the worker after HTML asset URLs have been versioned.
 await import('./build-pwa.mjs');
+
+await import('./record-builds.mjs');

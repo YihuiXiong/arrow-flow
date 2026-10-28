@@ -137,3 +137,20 @@ Implementation files: `manifest.webmanifest`, `pwa.js`, `pwa.css`, and PNG icons
 Run `node test-pwa.mjs` after versioning. The worker harness simulates a failed network and checks root and subdirectory deployments, all cached training dependencies, navigation aliases, cache status/repair, explicit update activation, preservation of older open-page assets, scope isolation and rejection of mixed-release resources. These are simulated lifecycle/network tests; the live browser also verifies worker activation and cache readiness. iOS Home Screen installation and airplane-mode behavior require checking on an actual device.
 
 The separate `build-offline.mjs` output remains available for file-based use; it removes the PWA registration and manifest rather than trying to install a worker from a local file.
+
+## Version history
+
+The current version is **Arrow Flow v1.8.3 — Fieldwork / 场上练习**. Earlier development counts toward the version history; numbering does not restart at 1.0.0. Versions represent feature stages and patches, not every file save or Git commit.
+
+- **1.6.0:** consolidated historical training-tool baseline.
+- **1.7.0:** landing page and illustrated bilingual field guide.
+- **1.8.0:** offline PWA installation and update support.
+- **1.8.1:** Safari installation icons.
+- **1.8.2:** standalone fullscreen-control refinement.
+- **1.8.3:** remove internal cache IDs from user instructions and formalize version tracking.
+
+Historical stage labels are retrospective groupings of real source snapshots, not claims that these semantic tags were published at the time. Every snapshot retains its original commit, date and changed files in [build-history.json](./build-history.json). Intermediate preparation commits remain in raw source history and do not consume a public release number.
+
+Use a patch increment for small fixes (next: **1.8.4**) and a minor increment for a new feature stage (for example **1.9.0**). Update [release.json](./release.json) and [CHANGELOG.md](./CHANGELOG.md), then run `node version-assets.mjs`. It versions assets, regenerates the worker and developer-only `build-info.json`, and runs `record-builds.mjs` to retain snapshots and the release ledger. Commit the generated files and tag the published release. The latest source commit enters the snapshot index on the next run; Git history retains it immediately, and the release tag pins the exact public source. The recorder retains history when Git metadata is missing or shallow.
+
+The internal cache fingerprint stays in developer metadata and is never appended to installation instructions. `build-info.json` maps the public version to its cache fingerprint. Canonical source commits and public GitHub commits differ because the repositories are synchronized separately; matched public identifiers are retained where known.
