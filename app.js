@@ -352,11 +352,16 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden&&['countdow
 // Native fullscreen is always opt-in. Unsupported browsers get a brief explanation.
 let fullscreenBusy=false,fullscreenNoticeTimer=null,lastFullscreenExit=-Infinity,wasFullscreen=false;
 function fullscreenElement(){return document.fullscreenElement||document.webkitFullscreenElement||null;}
+const standaloneDisplay=matchMedia('(display-mode: standalone)');
+function isStandaloneApp(){return standaloneDisplay.matches||navigator.standalone===true;}
 function syncFullscreen(){
+  const standalone=isStandaloneApp();
+  document.documentElement.classList.toggle('standalone-app',standalone);
   const active=!!fullscreenElement();
   if(wasFullscreen&&!active)lastFullscreenExit=performance.now();
   wasFullscreen=active;
   for(const button of document.querySelectorAll('.fullscreen-toggle')){
+    button.hidden=standalone;
     button.setAttribute('aria-pressed',String(active));
     button.setAttribute('aria-label',t(active?'退出全屏':'进入全屏'));
     button.title=t(active?'退出全屏':'进入全屏');
@@ -369,7 +374,7 @@ function fullscreenNotice(message){
   fullscreenNoticeTimer=setTimeout(()=>{$('fullscreen-notice').hidden=true},6500);
 }
 async function toggleFullscreen(){
-  if(fullscreenBusy)return;
+  if(fullscreenBusy||isStandaloneApp())return;
   const root=document.documentElement,active=!!fullscreenElement();
   const request=root.requestFullscreen||root.webkitRequestFullscreen;
   const leave=document.exitFullscreen||document.webkitExitFullscreen;
@@ -387,6 +392,8 @@ async function toggleFullscreen(){
 for(const button of document.querySelectorAll('.fullscreen-toggle'))button.addEventListener('click',toggleFullscreen);
 document.addEventListener('fullscreenchange',syncFullscreen);
 document.addEventListener('webkitfullscreenchange',syncFullscreen);
+standaloneDisplay.addEventListener('change',syncFullscreen);
+window.addEventListener('pageshow',syncFullscreen);
 
 // Refresh every dynamic label when switching languages, without resetting settings.
 function applyLanguage(){
