@@ -27,11 +27,13 @@
     langButton.textContent = language === 'en' ? '中文' : 'EN';
     langButton.setAttribute('aria-label', language === 'en' ? 'Switch to Chinese' : '切换到英文');
     document.querySelector('.site-header nav').setAttribute('aria-label', language === 'en' ? 'Main navigation' : '主导航');
+    document.querySelector('.field-nav').setAttribute('aria-label', language === 'en' ? 'Page sections' : '页面导航');
     document.querySelector('.brand').setAttribute('aria-label', language === 'en' ? 'Arrow Flow home' : 'Arrow Flow 首页');
     announcement.textContent = '';
     next.setAttribute('aria-label', language === 'en' ? 'Show another cue' : '显示下一个提示');
     document.querySelector('.mode-switch').setAttribute('aria-label', language === 'en' ? 'Preview mode' : '预览模式');
     describeCue();
+    document.dispatchEvent(new Event('landinglanguagechange'));
   }
   langButton.addEventListener('click', () => {
     language = language === 'en' ? 'zh' : 'en';

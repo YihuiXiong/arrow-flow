@@ -115,8 +115,10 @@ Settings stay in this browser's `localStorage` (`arrow-flow`); there is no accou
 
 ## Landing page
 
-Open [the landing page](https://yihuixiong.github.io/arrow-flow/landing.html) for an introduction, an interactive arrow/number preview, practical drill examples, and links into the app, guide, and research notes. The existing app remains at the root URL.
+Open [the landing page](https://yihuixiong.github.io/arrow-flow/landing.html) for an introduction, an interactive arrow/number preview, a complete on-page field guide, and illustrated About/research sections. Guide and About navigation stays on the landing page; only explicit training buttons enter the app. The existing app remains at the root URL.
 
-The landing page is buildless and separate from the training runtime: `landing.html`, `landing.css`, and `landing.js`. It supports English and Chinese and shares the app’s saved language preference. The preview is illustrative and advances on request; it does not start a training session or play sound. Run `node version-assets.mjs` after changing either app or landing-page assets.
+The landing page is buildless and separate from the training runtime: `landing.html`, `landing.css`, `landing.js`, and `walkthrough.js`. It supports English and Chinese and shares the app’s saved language preference. The preview is illustrative and advances on request; it does not start a training session or play sound. Run `node version-assets.mjs` after changing either app or landing-page assets.
 
 All landing-page iconography uses inline SVG to avoid iOS emoji substitution. The mobile header includes a book icon linking to the drill guide. The sample cue has a localized direction or number/color description, also announced to screen readers after interaction.
+
+The field guide includes three deterministic walkthroughs (direction, number plus color, and number repeats), an animated example floor plan, individual cue selection, manual advance, opt-in playback, and a fixed/random interval illustration. These are teaching examples, not additional training modes or movement tracking. Playback pauses when the example leaves view or the page becomes hidden; reduced-motion settings disable marker animations. About includes a cue/rule/response diagram, a comparison with sport-specific anticipation, and expandable primary-study notes. Both sections are available in English and Chinese directly at `landing.html#guide` and `landing.html#about`.

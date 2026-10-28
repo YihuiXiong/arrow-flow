@@ -7,7 +7,7 @@ const root = fileURLToPath(new URL('./', import.meta.url));
 const site = existsSync(resolve(root, 'dist/index.html')) ? resolve(root, 'dist') : root;
 for (const [page, assets] of [
   ['index.html', ['styles.css', 'theme.js', 'i18n.js', 'app.js', 'info.js']],
-  ['landing.html', ['landing.css', 'landing.js']]
+  ['landing.html', ['landing.css', 'landing.js', 'walkthrough.js']]
 ]) {
   const file = resolve(site, page);
   if (!existsSync(file)) continue;
