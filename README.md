@@ -22,3 +22,5 @@ No dependencies or build step are required. Serve the page with a static server,
 Run `node build-offline.mjs` to create `Arrow-Flow-Offline.html`, or pass an output path as the first argument. The generated file includes the styles, scripts, icons, font, and audio and can be opened directly without a server.
 
 Make changes in the separate source files and regenerate the offline file when needed. GitHub Pages publishes changes pushed to `main`.
+
+Before publishing source changes, run `node version-assets.mjs`. Content-based asset versions prevent browsers from mixing an updated page with cached CSS or JavaScript.
