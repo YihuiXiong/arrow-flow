@@ -14,9 +14,38 @@
   if(!host)return;
   host.append(entry);
   const dialog=document.createElement('dialog');dialog.className='pwa-dialog';dialog.setAttribute('aria-labelledby','pwa-title');
-  dialog.innerHTML='<header><div><span class="pwa-kicker">ARROW FLOW / OFFLINE</span><h2 id="pwa-title"></h2></div><button type="button" class="pwa-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></header><div class="pwa-body"><div class="pwa-status-row"><span class="pwa-status-dot"></span><span class="pwa-status-text" role="status"></span></div><p id="pwa-status-detail"></p><div class="pwa-actions"><button type="button" class="pwa-action" id="pwa-check"></button></div><div class="pwa-update-block" hidden><h3 id="pwa-update-title"></h3><p id="pwa-update-note"></p><button type="button" class="pwa-action primary" id="pwa-update"></button></div><div class="pwa-install-block"><h3 id="pwa-install-title"></h3><ol class="pwa-install-steps"></ol><button type="button" class="pwa-action primary" id="pwa-install" hidden></button></div><p class="pwa-small" id="pwa-footnote"></p><p class="pwa-small" id="pwa-notice" role="status" hidden></p></div>';
+  dialog.innerHTML='<header><div><span class="pwa-kicker">ARROW FLOW / OFFLINE</span><h2 id="pwa-title"></h2></div><button type="button" class="pwa-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></header><div class="pwa-body"><div class="pwa-status-row"><span class="pwa-status-dot"></span><span class="pwa-status-text" role="status"></span></div><p id="pwa-status-detail"></p><div class="pwa-actions"><button type="button" class="pwa-action" id="pwa-check"></button></div><div class="pwa-update-block" hidden><h3 id="pwa-update-title"></h3><p id="pwa-update-note"></p><button type="button" class="pwa-action primary" id="pwa-update"></button></div><div class="pwa-install-block"><h3 id="pwa-install-title"></h3><ol class="pwa-install-steps" id="pwa-primary-steps"></ol><details class="pwa-safari-help" id="pwa-safari-help" hidden><summary><span id="pwa-safari-label"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m8 10 4 4 4-4"/></svg></summary><ol class="pwa-install-steps" id="pwa-safari-steps"></ol></details><button type="button" class="pwa-action primary" id="pwa-install" hidden></button></div><p class="pwa-small" id="pwa-footnote"></p><p class="pwa-small" id="pwa-notice" role="status" hidden></p></div>';
   document.body.append(dialog);
   const $=id=>document.getElementById(id);
+  function safariSteps(){
+    return [
+      {icon:'safari',text:say('在 Safari 中打开训练页。','Open the training page in Safari.')},
+      {icon:'share',text:say('轻点“分享”图标：方框中向上的箭头。','Tap Share: the square with an upward arrow.')},
+      {icon:'home',text:say('在分享菜单中选择“添加到主屏幕”；可能需要向下滚动。','Choose “Add to Home Screen” in the share menu; you may need to scroll down.')},
+      {icon:'check',text:say('如出现“作为 Web App 打开”，保持开启，然后轻点“添加”。','If “Open as Web App” appears, leave it on, then tap Add.')}
+    ];
+  }
+  function drawSteps(list,steps){
+    const icons={
+      safari:'<circle cx="12" cy="12" r="9"/><path d="m16.5 7.5-3 6-6 3 3-6zM12 3v2M21 12h-2M12 21v-2M3 12h2"/>',
+      share:'<path d="M8 8H5v13h14V8h-3M12 15V2m-4 4 4-4 4 4"/>',
+      home:'<rect x="3.5" y="3.5" width="17" height="17" rx="3.5"/><path d="M12 7.5v9M7.5 12h9"/>',
+      check:'<path d="m5 12 4.5 4.5L19 7"/>'
+    };
+    list.replaceChildren();
+    for(const step of steps){
+      const li=document.createElement('li');
+      if(typeof step==='string'){li.textContent=step;}
+      else{
+        const content=document.createElement('span');content.className='pwa-step-content';
+        const drawing=document.createElementNS('http://www.w3.org/2000/svg','svg');
+        for(const [name,value] of Object.entries({viewBox:'0 0 24 24',fill:'none',stroke:'currentColor','stroke-width':'1.6','stroke-linecap':'round','stroke-linejoin':'round','aria-hidden':'true',focusable:'false'}))drawing.setAttribute(name,value);
+        drawing.dataset.installIcon=step.icon;drawing.innerHTML=icons[step.icon];
+        const text=document.createElement('span');text.textContent=step.text;content.append(drawing,text);li.append(content);
+      }
+      list.append(li);
+    }
+  }
   function render(){
     const waiting=!!registration?.waiting;
     const label=!supported?say('安装与离线','Install & offline'):waiting?say('有可用更新','Update available'):ready?(navigator.onLine?say('离线已就绪','Offline ready'):say('正在离线使用','Using offline')):preparing?say('正在准备离线','Preparing offline'):say('安装与离线','Install & offline');
@@ -34,8 +63,11 @@
     $('pwa-update').textContent=busy()?say('练习结束后可更新','Available after the session'):say('更新并重新打开','Update & reopen');
     $('pwa-update').disabled=busy()||requestedUpdate;
     $('pwa-install-title').textContent=standalone()?say('已作为独立应用打开','Opened as a standalone app'):say('添加到主屏幕','Add to your Home Screen');
-    const steps=standalone()?[say('以后从主屏幕图标打开，即可进入训练。','Use the Home Screen icon to return directly to training.')]:ios?[say('在 Safari 中打开训练页。','Open the training page in Safari.'),say('轻点分享，选择“添加到主屏幕”。','Tap Share, then “Add to Home Screen”.'),say('如出现“作为 Web App 打开”，保持开启，然后点“添加”。','If “Open as Web App” appears, leave it on, then tap Add.')]:installPrompt?[say('点击下方按钮，并按浏览器提示安装。','Use the button below and follow the browser’s installation prompt.')]:[say('打开训练页，在浏览器菜单中选择“安装应用”或“添加到主屏幕”（名称因浏览器而异）。','Open the training page, then use “Install app” or “Add to Home Screen” in your browser menu; wording varies.')];
-    const list=dialog.querySelector('.pwa-install-steps');list.replaceChildren();steps.forEach(text=>{const li=document.createElement('li');li.textContent=text;list.append(li);});
+    const steps=standalone()?[say('以后从主屏幕图标打开，即可进入训练。','Use the Home Screen icon to return directly to training.')]:ios?safariSteps():installPrompt?[say('点击下方按钮，并按浏览器提示安装。','Use the button below and follow the browser’s installation prompt.')]:[say('打开训练页，在浏览器菜单中选择“安装应用”或“添加到主屏幕”（名称因浏览器而异）。','Open the training page, then use “Install app” or “Add to Home Screen” in your browser menu; wording varies.')];
+    drawSteps($('pwa-primary-steps'),steps);
+    $('pwa-safari-help').hidden=standalone()||ios;
+    $('pwa-safari-label').textContent=say('Safari 安装步骤 · iPhone / iPad','Safari steps · iPhone / iPad');
+    drawSteps($('pwa-safari-steps'),safariSteps());
     $('pwa-install').hidden=standalone()||!installPrompt;$('pwa-install').textContent=say('安装 Arrow Flow','Install Arrow Flow');
     $('pwa-footnote').textContent=say('首次联网准备后才可离线使用。清除网站数据或系统回收缓存后，需要重新准备；主屏幕应用可能需要单独首次联网。设置保存在当前浏览器或主屏幕应用中，外部研究论文仍需网络。','Prepare once online before using offline. Clearing site data or system cache eviction requires preparation again; a Home Screen app may need its own first online launch. Settings are saved in the current browser or Home Screen app. External research articles require internet access.')+(version?' · '+version.slice(0,8):'');
     $('pwa-notice').hidden=!notice;$('pwa-notice').textContent=notice;
