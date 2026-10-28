@@ -112,3 +112,9 @@ In the Sites checkout, prepend `dist/` to the three syntax-check paths. Commit t
 `node build-offline.mjs [output-path]` produces `Arrow-Flow-Offline.html` by default. It embeds the styles, scripts, icons, font, audio, and both information pages. External research articles still require internet access. Edit the source files rather than the generated offline HTML.
 
 Settings stay in this browser's `localStorage` (`arrow-flow`); there is no account or training-results database. The bundled Figtree font carries its SIL Open Font License in `styles.css`.
+
+## Landing page
+
+Open [the landing page](https://yihuixiong.github.io/arrow-flow/landing.html) for an introduction, an interactive arrow/number preview, practical drill examples, and links into the app, guide, and research notes. The existing app remains at the root URL.
+
+The landing page is buildless and separate from the training runtime: `landing.html`, `landing.css`, and `landing.js`. It supports English and Chinese and shares the app’s saved language preference. The preview is illustrative and advances on request; it does not start a training session or play sound. Run `node version-assets.mjs` after changing either app or landing-page assets.
