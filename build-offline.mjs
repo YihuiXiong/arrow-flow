@@ -13,6 +13,9 @@ for (const name of ['theme.js', 'i18n.js', 'app.js', 'info.js']) {
 }
 html = html.replace('href="./favicon.svg"', () => `href="data:image/svg+xml,${encodeURIComponent(read('favicon.svg'))}"`);
 html = html.replace('href="./apple-touch-icon.png"', () => `href="data:image/png;base64,${readFileSync(resolve(site, 'apple-touch-icon.png')).toString('base64')}"`);
+html = html.replace(/<link rel="manifest"[^>]*>\s*/g, '');
+html = html.replace(/<link rel="stylesheet" href="\.\/pwa\.css(?:\?[^"]*)?">/, () => `<style>\n${read('pwa.css')}</style>`);
+html = html.replace(/<script src="\.\/pwa\.js(?:\?[^"]*)?" defer><\/script>/, '');
 const output = resolve(process.argv[2] || resolve(root, 'Arrow-Flow-Offline.html'));
 mkdirSync(dirname(output), { recursive: true });
 writeFileSync(output, html);

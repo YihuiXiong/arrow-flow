@@ -398,3 +398,6 @@ function applyLanguage(){
 }
 $('language').addEventListener('change',()=>{applyLanguage();save();document.dispatchEvent(new Event('languagechange'))});
 applyLanguage();
+
+// Read-only session state for safe PWA update controls.
+window.arrowFlowIsTraining=()=>state!=='idle'&&state!=='done';

@@ -6,8 +6,8 @@ import { fileURLToPath } from 'node:url';
 const root = fileURLToPath(new URL('./', import.meta.url));
 const site = existsSync(resolve(root, 'dist/index.html')) ? resolve(root, 'dist') : root;
 for (const [page, assets] of [
-  ['index.html', ['styles.css', 'theme.js', 'i18n.js', 'app.js', 'info.js']],
-  ['landing.html', ['landing.css', 'landing.js', 'walkthrough.js']]
+  ['index.html', ['styles.css', 'theme.js', 'i18n.js', 'app.js', 'info.js', 'pwa.css', 'pwa.js']],
+  ['landing.html', ['landing.css', 'landing.js', 'walkthrough.js', 'pwa.css', 'pwa.js']]
 ]) {
   const file = resolve(site, page);
   if (!existsSync(file)) continue;
@@ -20,3 +20,6 @@ for (const [page, assets] of [
   writeFileSync(file, html);
 }
 console.log('Updated asset versions.');
+
+// Generate the worker after HTML asset URLs have been versioned.
+await import('./build-pwa.mjs');

@@ -122,3 +122,18 @@ The landing page is buildless and separate from the training runtime: `landing.h
 All landing-page iconography uses inline SVG to avoid iOS emoji substitution. The mobile header includes a book icon linking to the drill guide. The sample cue has a localized direction or number/color description, also announced to screen readers after interaction.
 
 The field guide includes three deterministic walkthroughs (direction, number plus color, and number repeats), an animated example floor plan, individual cue selection, manual advance, opt-in playback, and a fixed/random interval illustration. These are teaching examples, not additional training modes or movement tracking. Playback pauses when the example leaves view or the page becomes hidden; reduced-motion settings disable marker animations. About includes a cue/rule/response diagram, a comparison with sport-specific anticipation, and expandable primary-study notes. Both sections are available in English and Chinese directly at `landing.html#guide` and `landing.html#about`.
+
+## Install and use offline (PWA)
+
+1. Open the hosted training app while online. Wait for **Offline ready / 离线已就绪** in the footer. Tap it to view installation and cache status.
+2. On iPhone/iPad, open the training page in Safari and choose **Share → Add to Home Screen**. If offered, keep **Open as Web App** enabled. Other supported browsers may show an **Install Arrow Flow** button or a browser-menu installation option.
+3. Open the Home Screen app online once and verify its own **Offline ready** status before taking it offline. Browser and installed-app storage can differ. Then arrows, numbers, timing, sets, rest, embedded sounds/fonts, and both guides work without a connection.
+4. First preparation requires internet. External research papers do not work offline. Clearing website data or browser storage eviction can remove the cache; prepare again if status says it is missing. The offline panel checks actual cached files and can attempt a verified repair while online.
+
+The footer control also checks for updates. A fully downloaded update waits until you choose **Update & reopen** outside an active session. Saved settings remain in local storage. Other open windows are never automatically reloaded. Audio still follows the browser's user-interaction rules; enable/preview it with a tap. Installing does not remove browser audio restrictions or guarantee background/locked-screen training.
+
+Implementation files: `manifest.webmanifest`, `pwa.js`, `pwa.css`, and PNG icons live with public assets. `service-worker.template.js` and `build-pwa.mjs` generate `sw.js`. Running **`node version-assets.mjs`** first versions all CSS/JS references and then generates a cache version and SHA-256 resource integrity metadata. Commit the generated HTML and `sw.js` together with the changed assets. Do not edit the generated worker directly. The worker is scoped to this app's directory, pins a complete release for offline use, and leaves unrelated same-origin caches untouched.
+
+Run `node test-pwa.mjs` after versioning. The worker harness simulates a failed network and checks root and subdirectory deployments, all cached training dependencies, navigation aliases, cache status/repair, explicit update activation, preservation of older open-page assets, scope isolation and rejection of mixed-release resources. These are simulated lifecycle/network tests; the live browser also verifies worker activation and cache readiness. iOS Home Screen installation and airplane-mode behavior require checking on an actual device.
+
+The separate `build-offline.mjs` output remains available for file-based use; it removes the PWA registration and manifest rather than trying to install a worker from a local file.
