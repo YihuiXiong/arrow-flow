@@ -1,6 +1,6 @@
 // Chinese source strings and their English translations.
 const EN={
-  "先约定动作，再跟随提示。":"Choose your rules, then follow the cues.",
+  "关于":"About",
   "玩法说明":"How to play",
   "关于与研究":"About & science",
   "了解与帮助":"Learn & help",
