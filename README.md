@@ -118,3 +118,5 @@ Settings stay in this browser's `localStorage` (`arrow-flow`); there is no accou
 Open [the landing page](https://yihuixiong.github.io/arrow-flow/landing.html) for an introduction, an interactive arrow/number preview, practical drill examples, and links into the app, guide, and research notes. The existing app remains at the root URL.
 
 The landing page is buildless and separate from the training runtime: `landing.html`, `landing.css`, and `landing.js`. It supports English and Chinese and shares the app’s saved language preference. The preview is illustrative and advances on request; it does not start a training session or play sound. Run `node version-assets.mjs` after changing either app or landing-page assets.
+
+All landing-page iconography uses inline SVG to avoid iOS emoji substitution. The mobile header includes a book icon linking to the drill guide. The sample cue has a localized direction or number/color description, also announced to screen readers after interaction.
