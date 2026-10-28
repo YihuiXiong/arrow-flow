@@ -2,17 +2,17 @@
   "schema": 3,
   "description": "Feature-stage and patch versions, separate from raw source snapshots. Historical stages are retrospective groupings, not claims of previously published tags. Every source snapshot is retained; small internal saves do not each create a public release. Source IDs and public GitHub IDs differ.",
   "current_release": {
-    "version": "1.8.4",
+    "version": "1.8.5",
     "name": "Fieldwork",
     "name_zh": "场上练习",
     "date": "2026-10-28",
     "status": "released",
-    "summary": "Make update status explicit in both languages.",
+    "summary": "Bring research context into the onboarding page.",
     "changes": [
-      "Show a clear up-to-date confirmation after a successful update check.",
-      "Distinguish downloading, available updates, offline and failed checks; check automatically when opening installation information."
+      "Add a bilingual research introduction before the drill walkthrough, with a task diagram, three primary studies and separately labeled design implications.",
+      "Add a research navigation entry and keep evidence limits and source links visible."
     ],
-    "tag": "v1.8.4",
+    "tag": "v1.8.5",
     "numbering": "feature-stage-and-patch",
     "previous_build_count": 57,
     "historical_baseline_commit": "764c8489fe0a05bcd5af942570cd3ec8adaf3560"
@@ -135,6 +135,18 @@
       "date": "2026-10-28",
       "tag": "v1.8.4",
       "summary": "Make update status explicit in both languages.",
+      "retrospective": false,
+      "source_commits": [
+        "fe583da0288ac832243b95fa2690a8f01dcb849e"
+      ]
+    },
+    {
+      "version": "1.8.5",
+      "name": "Fieldwork",
+      "name_zh": "场上练习",
+      "date": "2026-10-28",
+      "tag": "v1.8.5",
+      "summary": "Bring research context into the onboarding page.",
       "retrospective": false,
       "source_commits": []
     }
@@ -932,6 +944,28 @@
       "cache_version": "3c52ce767ddf97a3",
       "public_commit": null,
       "stage_version": "1.8.3"
+    },
+    {
+      "build": "build-060",
+      "commit": "fe583da0288ac832243b95fa2690a8f01dcb849e",
+      "date": "2026-10-28T22:15:16Z",
+      "summary": "Update Site source",
+      "files": [
+        "Arrow-Flow-Offline.html",
+        "CHANGELOG.md",
+        "README.md",
+        "build-history.json",
+        "dist/build-info.json",
+        "dist/index.html",
+        "dist/landing.html",
+        "dist/pwa.css",
+        "dist/pwa.js",
+        "dist/sw.js",
+        "release.json"
+      ],
+      "cache_version": "34c68799a7e4bb67",
+      "public_commit": null,
+      "stage_version": "1.8.4"
     }
   ]
 }

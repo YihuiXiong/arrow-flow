@@ -2,6 +2,13 @@
 
 Versions group meaningful feature stages; small refinements increment the patch digit. Raw source snapshots are recorded separately in [build-history.json](./build-history.json). Historical stage labels below are retrospective groupings, not claims of pre-existing published tags.
 
+## v1.8.5 — Research in onboarding
+
+2026-10-28
+
+- Bring bilingual research background into the introductory page, with a task diagram and primary sources.
+- Distinguish research findings, design implications and untested app outcomes.
+
 ## v1.8.4 — Clear update status
 
 2026-10-28

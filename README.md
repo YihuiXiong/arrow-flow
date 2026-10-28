@@ -140,7 +140,7 @@ The separate `build-offline.mjs` output remains available for file-based use; it
 
 ## Version history
 
-The current version is **Arrow Flow v1.8.4 — Fieldwork / 场上练习**. Earlier development counts toward the version history; numbering does not restart at 1.0.0. Versions represent feature stages and patches, not every file save or Git commit.
+The current version is **Arrow Flow v1.8.5 — Fieldwork / 场上练习**. Earlier development counts toward the version history; numbering does not restart at 1.0.0. Versions represent feature stages and patches, not every file save or Git commit.
 
 - **1.6.0:** consolidated historical training-tool baseline.
 - **1.7.0:** landing page and illustrated bilingual field guide.
