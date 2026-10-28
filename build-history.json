@@ -2,18 +2,17 @@
   "schema": 3,
   "description": "Feature-stage and patch versions, separate from raw source snapshots. Historical stages are retrospective groupings, not claims of previously published tags. Every source snapshot is retained; small internal saves do not each create a public release. Source IDs and public GitHub IDs differ.",
   "current_release": {
-    "version": "1.8.3",
+    "version": "1.8.4",
     "name": "Fieldwork",
     "name_zh": "场上练习",
     "date": "2026-10-28",
     "status": "released",
-    "summary": "Fieldwork / 场上练习: the offline-PWA stage with three small refinements, continuing earlier development.",
+    "summary": "Make update status explicit in both languages.",
     "changes": [
-      "Remove internal cache identifiers from installation instructions.",
-      "Track feature stages and small patch versions while preserving all historical source snapshots.",
-      "Baseline includes arrow/number modes, editable colors and timing, sets/rest, sounds, bilingual guides, offline installation and standalone-aware fullscreen controls."
+      "Show a clear up-to-date confirmation after a successful update check.",
+      "Distinguish downloading, available updates, offline and failed checks; check automatically when opening installation information."
     ],
-    "tag": "v1.8.3",
+    "tag": "v1.8.4",
     "numbering": "feature-stage-and-patch",
     "previous_build_count": 57,
     "historical_baseline_commit": "764c8489fe0a05bcd5af942570cd3ec8adaf3560"
@@ -125,8 +124,19 @@
       "summary": "Fieldwork / 场上练习: the offline-PWA stage with three small refinements, continuing earlier development.",
       "retrospective": false,
       "source_commits": [
-        "7f056422ea711547723435fdecbb90807358f79e"
+        "7f056422ea711547723435fdecbb90807358f79e",
+        "d1719466af91c9a26f0dc25bacb7d9004c0c929e"
       ]
+    },
+    {
+      "version": "1.8.4",
+      "name": "Fieldwork",
+      "name_zh": "场上练习",
+      "date": "2026-10-28",
+      "tag": "v1.8.4",
+      "summary": "Make update status explicit in both languages.",
+      "retrospective": false,
+      "source_commits": []
     }
   ],
   "snapshots": [
@@ -901,6 +911,23 @@
         "record-builds.mjs",
         "release.json",
         "version-assets.mjs"
+      ],
+      "cache_version": "3c52ce767ddf97a3",
+      "public_commit": null,
+      "stage_version": "1.8.3"
+    },
+    {
+      "build": "build-059",
+      "commit": "d1719466af91c9a26f0dc25bacb7d9004c0c929e",
+      "date": "2026-10-28T15:52:15-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "CHANGELOG.md",
+        "README.md",
+        "build-history.json",
+        "dist/build-info.json",
+        "record-builds.mjs",
+        "release.json"
       ],
       "cache_version": "3c52ce767ddf97a3",
       "public_commit": null,

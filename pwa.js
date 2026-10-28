@@ -7,14 +7,14 @@
   const busy = () => !!window.arrowFlowIsTraining?.();
   const standalone = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
   const ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1);
-  let registration=null,ready=false,preparing=supported,failed=false,installPrompt=null,requestedUpdate=false,reloading=false,checking=false,notice='';
+  let registration=null,ready=false,preparing=supported,failed=false,installPrompt=null,requestedUpdate=false,reloading=false,checking=false,notice='',updateStatus='';
   const entry=document.createElement('button');entry.type='button';entry.className='pwa-entry';
   entry.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M5 16v4h14v-4"/></svg><span></span>';
   const host=document.querySelector('.home-links')||document.querySelector('footer.wrap>div');
   if(!host)return;
   host.append(entry);
   const dialog=document.createElement('dialog');dialog.className='pwa-dialog';dialog.setAttribute('aria-labelledby','pwa-title');
-  dialog.innerHTML='<header><div><span class="pwa-kicker">ARROW FLOW / OFFLINE</span><h2 id="pwa-title"></h2></div><button type="button" class="pwa-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></header><div class="pwa-body"><div class="pwa-status-row"><span class="pwa-status-dot"></span><span class="pwa-status-text" role="status"></span></div><p id="pwa-status-detail"></p><div class="pwa-actions"><button type="button" class="pwa-action" id="pwa-check"></button></div><div class="pwa-update-block" hidden><h3 id="pwa-update-title"></h3><p id="pwa-update-note"></p><button type="button" class="pwa-action primary" id="pwa-update"></button></div><div class="pwa-install-block"><h3 id="pwa-install-title"></h3><ol class="pwa-install-steps" id="pwa-primary-steps"></ol><details class="pwa-safari-help" id="pwa-safari-help" hidden><summary><span id="pwa-safari-label"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m8 10 4 4 4-4"/></svg></summary><ol class="pwa-install-steps" id="pwa-safari-steps"></ol></details><button type="button" class="pwa-action primary" id="pwa-install" hidden></button></div><p class="pwa-small" id="pwa-footnote"></p><p class="pwa-small" id="pwa-notice" role="status" hidden></p></div>';
+  dialog.innerHTML='<header><div><span class="pwa-kicker">ARROW FLOW / OFFLINE</span><h2 id="pwa-title"></h2></div><button type="button" class="pwa-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></header><div class="pwa-body"><div class="pwa-status-row"><span class="pwa-status-dot"></span><span class="pwa-status-text" role="status"></span></div><p id="pwa-status-detail"></p><div class="pwa-version-status" id="pwa-version-status" role="status" hidden></div><div class="pwa-actions"><button type="button" class="pwa-action" id="pwa-check"></button></div><div class="pwa-update-block" hidden><h3 id="pwa-update-title"></h3><p id="pwa-update-note"></p><button type="button" class="pwa-action primary" id="pwa-update"></button></div><div class="pwa-install-block"><h3 id="pwa-install-title"></h3><ol class="pwa-install-steps" id="pwa-primary-steps"></ol><details class="pwa-safari-help" id="pwa-safari-help" hidden><summary><span id="pwa-safari-label"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m8 10 4 4 4-4"/></svg></summary><ol class="pwa-install-steps" id="pwa-safari-steps"></ol></details><button type="button" class="pwa-action primary" id="pwa-install" hidden></button></div><p class="pwa-small" id="pwa-footnote"></p><p class="pwa-small" id="pwa-notice" role="status" hidden></p></div>';
   document.body.append(dialog);
   const $=id=>document.getElementById(id);
   function safariSteps(){
@@ -57,6 +57,12 @@
     $('pwa-status-detail').textContent=ready?say('训练、提示音、字体和本页说明已保存。断网后也可以打开并完成练习。','Training, cue sounds, fonts and the guide are saved. You can open and complete a session without a connection.'):supported?say('首次准备需要网络。保持此页打开，直到显示“离线资源已准备好”。','An internet connection is needed the first time. Keep this page open until it says “Ready to use offline”.'):say('请使用 Safari、Chrome 或 Edge 的普通浏览窗口，通过 HTTPS 打开线上版本。单独的离线 HTML 文件无需安装。','Open the hosted HTTPS version in a regular Safari, Chrome or Edge window. The separate offline HTML file needs no installation.');
     $('pwa-check').textContent=checking?say('正在检查…','Checking…'):ready?say('检查更新与离线资源','Check updates & offline files'):say('重新准备离线资源','Prepare offline files');
     $('pwa-check').disabled=!supported||checking;
+    const status=checking?'checking':waiting?'available':registration?.installing?'downloading':!navigator.onLine?'offline':updateStatus;
+    const messages={checking:say('正在检查版本…','Checking for updates…'),latest:say('当前已是最新版本','You’re up to date'),available:say('有新版本可更新','An update is available'),downloading:say('正在下载新版本…','Downloading a new version…'),offline:say('当前离线，联网后可检查更新','You’re offline. Connect to check for updates.'),error:say('暂时无法检查更新，请稍后重试','Couldn’t check for updates. Please try again.')};
+    $('pwa-version-status').hidden=!messages[status];
+    $('pwa-version-status').textContent=messages[status]||'';
+    $('pwa-version-status').dataset.state=status;
+
     dialog.querySelector('.pwa-update-block').hidden=!waiting;
     $('pwa-update-title').textContent=say('新版已准备好','A new version is ready');
     $('pwa-update-note').textContent=busy()?say('先完成或结束当前练习，再应用更新。','Finish or end your current session before updating.'):say('更新会重新打开此页，并保留已保存的设置。其他窗口不会自动刷新。','Updating reopens this page and keeps saved settings. Other windows will not reload automatically.');
@@ -97,25 +103,34 @@
     if(!supported)return;
     try{
       registration=await navigator.serviceWorker.register(new URL('./sw.js',location.href),{scope:'./',updateViaCache:'none'});
-      registration.addEventListener('updatefound',()=>watchInstalling(registration.installing));
+      registration.addEventListener('updatefound',()=>{updateStatus='';watchInstalling(registration.installing);render();});
       watchInstalling(registration.installing);
       if(registration.active){preparing=false;await checkCache();}else render();
     }catch{preparing=false;failed=true;render();}
   }
-  entry.addEventListener('click',()=>{render();dialog.showModal();if(supported)checkCache();});
+  entry.addEventListener('click',()=>{render();dialog.showModal();if(supported)checkUpdates();});
   dialog.querySelector('.pwa-close').addEventListener('click',()=>dialog.close());
   dialog.addEventListener('click',event=>{if(event.target!==dialog)return;const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)dialog.close();});
-  $('pwa-check').addEventListener('click',async()=>{
+  async function checkUpdates(){
     if(checking)return;checking=true;notice='';render();
     try{
       if(!registration)await register();
-      await registration?.update();
+      if(!registration)throw new Error('Registration unavailable');
+      await registration.update();
+      const installing=registration.installing;
+      if(installing&& !['installed','activated','redundant'].includes(installing.state))await new Promise((resolve,reject)=>{
+        const timer=setTimeout(()=>{installing.removeEventListener('statechange',changed);reject(new Error('Update timed out'));},30000);
+        function changed(){if(['installed','activated','redundant'].includes(installing.state)){clearTimeout(timer);installing.removeEventListener('statechange',changed);installing.state==='redundant'?reject(new Error('Update failed')):resolve();}}
+        installing.addEventListener('statechange',changed);changed();
+      });
+      updateStatus=registration.waiting?'available':'latest';
       await checkCache();
       if(!ready&&registration?.active){const result=await ask(registration.active,'REPAIR_OFFLINE',25000);if(!result.ready)throw new Error('Repair failed');await checkCache();}
-      notice=ready?say('离线资源检查通过。若有新版，下载完成后会出现更新按钮。','Offline files checked. If a new version is available, an update button appears after download.'):say('请保持联网，等待资源准备完成。','Stay online while resources finish preparing.');
-    }catch{notice=ready?say('已有离线资源可用，当前无法检查网络更新。','Saved offline files remain available. Network updates could not be checked.'):say('尚未完成准备，请联网后重试。','Preparation is incomplete. Connect to the internet and try again.');preparing=false;failed=!ready;}
+      notice=ready?say('离线资源检查通过。','Offline files checked.'):say('请保持联网，等待资源准备完成。','Stay online while resources finish preparing.');
+    }catch{updateStatus='error';notice=ready?say('已有离线资源可用，当前无法检查网络更新。','Saved offline files remain available. Network updates could not be checked.'):say('尚未完成准备，请联网后重试。','Preparation is incomplete. Connect to the internet and try again.');preparing=false;failed=!ready;}
     finally{checking=false;render();}
-  });
+  }
+  $('pwa-check').addEventListener('click',checkUpdates);
   $('pwa-update').addEventListener('click',()=>{
     if(busy()||!registration?.waiting)return;
     requestedUpdate=true;render();registration.waiting.postMessage({type:'ACTIVATE_UPDATE'});

@@ -2,6 +2,13 @@
 
 Versions group meaningful feature stages; small refinements increment the patch digit. Raw source snapshots are recorded separately in [build-history.json](./build-history.json). Historical stage labels below are retrospective groupings, not claims of pre-existing published tags.
 
+## v1.8.4 — Clear update status
+
+2026-10-28
+
+- Show “当前已是最新版本” / “You’re up to date” after a successful check.
+- Check when opening installation information; distinguish downloading, updates, offline and failed checks.
+
 ## v1.8.3 — Fieldwork / 场上练习
 
 2026-10-28 · GitHub tag: `v1.8.3`
