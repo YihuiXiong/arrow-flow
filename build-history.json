@@ -2,16 +2,17 @@
   "schema": 3,
   "description": "Feature-stage and patch versions, separate from raw source snapshots. Historical stages are retrospective groupings, not claims of previously published tags. Every source snapshot is retained; small internal saves do not each create a public release. Source IDs and public GitHub IDs differ.",
   "current_release": {
-    "version": "1.8.6",
+    "version": "1.8.7",
     "name": "Fieldwork",
     "name_zh": "场上练习",
-    "date": "2026-10-28",
+    "date": "2026-10-29",
     "status": "released",
-    "summary": "Use regular weight for offline readiness labels.",
+    "summary": "Clarify cross-platform browser support on the landing page.",
     "changes": [
-      "Remove bold weight from the offline entry label and offline readiness status in both languages."
+      "Add bilingual compatibility notes for phones, tablets and computers, naming iOS, iPadOS, Android, Windows, macOS and Linux.",
+      "Clarify modern-browser access and offline use after initial online preparation."
     ],
-    "tag": "v1.8.6",
+    "tag": "v1.8.7",
     "numbering": "feature-stage-and-patch",
     "previous_build_count": 57,
     "historical_baseline_commit": "764c8489fe0a05bcd5af942570cd3ec8adaf3560"
@@ -159,6 +160,18 @@
       "date": "2026-10-28",
       "tag": "v1.8.6",
       "summary": "Use regular weight for offline readiness labels.",
+      "retrospective": false,
+      "source_commits": [
+        "a491fb30455a851d1c0490a99a85746408346e5f"
+      ]
+    },
+    {
+      "version": "1.8.7",
+      "name": "Fieldwork",
+      "name_zh": "场上练习",
+      "date": "2026-10-29",
+      "tag": "v1.8.7",
+      "summary": "Clarify cross-platform browser support on the landing page.",
       "retrospective": false,
       "source_commits": []
     }
@@ -1012,6 +1025,27 @@
       "cache_version": "0affbd518743cbda",
       "public_commit": null,
       "stage_version": "1.8.5"
+    },
+    {
+      "build": "build-063",
+      "commit": "a491fb30455a851d1c0490a99a85746408346e5f",
+      "date": "2026-10-28T19:44:28-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "Arrow-Flow-Offline.html",
+        "CHANGELOG.md",
+        "README.md",
+        "build-history.json",
+        "dist/build-info.json",
+        "dist/index.html",
+        "dist/landing.html",
+        "dist/pwa.css",
+        "dist/sw.js",
+        "release.json"
+      ],
+      "cache_version": "af06f0e3abf94593",
+      "public_commit": null,
+      "stage_version": "1.8.6"
     }
   ]
 }

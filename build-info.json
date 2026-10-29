@@ -1,16 +1,17 @@
 {
-  "version": "1.8.6",
+  "version": "1.8.7",
   "name": "Fieldwork",
   "name_zh": "场上练习",
-  "date": "2026-10-28",
+  "date": "2026-10-29",
   "status": "released",
-  "summary": "Use regular weight for offline readiness labels.",
+  "summary": "Clarify cross-platform browser support on the landing page.",
   "changes": [
-    "Remove bold weight from the offline entry label and offline readiness status in both languages."
+    "Add bilingual compatibility notes for phones, tablets and computers, naming iOS, iPadOS, Android, Windows, macOS and Linux.",
+    "Clarify modern-browser access and offline use after initial online preparation."
   ],
-  "tag": "v1.8.6",
+  "tag": "v1.8.7",
   "numbering": "feature-stage-and-patch",
   "previous_build_count": 57,
   "historical_baseline_commit": "764c8489fe0a05bcd5af942570cd3ec8adaf3560",
-  "cache_version": "af06f0e3abf94593"
+  "cache_version": "d028afafad16743f"
 }

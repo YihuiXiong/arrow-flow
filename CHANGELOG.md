@@ -2,6 +2,13 @@
 
 Versions group meaningful feature stages; small refinements increment the patch digit. Raw source snapshots are recorded separately in [build-history.json](./build-history.json). Historical stage labels below are retrospective groupings, not claims of pre-existing published tags.
 
+## v1.8.7 — Platform compatibility note
+
+2026-10-29
+
+- Add a bilingual landing-page note for modern-browser use across mobile, tablet and desktop platforms.
+- Clarify that offline access requires initial online preparation.
+
 ## v1.8.6 — Lighter offline labels
 
 2026-10-28
