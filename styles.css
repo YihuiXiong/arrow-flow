@@ -274,3 +274,5 @@ body:has(.info-dialog[open]){overflow:hidden}.info-dialog{width:min(780px,calc(1
 /* Installed standalone windows already provide the dedicated app surface. */
 .standalone-app .fullscreen-toggle{display:none!important}.standalone-app .stage .top-right{margin-right:0}
 @media(display-mode:standalone){.fullscreen-toggle{display:none!important}.stage .top-right{margin-right:0}}
+
+#number-ink-settings{margin-top:20px;padding-top:2px;border-top:1px solid var(--line)}#custom-number-ink input[type=color]{width:100%;height:48px;border:0;padding:5px;background:var(--field);border-radius:10px;cursor:pointer}#number-color-preview{display:grid;place-items:center;margin-top:16px;height:96px;border-radius:10px;font-family:var(--num);font-size:68px;font-weight:800;line-height:1}

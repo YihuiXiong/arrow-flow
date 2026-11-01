@@ -1,15 +1,15 @@
 {
-  "version": "1.8.7",
+  "version": "1.9.0",
   "name": "Fieldwork",
   "name_zh": "场上练习",
-  "date": "2026-10-29",
+  "date": "2026-11-01",
   "status": "released",
-  "summary": "Clarify cross-platform browser support on the landing page.",
+  "summary": "Customize number text colors independently from backgrounds.",
   "changes": [
-    "Add bilingual compatibility notes for phones, tablets and computers, naming iOS, iPadOS, Android, Windows, macOS and Linux.",
-    "Clarify modern-browser access and offline use after initial online preparation."
+    "Add automatic contrast, custom single color and editable random palettes for number text.",
+    "Persist text colors separately from backgrounds, add a settings preview, and support both languages."
   ],
-  "tag": "v1.8.7",
+  "tag": "v1.9.0",
   "numbering": "feature-stage-and-patch",
   "previous_build_count": 57,
   "historical_baseline_commit": "764c8489fe0a05bcd5af942570cd3ec8adaf3560"

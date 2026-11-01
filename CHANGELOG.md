@@ -2,6 +2,13 @@
 
 Versions group meaningful feature stages; small refinements increment the patch digit. Raw source snapshots are recorded separately in [build-history.json](./build-history.json). Historical stage labels below are retrospective groupings, not claims of pre-existing published tags.
 
+## v1.9.0 — Number text colors
+
+2026-11-01
+
+- Customize number text independently of number backgrounds: automatic contrast, single color, or editable random palette.
+- Add a color preview and persistent bilingual settings; preserve automatic contrast for existing users.
+
 ## v1.8.7 — Platform compatibility note
 
 2026-10-29

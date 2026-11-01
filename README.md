@@ -140,7 +140,7 @@ The separate `build-offline.mjs` output remains available for file-based use; it
 
 ## Version history
 
-The current version is **Arrow Flow v1.8.7 — Fieldwork / 场上练习**. Earlier development counts toward the version history; numbering does not restart at 1.0.0. Versions represent feature stages and patches, not every file save or Git commit.
+The current version is **Arrow Flow v1.9.0 — Fieldwork / 场上练习**. Earlier development counts toward the version history; numbering does not restart at 1.0.0. Versions represent feature stages and patches, not every file save or Git commit.
 
 - **1.6.0:** consolidated historical training-tool baseline.
 - **1.7.0:** landing page and illustrated bilingual field guide.
@@ -154,3 +154,5 @@ Historical stage labels are retrospective groupings of real source snapshots, no
 Use a patch increment for small fixes (next: **1.8.4**) and a minor increment for a new feature stage (for example **1.9.0**). Update [release.json](./release.json) and [CHANGELOG.md](./CHANGELOG.md), then run `node version-assets.mjs`. It versions assets, regenerates the worker and developer-only `build-info.json`, and runs `record-builds.mjs` to retain snapshots and the release ledger. Commit the generated files and tag the published release. The latest source commit enters the snapshot index on the next run; Git history retains it immediately, and the release tag pins the exact public source. The recorder retains history when Git metadata is missing or shallow.
 
 The internal cache fingerprint stays in developer metadata and is never appended to installation instructions. `build-info.json` maps the public version to its cache fingerprint. Canonical source commits and public GitHub commits differ because the repositories are synchronized separately; matched public identifiers are retained where known.
+
+Number text colors can use automatic contrast (default), a custom single color, or an editable random palette. Text, background and number are sampled independently. Settings include a preview; users choose visible custom combinations.

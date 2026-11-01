@@ -1,5 +1,13 @@
 // Chinese source strings and their English translations.
 const EN={
+  "数字文字颜色":"Number text color",
+  "自动对比色":"Automatic contrast",
+  "自定义数字颜色":"Custom number color",
+  "随机数字颜色":"Random number colors",
+  "数字颜色 {n}":"Number color {n}",
+  "字色、背景色与数字独立随机。自定义时请选择容易辨认的配色。":"Text color, background and number are sampled independently. Choose clearly visible combinations when customizing.",
+  "配色预览 · 使用第一种背景色和字色":"Color preview · first background and text color",
+
   "关于":"About",
   "玩法说明":"How to play",
   "关于与研究":"About & science",

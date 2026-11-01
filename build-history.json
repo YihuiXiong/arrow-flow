@@ -2,17 +2,17 @@
   "schema": 3,
   "description": "Feature-stage and patch versions, separate from raw source snapshots. Historical stages are retrospective groupings, not claims of previously published tags. Every source snapshot is retained; small internal saves do not each create a public release. Source IDs and public GitHub IDs differ.",
   "current_release": {
-    "version": "1.8.7",
+    "version": "1.9.0",
     "name": "Fieldwork",
     "name_zh": "场上练习",
-    "date": "2026-10-29",
+    "date": "2026-11-01",
     "status": "released",
-    "summary": "Clarify cross-platform browser support on the landing page.",
+    "summary": "Customize number text colors independently from backgrounds.",
     "changes": [
-      "Add bilingual compatibility notes for phones, tablets and computers, naming iOS, iPadOS, Android, Windows, macOS and Linux.",
-      "Clarify modern-browser access and offline use after initial online preparation."
+      "Add automatic contrast, custom single color and editable random palettes for number text.",
+      "Persist text colors separately from backgrounds, add a settings preview, and support both languages."
     ],
-    "tag": "v1.8.7",
+    "tag": "v1.9.0",
     "numbering": "feature-stage-and-patch",
     "previous_build_count": 57,
     "historical_baseline_commit": "764c8489fe0a05bcd5af942570cd3ec8adaf3560"
@@ -172,6 +172,18 @@
       "date": "2026-10-29",
       "tag": "v1.8.7",
       "summary": "Clarify cross-platform browser support on the landing page.",
+      "retrospective": false,
+      "source_commits": [
+        "2c060ed5aad2b48343c85b23c5c8a4662de18623"
+      ]
+    },
+    {
+      "version": "1.9.0",
+      "name": "Fieldwork",
+      "name_zh": "场上练习",
+      "date": "2026-11-01",
+      "tag": "v1.9.0",
+      "summary": "Customize number text colors independently from backgrounds.",
       "retrospective": false,
       "source_commits": []
     }
@@ -1046,6 +1058,25 @@
       "cache_version": "af06f0e3abf94593",
       "public_commit": null,
       "stage_version": "1.8.6"
+    },
+    {
+      "build": "build-064",
+      "commit": "2c060ed5aad2b48343c85b23c5c8a4662de18623",
+      "date": "2026-10-29T17:13:41-04:00",
+      "summary": "Update Site source",
+      "files": [
+        "CHANGELOG.md",
+        "README.md",
+        "build-history.json",
+        "dist/build-info.json",
+        "dist/landing.css",
+        "dist/landing.html",
+        "dist/sw.js",
+        "release.json"
+      ],
+      "cache_version": "d028afafad16743f",
+      "public_commit": null,
+      "stage_version": "1.8.7"
     }
   ]
 }
