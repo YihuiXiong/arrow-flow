@@ -2,6 +2,13 @@
 
 Versions group meaningful feature stages; small refinements increment the patch digit. Raw source snapshots are recorded separately in [build-history.json](./build-history.json). Historical stage labels below are retrospective groupings, not claims of pre-existing published tags.
 
+## v1.9.1 — Complementary number colors
+
+2026-11-01
+
+- Add complementary text colors based on the current background hue, retaining saturation and lightness. Gray backgrounds use black or white.
+- Rename automatic contrast to automatic black/white and explain each mode in both languages.
+
 ## v1.9.0 — Number text colors
 
 2026-11-01

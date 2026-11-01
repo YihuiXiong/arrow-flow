@@ -18,7 +18,7 @@ function load(){
   try{const s=JSON.parse(localStorage.getItem('arrow-flow')||'null');if(s)for(const k of KEYS)if(s[k]!=null)$(k).value=s[k]}catch{}
   if(!$('sound-type').value)$('sound-type').value='beep';
   if(!['zh','en'].includes($('language').value))$('language').value='zh';
-  if(!['auto','custom','random'].includes($('number-ink-mode').value))$('number-ink-mode').value='auto';
+  if(!['auto','complementary','custom','random'].includes($('number-ink-mode').value))$('number-ink-mode').value='auto';
   if(!$('theme').value)$('theme').value='system';
   if(!$('interval-mode').value)$('interval-mode').value='fixed';
 }
@@ -164,7 +164,7 @@ function showArrow(){
     const pool=config.numberColors;const colors=pool.map((_,i)=>i).filter(i=>pool.length===1||i!==lastNumberColor);
     lastNumberColor=colors[Math.floor(Math.random()*colors.length)];
     const bg=pool[lastNumberColor];$('stage').style.setProperty('--number-bg',bg);$('stage').classList.add('number-cue');$('stage').classList.toggle('number-light-bg',lightNumberBackground(bg));
-    $('number-cue').style.color=numberInkColor(config.numberInkMode,config.numberInk,config.numberInkColors);
+    $('number-cue').style.color=numberInkColor(config.numberInkMode,config.numberInk,config.numberInkColors,bg);
     $('number-cue').style.fontSize='clamp(80px,'+Math.min(48,80/String(n).length)+'vmin,600px)';$('number-cue').textContent=n;$('number-cue').setAttribute('aria-label',t('数字 {n}',{n}));show('number-cue',true);show('arrow',false);
   }else{
   const options=config.dirs===2?DIRS[2]:DIRS[config.dirs].filter(d=>d!==last);
@@ -264,18 +264,27 @@ function newPaletteColor(existing){
 $('add-number-color').onclick=()=>{const key=paletteKey(),colors=readPalette(key);if(colors.length<8){colors.push(newPaletteColor(colors));$(key).value=JSON.stringify(colors);renderNumberPalette();save();}};
 $('reset-number-colors').onclick=()=>{const key=paletteKey();$(key).value=JSON.stringify(paletteDefaults(key));renderNumberPalette();updateNumberColorPreview();save();};
 renderNumberPalette();
-function numberInkColor(mode,custom,palette){
-  return mode==='custom'?custom:mode==='random'?palette[Math.floor(Math.random()*palette.length)]:'';
+function complementaryNumberColor(background){
+  const rgb=background.slice(1).match(/../g).map(value=>parseInt(value,16));
+  const low=Math.min(...rgb),high=Math.max(...rgb);
+  if(low===high)return lightNumberBackground(background)?'#252925':'#ffffff';
+  // HSL hue + 180 degrees, retaining saturation and lightness.
+  return '#'+rgb.map(value=>(low+high-value).toString(16).padStart(2,'0')).join('');
+}
+function numberInkColor(mode,custom,palette,background){
+  return mode==='complementary'?complementaryNumberColor(background):mode==='custom'?custom:mode==='random'?palette[Math.floor(Math.random()*palette.length)]:'';
 }
 function updateNumberColorPreview(){
   const bg=numberPalette()[0],mode=$('number-ink-mode').value,preview=$('number-color-preview');
   preview.style.backgroundColor=bg;
-  preview.style.color=mode==='auto'?(lightNumberBackground(bg)?'#252925':'#ffffff'):mode==='custom'?$('number-ink').value:readPalette('number-ink-colors')[0];
+  preview.style.color=numberInkColor(mode,$('number-ink').value,[readPalette('number-ink-colors')[0]],bg)||(lightNumberBackground(bg)?'#252925':'#ffffff');
 }
 function syncNumberInk(){
   $('number-ink-settings').hidden=$('training-mode').value!=='numbers';
   $('custom-number-ink').hidden=$('number-ink-mode').value!=='custom';
   $('random-number-ink').hidden=$('number-ink-mode').value!=='random';
+  const help={auto:'根据背景明暗，自动使用黑色或白色数字。',complementary:'数字使用背景的互补色，随背景变化；灰色背景使用黑白字色。',custom:'所有数字使用你选择的字色。请选择与背景容易区分的颜色。',random:'字色、背景色与数字独立随机。请选择容易辨认的配色。'};
+  $('number-ink-help').textContent=t(help[$('number-ink-mode').value]||help.auto);
   renderNumberPalette('number-ink-colors','number-ink-palette','add-number-ink');updateNumberColorPreview();
 }
 $('number-ink-mode').addEventListener('change',()=>{syncNumberInk();save();});

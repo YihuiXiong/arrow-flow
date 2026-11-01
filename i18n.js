@@ -1,7 +1,13 @@
 // Chinese source strings and their English translations.
 const EN={
   "数字文字颜色":"Number text color",
-  "自动对比色":"Automatic contrast",
+  "自动黑白":"Automatic black / white",
+  "背景互补色":"Background complement",
+  "根据背景明暗，自动使用黑色或白色数字。":"Use black or white digits automatically based on the background brightness.",
+  "数字使用背景的互补色，随背景变化；灰色背景使用黑白字色。":"Digits use the background’s complementary color and change with it. Gray backgrounds use black or white digits.",
+  "所有数字使用你选择的字色。请选择与背景容易区分的颜色。":"All digits use your chosen text color. Choose a color that is easy to distinguish from the background.",
+  "字色、背景色与数字独立随机。请选择容易辨认的配色。":"Text color, background and number are sampled independently. Choose clearly visible combinations.",
+  "配色预览":"Color preview",
   "自定义数字颜色":"Custom number color",
   "随机数字颜色":"Random number colors",
   "数字颜色 {n}":"Number color {n}",

@@ -1,15 +1,15 @@
 {
-  "version": "1.9.0",
+  "version": "1.9.1",
   "name": "Fieldwork",
   "name_zh": "场上练习",
   "date": "2026-11-01",
   "status": "released",
-  "summary": "Customize number text colors independently from backgrounds.",
+  "summary": "Add complementary number text colors and clarify automatic black/white.",
   "changes": [
-    "Add automatic contrast, custom single color and editable random palettes for number text.",
-    "Persist text colors separately from backgrounds, add a settings preview, and support both languages."
+    "Add background-complementary text colors that follow each cue background, with black/white fallback for grayscale.",
+    "Rename automatic contrast to Automatic black / white and 自动黑白; update bilingual contextual help and the settings preview."
   ],
-  "tag": "v1.9.0",
+  "tag": "v1.9.1",
   "numbering": "feature-stage-and-patch",
   "previous_build_count": 57,
   "historical_baseline_commit": "764c8489fe0a05bcd5af942570cd3ec8adaf3560"

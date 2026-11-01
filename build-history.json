@@ -2,17 +2,17 @@
   "schema": 3,
   "description": "Feature-stage and patch versions, separate from raw source snapshots. Historical stages are retrospective groupings, not claims of previously published tags. Every source snapshot is retained; small internal saves do not each create a public release. Source IDs and public GitHub IDs differ.",
   "current_release": {
-    "version": "1.9.0",
+    "version": "1.9.1",
     "name": "Fieldwork",
     "name_zh": "场上练习",
     "date": "2026-11-01",
     "status": "released",
-    "summary": "Customize number text colors independently from backgrounds.",
+    "summary": "Add complementary number text colors and clarify automatic black/white.",
     "changes": [
-      "Add automatic contrast, custom single color and editable random palettes for number text.",
-      "Persist text colors separately from backgrounds, add a settings preview, and support both languages."
+      "Add background-complementary text colors that follow each cue background, with black/white fallback for grayscale.",
+      "Rename automatic contrast to Automatic black / white and 自动黑白; update bilingual contextual help and the settings preview."
     ],
-    "tag": "v1.9.0",
+    "tag": "v1.9.1",
     "numbering": "feature-stage-and-patch",
     "previous_build_count": 57,
     "historical_baseline_commit": "764c8489fe0a05bcd5af942570cd3ec8adaf3560"
@@ -184,6 +184,18 @@
       "date": "2026-11-01",
       "tag": "v1.9.0",
       "summary": "Customize number text colors independently from backgrounds.",
+      "retrospective": false,
+      "source_commits": [
+        "bbb9a73074e1dbc7c474ad22f3e0d38e678c1fff"
+      ]
+    },
+    {
+      "version": "1.9.1",
+      "name": "Fieldwork",
+      "name_zh": "场上练习",
+      "date": "2026-11-01",
+      "tag": "v1.9.1",
+      "summary": "Add complementary number text colors and clarify automatic black/white.",
       "retrospective": false,
       "source_commits": []
     }
@@ -1077,6 +1089,29 @@
       "cache_version": "d028afafad16743f",
       "public_commit": null,
       "stage_version": "1.8.7"
+    },
+    {
+      "build": "build-065",
+      "commit": "bbb9a73074e1dbc7c474ad22f3e0d38e678c1fff",
+      "date": "2026-11-01T05:26:04-05:00",
+      "summary": "Update Site source",
+      "files": [
+        "Arrow-Flow-Offline.html",
+        "CHANGELOG.md",
+        "README.md",
+        "build-history.json",
+        "dist/app.js",
+        "dist/build-info.json",
+        "dist/i18n.js",
+        "dist/index.html",
+        "dist/styles.css",
+        "dist/sw.js",
+        "release.json",
+        "test-number-colors.mjs"
+      ],
+      "cache_version": "2b87c36eadfc88ff",
+      "public_commit": null,
+      "stage_version": "1.9.0"
     }
   ]
 }
