@@ -2,6 +2,15 @@
 
 Versions group meaningful feature stages; small refinements increment the patch digit. Raw source snapshots are recorded separately in [build-history.json](./build-history.json). Historical stage labels below are retrospective groupings, not claims of pre-existing published tags.
 
+## v1.9.2 — Reliability fixes
+
+2026-11-02
+
+- Fix a screen wake-lock leak: pausing and resuming reuses the active lock. Pending requests are shared, and locks granted after exit are released.
+- Background-complement number text keeps its hue but adjusts brightness to at least 3:1 contrast when the exact complement is hard to read.
+- Ignore saved settings that no longer match an available option, so the countdown cannot stall.
+- The number color test now runs from a plain repository checkout.
+
 ## v1.9.1 — Complementary number colors
 
 2026-11-01

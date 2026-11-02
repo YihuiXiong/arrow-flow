@@ -1,15 +1,17 @@
 {
-  "version": "1.9.1",
+  "version": "1.9.2",
   "name": "Fieldwork",
   "name_zh": "场上练习",
-  "date": "2026-11-01",
+  "date": "2026-11-02",
   "status": "released",
-  "summary": "Add complementary number text colors and clarify automatic black/white.",
+  "summary": "Fix screen wake-lock leak, keep complementary number text readable, and harden saved settings.",
   "changes": [
-    "Add background-complementary text colors that follow each cue background, with black/white fallback for grayscale.",
-    "Rename automatic contrast to Automatic black / white and 自动黑白; update bilingual contextual help and the settings preview."
+    "Reuse active or pending wake-lock requests and release locks that arrive after a session has ended.",
+    "Background-complement number text keeps its hue but is darkened or lightened to at least 3:1 contrast when the pure complement is hard to read.",
+    "Ignore saved settings that no longer match an available option instead of stalling the countdown.",
+    "Number color test runs from a plain repository checkout as well as dist/."
   ],
-  "tag": "v1.9.1",
+  "tag": "v1.9.2",
   "numbering": "feature-stage-and-patch",
   "previous_build_count": 57,
   "historical_baseline_commit": "764c8489fe0a05bcd5af942570cd3ec8adaf3560"

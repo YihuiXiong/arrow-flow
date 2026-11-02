@@ -140,7 +140,7 @@ The separate `build-offline.mjs` output remains available for file-based use; it
 
 ## Version history
 
-The current version is **Arrow Flow v1.9.1 — Fieldwork / 场上练习**. Earlier development counts toward the version history; numbering does not restart at 1.0.0. Versions represent feature stages and patches, not every file save or Git commit.
+The current version is **Arrow Flow v1.9.2 — Fieldwork / 场上练习**. Earlier development counts toward the version history; numbering does not restart at 1.0.0. Versions represent feature stages and patches, not every file save or Git commit.
 
 - **1.6.0:** consolidated historical training-tool baseline.
 - **1.7.0:** landing page and illustrated bilingual field guide.
@@ -155,4 +155,6 @@ Use a patch increment for small fixes (next: **1.8.4**) and a minor increment fo
 
 The internal cache fingerprint stays in developer metadata and is never appended to installation instructions. `build-info.json` maps the public version to its cache fingerprint. Canonical source commits and public GitHub commits differ because the repositories are synchronized separately; matched public identifiers are retained where known.
 
-Number text colors can use automatic black/white (default), a background complement, a custom single color, or an editable random palette. Complementary mode rotates the background hue by 180 degrees while keeping saturation and lightness, with black/white for gray backgrounds. Random palettes sample text color independently of background and number. Settings include a preview; users choose visible custom combinations.
+Number text colors can use automatic black/white (default), a background complement, a custom single color, or an editable random palette. Complementary mode rotates the background hue by 180 degrees and adjusts brightness when needed to reach at least 3:1 text contrast, with black/white for gray backgrounds. Random palettes sample text color independently of background and number. Settings include a preview; users choose visible custom combinations.
+
+The v1.9.2 reliability patch was contributed by Claude (original patch commit `515dba53aa444bbf57d360e9d9204a0ad6b4a1dd`) and integrated into this source layout with additional wake-lock race checks.

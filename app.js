@@ -10,12 +10,14 @@ const darkQuery=matchMedia('(prefers-color-scheme: dark)');
 let state='idle',resumeState='',timer=null,next=null,due=0,left=0;
 const DEFAULT_NUMBER_COLORS=["#d83842","#16816b","#f3cf46","#245fbd"];let lastNumberColor=-1;
 let restFrame=0;
-let round=0,set=1,restSeconds=0,last=-1,count=3,config={},wake=null;
+let round=0,set=1,restSeconds=0,last=-1,count=3,config={},wake=null,wakeRequest=null,wakeEpoch=0;
 
 /* ---------- 设置 ---------- */
 function save(){try{localStorage.setItem('arrow-flow',JSON.stringify(Object.fromEntries(KEYS.map(k=>[k,$(k).value]))))}catch{}}
 function load(){
-  try{const s=JSON.parse(localStorage.getItem('arrow-flow')||'null');if(s)for(const k of KEYS)if(s[k]!=null)$(k).value=s[k]}catch{}
+  try{const s=JSON.parse(localStorage.getItem('arrow-flow')||'null');if(s)for(const k of KEYS)if(s[k]!=null){const el=$(k),fallback=el.value;el.value=s[k];if(el.tagName==='SELECT'&&el.selectedIndex<0)el.value=fallback;}}catch{}
+  // A saved value with no matching option (e.g. one removed in a later version) keeps the default.
+  if(!['arrows','numbers'].includes($('training-mode').value))$('training-mode').value='arrows';
   if(!$('sound-type').value)$('sound-type').value='beep';
   if(!['zh','en'].includes($('language').value))$('language').value='zh';
   if(!['auto','complementary','custom','random'].includes($('number-ink-mode').value))$('number-ink-mode').value='auto';
@@ -112,8 +114,22 @@ function setPauseIcon(paused){
   $('pause').setAttribute('aria-label',t(paused?'继续':'暂停'));
 }
 function updateCounter(){$('counter').textContent=config.rounds?round+' / '+config.rounds:String(round)}
-async function keepAwake(){try{wake=await navigator.wakeLock?.request('screen')}catch{}}
-function releaseWake(){try{wake?.release()}catch{}wake=null}
+// Reuse a live lock: pause/resume must not stack locks that exit() can no longer release.
+async function keepAwake(){
+  if(wake&&!wake.released)return;
+  if(wakeRequest)return wakeRequest;
+  const epoch=wakeEpoch;
+  const request=(async()=>{
+    try{
+      const lock=await navigator.wakeLock?.request('screen');
+      if(epoch!==wakeEpoch){try{await lock?.release()}catch{}return;}
+      wake=lock;
+    }catch{}
+  })();
+  wakeRequest=request;
+  try{await request}finally{if(wakeRequest===request)wakeRequest=null;}
+}
+function releaseWake(){wakeEpoch++;wakeRequest=null;const lock=wake;wake=null;try{lock?.release()?.catch(()=>{})}catch{}}
 const clamp=(v,lo,hi,fallback)=>Math.max(lo,Math.min(hi,Number.isFinite(v)?v:fallback));
 
 function start(){
@@ -269,7 +285,16 @@ function complementaryNumberColor(background){
   const low=Math.min(...rgb),high=Math.max(...rgb);
   if(low===high)return lightNumberBackground(background)?'#252925':'#ffffff';
   // HSL hue + 180 degrees, retaining saturation and lightness.
-  return '#'+rgb.map(value=>(low+high-value).toString(16).padStart(2,'0')).join('');
+  let ink=rgb.map(value=>low+high-value);
+  // Same-lightness complements can be hard to read at a glance. Below 3:1 contrast,
+  // mix toward black or white (hue unchanged) until the digit is readable.
+  const luminance=c=>c.map(v=>v/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4).reduce((sum,v,i)=>sum+v*[.2126,.7152,.0722][i],0);
+  const bg=luminance(rgb),contrast=c=>{const l=luminance(c);return(Math.max(l,bg)+.05)/(Math.min(l,bg)+.05);};
+  let target=luminance(ink)<bg?0:255;
+  if(contrast([target,target,target])<3)target=255-target;
+  for(let step=0;step<40&&contrast(ink)<3;step++)ink=ink.map(v=>Math.round(v+(target-v)*.12));
+  if(contrast(ink)<3)ink=[target,target,target];
+  return '#'+ink.map(value=>value.toString(16).padStart(2,'0')).join('');
 }
 function numberInkColor(mode,custom,palette,background){
   return mode==='complementary'?complementaryNumberColor(background):mode==='custom'?custom:mode==='random'?palette[Math.floor(Math.random()*palette.length)]:'';
